@@ -2,9 +2,12 @@ import { useRef } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
+import heroVideo from "@/assets/hero-city.mp4.asset.json";
+
 const OUTLINE_IMG =
   "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_outline_fzg37d.jpg";
-const REAL_IMG = "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg";
+const REAL_POSTER =
+  "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg";
 
 export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -39,10 +42,16 @@ export default function Hero() {
 
         {/* Top layer — realistic reveal */}
         <motion.div style={{ clipPath }} className="absolute inset-0">
-          <motion.img
+          <motion.video
             style={{ scale }}
-            src={REAL_IMG}
-            alt="Photorealistic city skyline at dusk"
+            src={heroVideo.url}
+            poster={REAL_POSTER}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-label="Photorealistic city skyline at dusk"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40" />
