@@ -36,7 +36,6 @@ export default function Navbar() {
             href="#top"
             className="flex min-w-0 items-center gap-2 text-base sm:gap-2.5 sm:text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
           >
-            <img
             <Logo
               priority
               sizes="(min-width: 768px) 42px, (min-width: 640px) 38px, 33px"
