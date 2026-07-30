@@ -4,34 +4,40 @@ import { ArrowUpRight } from "lucide-react";
 
 const PROJECTS = [
   {
-    name: "Pixzen",
-    tag: "Brand & Product",
-    copy: "A creative suite rebuilt around a single, calm canvas.",
-    img: "https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781522720269-Pixzen.webp",
+    name: "RSU PKU Muhammadiyah Gombong",
+    tag: "Implementasi UPS 5000VA Data Center",
+    copy: "Pengadaan UPS untuk Server, Network Access Storage, Core Router Data Center",
+    img: "https://www.mentarisatria.net.id/assets/project-pku-gombong-Bs_kQ16z.jpg",
   },
   {
-    name: "Wander",
-    tag: "Travel Platform",
-    copy: "Trip planning that feels like daydreaming, not admin.",
-    img: "https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781631791578-Wander_Hero.webp",
+    name: "Plataran Makassar",
+    tag: "Implementasi Network & Hospitality",
+    copy: "Instalasi Network Access Point, IP Camera, UPS & Rack Server",
+    img: "https://plataran.com/wp-content/uploads/2025/08/PLSMM_INTERIOR-MARAJA-4.jpg",
   },
   {
-    name: "Agentify",
-    tag: "AI SaaS",
-    copy: "An agent console dense with data yet quiet to read.",
-    img: "https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781671943344-Agentify_Hero.webp",
+    name: "RS Siaga Medika Banyumas",
+    tag: "Implementasi Data Center",
+    copy: "Pengadaan Server, Network Access Storage, Core Router Data Center",
+    img: "https://res.cloudinary.com/dk0z4ums3/image/upload/w_720,h_480,c_fill,f_auto/v1635826427/hospital_image/71c66cf19052_rs%20siaga%20medika%20banyumas%201.jpeg.jpg",
   },
   {
-    name: "Future",
-    tag: "Editorial",
-    copy: "A carousel-led story format built for long attention.",
-    img: "https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781679053418-Future_Carousel.webp",
+    name: "Internet Service Provider Korporat",
+    tag: "ISP Solution",
+    copy: "Layanan Internet ISP dan Intranet untuk Gymnest Purwokerto",
+    img: "https://www.mentarisatria.net.id/assets/service-isp-CcR3Pu8u.jpg",
   },
   {
-    name: "Genova",
-    tag: "Fintech",
-    copy: "Trust rendered in typography, spacing, and restraint.",
-    img: "https://strvid.nyc3.cdn.digitaloceanspaces.com/motionitems/1781670271708-Genova_Hero.webp",
+    name: "RSUD Margono Soekarjo",
+    tag: "Managed Service IT Perusahaan",
+    copy: "Instalasi dan Perbaikan Kabel Fiber Optic Antar Gedung",
+    img: "https://goalkes-images.s3.ap-southeast-1.amazonaws.com/media/447/ROp80pMiXWx0wiHAIZXj0Pg8V539oO6aRtWXU3Q2.jpg",
+  },
+  {
+    name: "Teras Menara Sudirman Jakarta",
+    tag: "Access Point, Wifi & Surveillance",
+    copy: "Pengadaan Access Point, Wifi, Camera Surveillance",
+    img: "https://www.mentarisatria.net.id/assets/project-teras-sudirman-Cb4mYklj.webp",
   },
 ];
 
@@ -48,14 +54,21 @@ export default function Work() {
           transition={{ duration: 0.8 }}
           className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4"
         >
-          <h2 className="min-w-0 text-4xl font-black tracking-tighter text-white sm:text-5xl">
-            Our Works
-          </h2>
+          <div className="min-w-0">
+            <h2 className="text-4xl font-black tracking-tighter text-white sm:text-5xl">
+              Portfolio Project
+            </h2>
+            <p className="mt-3 text-base font-light text-gray-400">
+              Berbagai project infrastruktur IT yang telah kami selesaikan dengan sukses
+            </p>
+          </div>
           <a
-            href="#work"
+            href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-300 transition-colors hover:text-white"
           >
-            View All Projects
+            Diskusikan Project
             <ArrowUpRight
               size={16}
               className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -75,33 +88,28 @@ export default function Work() {
                 animate={{ flexGrow: isActive ? 4 : 0.8 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
                 className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
-
               >
                 <img
                   src={p.img}
-                  alt={`${p.name} — ${p.tag} case study`}
+                  alt={`${p.name} — ${p.tag}`}
                   loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <span className="text-xs font-bold tracking-widest text-gray-300 uppercase">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <span className="text-[11px] font-bold tracking-widest text-blue-300 uppercase">
                     {p.tag}
                   </span>
-                  <h3 className="mt-1 text-2xl font-black tracking-tighter text-white">{p.name}</h3>
-                  <motion.div
-                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
-                    transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                    className="overflow-hidden"
+                  <h3 className="mt-1.5 text-xl leading-tight font-black tracking-tighter text-white">
+                    {p.name}
+                  </h3>
+                  <motion.p
+                    animate={{ opacity: isActive ? 1 : 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-300"
                   >
-                    <p className="mt-2 max-w-sm text-sm leading-relaxed font-light text-gray-300">
-                      {p.copy}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1 rounded-full bg-white px-4 py-2 text-xs font-bold text-black transition-transform duration-200 hover:scale-105 active:scale-95">
-                      View Case Study <ArrowUpRight size={14} />
-                    </span>
-                  </motion.div>
+                    {p.copy}
+                  </motion.p>
                 </div>
               </motion.article>
             );
