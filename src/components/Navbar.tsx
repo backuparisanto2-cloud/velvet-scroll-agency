@@ -34,7 +34,7 @@ export default function Navbar() {
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:flex md:justify-between">
           <a
             href="#top"
-            className="flex min-w-0 items-center gap-2.5 text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+            className="flex min-w-0 items-center gap-2 text-base sm:gap-2.5 sm:text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
           >
             <img
               src={logoSgk.url}
@@ -42,7 +42,9 @@ export default function Navbar() {
               width={434}
               height={368}
               decoding="async"
-              className="h-8 w-auto shrink-0"
+              loading="eager"
+              fetchPriority="high"
+              className="h-7 w-auto shrink-0 sm:h-8 md:h-9"
             />
             <span className="truncate">
               MENTARI SATRIA
