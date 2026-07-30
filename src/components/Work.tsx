@@ -106,8 +106,12 @@ export default function Work() {
                   src={p.img}
                   alt={`${p.name} — ${p.tag}`}
                   loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  decoding="async"
+                  width={1200}
+                  height={800}
+                  className={`absolute inset-0 h-full w-full object-cover ${p.position} transition-transform duration-700 group-hover:scale-105`}
                 />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <span className="text-[11px] font-bold tracking-widest text-blue-300 uppercase">
