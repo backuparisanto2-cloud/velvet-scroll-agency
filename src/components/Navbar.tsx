@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import ThemeToggle, { LangSwitch } from "@/components/ThemeToggle";
 import { useT } from "@/i18n/context";
+import { logEvent } from "@/lib/analytics";
 
 const NAV_KEYS = [
   { key: "about", href: "#agency" },
