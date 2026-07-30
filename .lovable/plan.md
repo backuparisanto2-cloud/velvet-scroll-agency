@@ -1,18 +1,40 @@
-## Masalah
+## Tujuan
 
-Video hero terlihat blur di smartphone karena dua hal:
+Ganti seluruh isi konten situs (teks, gambar, section, title/description, plus peta Google) dengan konten dari **mentarisatria.net.id** (PT Sekawan Global Komunika), tanpa mengambil logo mereka. Hero tetap memakai gambar sketsa + video yang sekarang — hanya teksnya yang diganti.
 
-1. **Sumber video terlalu kecil.** `pickSource()` di `src/components/Hero.tsx` memilih versi 640p ketika `innerWidth * dpr <= 820`. Di perangkat yang sedang dipakai (384 CSS px, dpr 1.875 → ~720 px fisik), yang terpilih adalah 640p, padahal layar butuh ~720 px — jadi video di-upscale dan tampak lembut/blur.
-2. **Lapisan blur justru paling kuat di mobile.** Overlay `backdrop-blur-[2px]` aktif secara default dan baru turun ke `1px` mulai breakpoint `sm`, jadi layar kecil malah dapat blur paling besar.
+## Perubahan per bagian
 
-## Perubahan
+**`src/routes/index.tsx`**
+- Title: "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya".
+- Description: teks perusahaan dari situs sumber (PT Sekawan Global Komunika).
+- Tambah section baru `Contact` (peta + info kontak) setelah About.
 
-Semua di `src/components/Hero.tsx`, tanpa mengubah layout:
+**`src/components/Navbar.tsx`**
+- Wordmark teks "MENTARI SATRIA" (bukan logo mereka, murni tipografi seperti sekarang).
+- Menu: Tentang, Layanan, Portfolio, Event, Kontak.
 
-- Perketat ambang pemilihan sumber: pakai 640p hanya untuk layar fisik yang benar-benar kecil (≈ ≤ 640 px) atau saat `saveData` aktif; selain itu pakai 1280p. Ponsel modern beresolusi tinggi akan mendapat 1280p sehingga tajam.
-- Balik arah blur: hilangkan `backdrop-blur` pada layar kecil, dan terapkan blur halus (~1px) hanya mulai `sm` ke atas. Saturasi/kontras tetap dipertahankan agar nuansa premium tidak hilang.
-- Sedikit kompensasi gelap-terang: karena blur mobile hilang, jaga keterbacaan teks lewat scrim/drop-shadow yang sudah ada (tidak menambah lapisan baru).
+**`src/components/Hero.tsx`** (visual tidak diubah)
+- Judul: "Solusi Infrastruktur IT" → reveal "Server, Internet & Network".
+- Video/gambar/animasi clipPath tetap seperti sekarang.
 
-## Verifikasi
+**`src/components/Services.tsx`** — 5 layanan dari situs sumber, memakai gambar aslinya:
+Pengadaan Server/Part/Upgrade & Data Center, Network & Router Enterprise, Pengadaan Perangkat IT, Managed Service IT, Internet Service Provider (ISP) — dengan deskripsi asli dan foto `service-*.jpg` dari mentarisatria.net.id. Grid disesuaikan agar muat 5 kartu dengan gambar.
 
-Cek dengan headless browser pada viewport ponsel (dpr 2 dan 3) bahwa sumber yang terpilih adalah versi 1280p dan tidak ada `backdrop-filter` aktif, lalu screenshot untuk memastikan teks tetap terbaca dan layout tidak berubah.
+**`src/components/Work.tsx`** — "Portfolio Project", 6 project asli (RSU PKU Muhammadiyah Gombong, Plataran Makassar, RS Siaga Medika Banyumas, ISP Korporat Gymnest, RSUD Margono Soekarjo, Teras Menara Sudirman) beserta gambar dan deskripsi aslinya. Layout accordion tetap.
+
+**Section baru `src/components/Events.tsx`** — "Event & Kegiatan": 4 kartu (Huawei/Infoblox/Forcepoint 2022, HPE 2024, DELL 2023, Ruijie/Sonicwall/Robustel 2024) dengan foto, judul, dan lokasi/tanggal asli.
+
+**`src/components/About.tsx`** — "Tentang Kami" dengan dua paragraf asli, tiga keunggulan (Tim Berpengalaman, Solusi Scalable & Aman, SLA Profesional), dan statistik asli: 200+ Klien Aktif, 1000+ Project Selesai, 99.9% Uptime Guarantee.
+
+**`src/components/Clients.tsx`** — jadi "Technology Partners": nama partner (Cisco, Dell, HP, Fortinet, Ruijie, Ruckus, Gigabyte, Sangfor, APC, APJII, Netviel, WPS) sebagai teks dalam ticker berjalan — tidak memakai file logo mereka, sesuai permintaan.
+
+**Section baru `src/components/Contact.tsx`** — "Hubungi Kami": alamat kantor lengkap (Jl. Overste Isdiman No.25, Purwokerto), telepon +62 281 7920477, WhatsApp +62 812 1295 1737, email info@mentarisatria.net.id, jam operasional Senin–Sabtu 08.00–17.00 WIB, plus **peta Google embed** untuk alamat tersebut (iframe `google.com/maps?q=<alamat>&output=embed`, lazy-load, tanpa API key) dengan sudut membulat mengikuti gaya glass yang ada.
+
+**`src/components/Footer.tsx`** — CTA "Siap Transformasi Infrastruktur IT Perusahaan Anda?" dengan tombol WhatsApp asli, navigasi baru, kontak singkat, dan copyright PT Sekawan Global Komunika.
+
+## Catatan teknis
+
+- Gambar diambil langsung lewat URL remote milik situs sumber (tidak diunduh ke repo), memakai `loading="lazy"` dan `alt` deskriptif.
+- Tidak ada file logo yang disalin — semua identitas merek dirender sebagai teks.
+- Gaya visual (midnight blue, glassmorphism, animasi framer-motion) dipertahankan sepenuhnya.
+- Verifikasi: typecheck + screenshot headless desktop & mobile, termasuk cek iframe peta termuat.

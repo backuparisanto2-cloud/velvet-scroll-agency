@@ -1,26 +1,36 @@
 import { motion } from "framer-motion";
-import { LineChart, PenTool, Sparkles, TrendingUp } from "lucide-react";
+import { Cloud, Cpu, Network, Server, Wrench } from "lucide-react";
 
 const SERVICES = [
   {
-    icon: PenTool,
-    title: "UI/UX Design",
-    copy: "Interfaces engineered around intent — research, flows, and pixel-exact systems that make complex products feel effortless.",
+    icon: Server,
+    title: "Pengadaan Server/Part/Upgrade & Data Center",
+    copy: "Solusi server enterprise dan data center yang aman, scalable, dan terpercaya untuk kebutuhan bisnis Anda.",
+    img: "https://www.mentarisatria.net.id/assets/service-server-D463EoSo.jpg",
   },
   {
-    icon: Sparkles,
-    title: "Visual Graphic",
-    copy: "Identity, motion, and art direction that gives your brand a look nobody else can borrow.",
+    icon: Network,
+    title: "Network & Router Enterprise",
+    copy: "Implementasi jaringan dan router enterprise berkualitas tinggi untuk konektivitas optimal perusahaan.",
+    img: "https://www.mentarisatria.net.id/assets/service-network-DjysASeH.jpg",
   },
   {
-    icon: LineChart,
-    title: "Strategy",
-    copy: "Positioning, roadmaps, and measurable design decisions grounded in how your market actually behaves.",
+    icon: Cpu,
+    title: "Pengadaan Perangkat IT",
+    copy: "Penyediaan perangkat IT terlengkap untuk kebutuhan korporasi, instansi pemerintah, dan pendidikan.",
+    img: "https://www.mentarisatria.net.id/assets/service-devices-CGNJJD3a.jpg",
   },
   {
-    icon: TrendingUp,
-    title: "Business Growth",
-    copy: "Conversion-focused experiments, funnels, and iteration loops that turn traffic into durable revenue.",
+    icon: Wrench,
+    title: "Managed Service IT",
+    copy: "Layanan pengelolaan infrastruktur IT profesional dengan SLA terjamin untuk operasional bisnis yang lancar.",
+    img: "https://www.mentarisatria.net.id/assets/service-managed-CYeiu6Nh.jpg",
+  },
+  {
+    icon: Cloud,
+    title: "Internet Service Provider (ISP)",
+    copy: "Layanan internet dedicated berkecepatan tinggi dan stabil untuk perusahaan dan korporasi.",
+    img: "https://www.mentarisatria.net.id/assets/service-isp-CcR3Pu8u.jpg",
   },
 ];
 
@@ -36,28 +46,43 @@ export default function Services() {
           className="mb-16 max-w-2xl"
         >
           <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
-            What we do
+            Layanan Kami
           </span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-white sm:text-5xl">
-            Services Built Specifically for your Business
+            Layanan Infrastruktur IT Profesional
           </h2>
+          <p className="mt-4 text-base leading-relaxed font-light text-gray-400">
+            Solusi lengkap jasa server dan network enterprise untuk mendukung transformasi digital
+            bisnis Anda
+          </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {SERVICES.map(({ icon: Icon, title, copy }, i) => (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map(({ icon: Icon, title, copy, img }, i) => (
             <motion.article
               key={title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md transition-colors hover:border-white/20"
+              className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md transition-colors hover:border-white/20"
             >
-              <div className="absolute top-0 right-0 grid h-24 w-24 place-items-center rounded-bl-[6rem] bg-white/5 transition-colors group-hover:bg-white/10">
-                <Icon className="mt-2 mr-2 text-white" size={26} aria-hidden="true" />
+              <div className="relative h-44 w-full overflow-hidden">
+                <img
+                  src={img}
+                  alt={title}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0c1128] via-[#0c1128]/30 to-transparent" />
+                <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-black/40 backdrop-blur-md">
+                  <Icon className="text-white" size={20} aria-hidden="true" />
+                </div>
               </div>
-              <div className="max-w-[80%]">
-                <h3 className="text-2xl font-black tracking-tighter text-white">{title}</h3>
+              <div className="flex flex-1 flex-col p-7">
+                <h3 className="text-xl leading-snug font-black tracking-tighter text-white">
+                  {title}
+                </h3>
                 <p className="mt-3 text-sm leading-relaxed font-light text-gray-400">{copy}</p>
               </div>
               <div className="pointer-events-none absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-purple-500/10 blur-[80px]" />

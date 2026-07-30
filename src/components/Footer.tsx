@@ -1,18 +1,28 @@
 import { motion } from "framer-motion";
-import { Dribbble, Github, Instagram, Linkedin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
-const NAV = ["Services", "Work", "Agency", "Contact"];
-const RESOURCES = ["Case Studies", "Process", "Careers", "Journal"];
-const SOCIALS = [
-  { icon: Instagram, label: "Instagram" },
-  { icon: Linkedin, label: "LinkedIn" },
-  { icon: Dribbble, label: "Dribbble" },
-  { icon: Github, label: "GitHub" },
+const NAV = [
+  { label: "Tentang", href: "#agency" },
+  { label: "Layanan", href: "#services" },
+  { label: "Portfolio", href: "#work" },
+  { label: "Event", href: "#events" },
+  { label: "Kontak", href: "#contact" },
 ];
+
+const LAYANAN = [
+  "Server & Data Center",
+  "Network & Router Enterprise",
+  "Pengadaan Perangkat IT",
+  "Managed Service IT",
+  "Internet Service Provider",
+];
+
+const WA =
+  "https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative w-full border-t border-white/5 py-24">
+    <footer className="relative w-full border-t border-white/5 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -21,43 +31,50 @@ export default function Footer() {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-start gap-8 pb-20"
         >
-          <h2 className="max-w-3xl text-5xl leading-[1.1] font-black tracking-tighter text-white sm:text-7xl lg:text-8xl">
-            Let&apos;s create something{" "}
+          <h2 className="max-w-4xl text-4xl leading-[1.1] font-black tracking-tighter text-white sm:text-6xl lg:text-7xl">
+            Siap Transformasi Infrastruktur IT{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              epic.
+              Perusahaan Anda?
             </span>
           </h2>
+          <p className="max-w-2xl text-base leading-relaxed font-light text-gray-400">
+            Konsultasikan kebutuhan jasa server dan network, data center, managed service, dan
+            Internet Service Provider dengan tim ahli kami sekarang
+          </p>
           <a
-            href="mailto:hello@novastudio.com"
+            href={WA}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full bg-white px-7 py-3.5 text-sm font-bold text-black transition-transform duration-200 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] active:scale-95"
           >
-            Start a Project
+            Hubungi Kami Sekarang
           </a>
         </motion.div>
 
         <div className="grid gap-10 border-t border-white/10 py-14 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="text-lg font-black tracking-tighter text-white">
-              NOVA
+              MENTARI SATRIA
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 .
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed font-light text-gray-400">
-              A design and engineering studio building premium digital products worldwide.
+              PT Sekawan Global Komunika — perusahaan IT Indonesia untuk infrastruktur IT, data
+              center, dan layanan Internet Service Provider.
             </p>
           </div>
 
-          <nav aria-label="Footer navigation">
-            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Navigate</h3>
+          <nav aria-label="Navigasi footer">
+            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Navigasi</h3>
             <ul className="mt-4 space-y-2.5">
               {NAV.map((n) => (
-                <li key={n}>
+                <li key={n.label}>
                   <a
-                    href={`#${n.toLowerCase()}`}
+                    href={n.href}
                     className="text-sm font-light text-gray-300 transition-colors hover:text-white"
                   >
-                    {n}
+                    {n.label}
                   </a>
                 </li>
               ))}
@@ -65,12 +82,12 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Resources</h3>
+            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Layanan</h3>
             <ul className="mt-4 space-y-2.5">
-              {RESOURCES.map((n) => (
+              {LAYANAN.map((n) => (
                 <li key={n}>
                   <a
-                    href="#work"
+                    href="#services"
                     className="text-sm font-light text-gray-300 transition-colors hover:text-white"
                   >
                     {n}
@@ -81,34 +98,40 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Social</h3>
-            <div className="mt-4 flex gap-3">
-              {SOCIALS.map(({ icon: Icon, label }) => (
-                <a
-                  key={label}
-                  href="#contact"
-                  aria-label={label}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-gray-300 backdrop-blur-md transition-all hover:scale-105 hover:border-white/30 hover:text-white active:scale-95"
-                >
-                  <Icon size={17} aria-hidden="true" />
+            <h3 className="text-xs font-bold tracking-widest text-gray-400 uppercase">Kontak</h3>
+            <ul className="mt-4 space-y-3 text-sm font-light text-gray-300">
+              <li className="flex gap-2">
+                <MapPin size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
+                <span>
+                  Jl. Overste Isdiman No.25, Purwokerto, Banyumas, Jawa Tengah 53114
+                </span>
+              </li>
+              <li className="flex gap-2">
+                <Phone size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
+                <a href="tel:+622817920477" className="transition-colors hover:text-white">
+                  +62 281 7920477
                 </a>
-              ))}
-            </div>
+              </li>
+              <li className="flex gap-2">
+                <Mail size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
+                <a
+                  href="mailto:info@mentarisatria.net.id"
+                  className="transition-colors hover:text-white"
+                >
+                  info@mentarisatria.net.id
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs font-light text-gray-600">
-            © {new Date().getFullYear()} Nova Studio. All rights reserved.
+            © {new Date().getFullYear()} PT Sekawan Global Komunika. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <a href="#contact" className="text-xs text-gray-600 transition-colors hover:text-white">
-              Privacy Policy
-            </a>
-            <a href="#contact" className="text-xs text-gray-600 transition-colors hover:text-white">
-              Terms of Service
-            </a>
-          </div>
+          <p className="text-xs font-light text-gray-600">
+            Senin - Sabtu: 08.00 - 17.00 WIB
+          </p>
         </div>
       </div>
     </footer>

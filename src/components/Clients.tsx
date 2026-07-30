@@ -1,20 +1,25 @@
 import { motion } from "framer-motion";
-import { Camera, CreditCard, Globe2, Hexagon, ShoppingBag, Tv } from "lucide-react";
 
-const CLIENTS = [
-  { icon: Camera, name: "Instagram" },
-  { icon: ShoppingBag, name: "Shopify" },
-  { icon: Hexagon, name: "HubSpot" },
-  { icon: Tv, name: "CNBC" },
-  { icon: Globe2, name: "BUSINESS INSIDER" },
-  { icon: CreditCard, name: "stripe" },
+const PARTNERS = [
+  "Cisco",
+  "Dell",
+  "HP",
+  "Fortinet",
+  "Ruijie",
+  "Ruckus",
+  "Gigabyte",
+  "Sangfor",
+  "APC",
+  "APJII",
+  "Netviel",
+  "WPS",
 ];
 
 export default function Clients() {
-  const track = [...CLIENTS, ...CLIENTS, ...CLIENTS, ...CLIENTS];
+  const track = [...PARTNERS, ...PARTNERS];
 
   return (
-    <section aria-label="Our clients" className="relative w-full py-24">
+    <section aria-label="Technology Partners" className="relative w-full py-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,10 +28,10 @@ export default function Clients() {
         className="mx-auto mb-14 flex max-w-6xl flex-col items-center gap-4 px-4 sm:px-6 lg:px-8"
       >
         <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold tracking-widest text-gray-300 uppercase backdrop-blur-md">
-          Interested
+          Partner
         </span>
         <h2 className="text-center text-3xl font-black tracking-tighter text-white sm:text-4xl">
-          Trusted by 300+ businesses
+          Technology Partners
         </h2>
       </motion.div>
 
@@ -39,14 +44,13 @@ export default function Clients() {
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 40, ease: "linear", repeat: Infinity }}
         >
-          {track.map(({ icon: Icon, name }, i) => (
-            <div
+          {track.map((name, i) => (
+            <span
               key={`${name}-${i}`}
-              className="flex shrink-0 items-center gap-3 text-gray-400 transition-colors hover:text-white"
+              className="shrink-0 text-lg font-semibold tracking-tight whitespace-nowrap text-gray-400 transition-colors hover:text-white"
             >
-              <Icon size={26} aria-hidden="true" />
-              <span className="text-lg font-semibold tracking-tight whitespace-nowrap">{name}</span>
-            </div>
+              {name}
+            </span>
           ))}
         </motion.div>
       </div>
