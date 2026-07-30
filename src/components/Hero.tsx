@@ -14,8 +14,10 @@ function pickSource() {
   if (typeof window === "undefined") return heroVideoLg.url;
   const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
   if (conn?.saveData) return heroVideoSm.url;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  return window.innerWidth * dpr <= 820 ? heroVideoSm.url : heroVideoLg.url;
+  const dpr = Math.min(window.devicePixelRatio || 1, 3);
+  // Only use the 640p source when the physical pixel width really is small;
+  // high-DPI phones get the 1280p source so the video stays sharp.
+  return window.innerWidth * dpr <= 640 ? heroVideoSm.url : heroVideoLg.url;
 }
 
 export default function Hero() {
