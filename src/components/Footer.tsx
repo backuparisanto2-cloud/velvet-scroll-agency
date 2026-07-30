@@ -1,31 +1,24 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { useT } from "@/i18n/context";
 
 const NAV = [
-  { label: "Tentang", href: "#agency" },
-  { label: "Layanan", href: "#services" },
-  { label: "Tools", href: "#tools" },
-  { label: "Portfolio", href: "#work" },
-  { label: "Event", href: "#events" },
-  { label: "Partner", href: "#partners" },
-  { label: "Kontak", href: "#contact" },
-];
-
-const LAYANAN = [
-  "Server & Data Center",
-  "Network & Router Enterprise",
-  "Pengadaan Perangkat IT",
-  "Managed Service IT",
-  "Internet Service Provider",
-  "Solusi AI Anda",
-];
+  { key: "about", href: "#agency" },
+  { key: "services", href: "#services" },
+  { key: "tools", href: "#tools" },
+  { key: "work", href: "#work" },
+  { key: "events", href: "#events" },
+  { key: "partners", href: "#partners" },
+  { key: "contact", href: "#contact" },
+] as const;
 
 
 const WA =
   "https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai";
 
 export default function Footer() {
+  const t = useT();
   return (
     <footer className="relative w-full border-t border-foreground/5 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -37,14 +30,13 @@ export default function Footer() {
           className="flex flex-col items-start gap-8 pb-20"
         >
           <h2 className="max-w-4xl text-4xl leading-[1.1] font-black tracking-tighter text-foreground sm:text-6xl lg:text-7xl">
-            Siap Transformasi Infrastruktur IT{" "}
+            {t.footer.ctaTitle}{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Perusahaan Anda?
+              {t.footer.ctaTitleAccent}
             </span>
           </h2>
           <p className="max-w-2xl text-base leading-relaxed font-light text-muted-foreground">
-            Konsultasikan kebutuhan jasa server dan network, data center, managed service, dan
-            Internet Service Provider dengan tim ahli kami sekarang
+            {t.footer.ctaDesc}
           </p>
           <a
             href={WA}
@@ -52,7 +44,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="rounded-full bg-foreground px-7 py-3.5 text-sm font-bold text-background transition-transform duration-200 hover:scale-105 hover:shadow-[0_0_20px_var(--tw-shadow-color)] active:scale-95"
           >
-            Hubungi Kami Sekarang
+            {t.footer.ctaBtn}
           </a>
         </motion.div>
 
@@ -69,21 +61,20 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed font-light text-muted-foreground">
-              PT Sekawan Global Komunika — perusahaan IT Indonesia untuk infrastruktur IT, data
-              center, dan layanan Internet Service Provider.
+              {t.footer.tagline}
             </p>
           </div>
 
-          <nav aria-label="Navigasi footer">
-            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Navigasi</h3>
+          <nav aria-label={t.footer.navLabel}>
+            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">{t.footer.navHeading}</h3>
             <ul className="mt-4 space-y-2.5">
               {NAV.map((n) => (
-                <li key={n.label}>
+                <li key={n.key}>
                   <a
                     href={n.href}
                     className="text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {n.label}
+                    {t.nav[n.key]}
                   </a>
                 </li>
               ))}
@@ -91,9 +82,9 @@ export default function Footer() {
           </nav>
 
           <div>
-            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Layanan</h3>
+            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">{t.footer.servicesHeading}</h3>
             <ul className="mt-4 space-y-2.5">
-              {LAYANAN.map((n) => (
+              {t.footer.services.map((n) => (
                 <li key={n}>
                   <a
                     href="#services"
@@ -107,7 +98,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Kontak</h3>
+            <h3 className="text-xs font-bold tracking-widest text-muted-foreground uppercase">{t.footer.contactHeading}</h3>
             <ul className="mt-4 space-y-3 text-sm font-light text-muted-foreground">
               <li className="flex gap-2">
                 <MapPin size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
@@ -136,10 +127,10 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 border-t border-foreground/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs font-light text-muted-foreground">
-            © {new Date().getFullYear()} PT Sekawan Global Komunika. All rights reserved.
+            © {new Date().getFullYear()} {t.footer.rights}
           </p>
           <p className="text-xs font-light text-muted-foreground">
-            Senin - Sabtu: 08.00 - 17.00 WIB
+            {t.footer.hours}
           </p>
         </div>
       </div>
