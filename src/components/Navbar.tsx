@@ -2,24 +2,27 @@ import { useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import ThemeToggle, { LangSwitch } from "@/components/ThemeToggle";
+import { useT } from "@/i18n/context";
 
-const NAV_ITEMS = [
-  { label: "Tentang", href: "#agency" },
-  { label: "Layanan", href: "#services" },
-  { label: "Tools", href: "#tools" },
-  { label: "Portfolio", href: "#work" },
-  { label: "Event", href: "#events" },
-  { label: "Partner", href: "#partners" },
-  { label: "Kontak", href: "#contact" },
-];
+const NAV_KEYS = [
+  { key: "about", href: "#agency" },
+  { key: "services", href: "#services" },
+  { key: "tools", href: "#tools" },
+  { key: "work", href: "#work" },
+  { key: "events", href: "#events" },
+  { key: "partners", href: "#partners" },
+  { key: "contact", href: "#contact" },
+] as const;
 
 
 export default function Navbar() {
+  const t = useT();
   const [open, setOpen] = useState(false);
   const { scrollY } = useScroll();
 
   const bgOpacity = useTransform(scrollY, [0, 50], [0.02, 0.08]);
-  const background = useMotionTemplate`rgba(255,255,255,${bgOpacity})`;
+  const background = useMotionTemplate`color-mix(in oklch, var(--color-background) ${useTransform(bgOpacity, (v) => 40 + v * 500)}%, transparent)`;
   const blur = useTransform(scrollY, [0, 50], [8, 24]);
   const backdropFilter = useMotionTemplate`blur(${blur}px)`;
 
@@ -50,17 +53,22 @@ export default function Navbar() {
           </a>
 
           <ul className="hidden items-center gap-8 md:flex">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
+            {NAV_KEYS.map((item) => (
+              <li key={item.key}>
                 <a
                   href={item.href}
                   className="text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {item.label}
+                  {t.nav[item.key]}
                 </a>
               </li>
             ))}
           </ul>
+
+          <div className="hidden items-center gap-2 md:flex">
+            <LangSwitch />
+            <ThemeToggle />
+          </div>
 
           <a
             href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
@@ -68,30 +76,34 @@ export default function Navbar() {
             rel="noopener noreferrer"
             className="hidden rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background transition-transform duration-200 hover:scale-105 active:scale-95 md:inline-block"
           >
-            Konsultasi Gratis
+            {t.nav.cta}
           </a>
 
+          <div className="flex items-center gap-2 md:hidden">
+            <LangSwitch />
+            <ThemeToggle />
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Tutup menu" : "Buka menu"}
+            aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={open}
             className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-foreground/10 text-foreground md:hidden"
           >
             {open ? <X size={17} /> : <Menu size={17} />}
           </button>
+          </div>
         </div>
 
         {open && (
           <ul className="mt-4 flex flex-col gap-3 border-t border-foreground/10 pt-4 md:hidden">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.label}>
+            {NAV_KEYS.map((item) => (
+              <li key={item.key}>
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className="block text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {item.label}
+                  {t.nav[item.key]}
                 </a>
               </li>
             ))}
@@ -102,7 +114,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 className="mt-1 inline-block rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background"
               >
-                Konsultasi Gratis
+                {t.nav.cta}
               </a>
             </li>
           </ul>
