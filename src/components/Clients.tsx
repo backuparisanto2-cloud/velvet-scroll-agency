@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import cisco from "@/assets/img/logo-cisco.webp.asset.json";
 import gigabyte from "@/assets/img/logo-gigabyte.webp.asset.json";
 import ruijie from "@/assets/img/logo-ruijie.webp.asset.json";
@@ -28,6 +29,7 @@ const PARTNERS = [
 ];
 
 export default function Clients() {
+  const t = useT();
   return (
     <section id="partners" aria-label="Technology Partners" className="relative w-full py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -39,12 +41,12 @@ export default function Clients() {
           className="mb-12 flex flex-col items-center gap-4"
         >
           <span className="rounded-full border border-foreground/10 bg-foreground/5 px-4 py-1.5 text-xs font-bold tracking-widest text-muted-foreground uppercase backdrop-blur-md">
-            Partner
+            {t.partners.badge}
           </span>
           <h2 className="text-center text-3xl font-black tracking-tighter text-foreground sm:text-4xl">
-            Technology{" "}
+            {t.partners.title}{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Partners
+              {t.partners.titleAccent}
             </span>
           </h2>
         </motion.div>
