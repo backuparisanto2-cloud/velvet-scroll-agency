@@ -7,54 +7,20 @@ import imgSiaga from "@/assets/img/project-siaga-medika.webp.asset.json";
 import imgIsp from "@/assets/img/service-isp.webp.asset.json";
 import imgMargono from "@/assets/img/project-margono.webp.asset.json";
 import imgTeras from "@/assets/img/project-teras-sudirman.webp.asset.json";
+import { useT } from "@/i18n/context";
 
 const PROJECTS = [
-  {
-    name: "RSU PKU Muhammadiyah Gombong",
-    tag: "Implementasi UPS 5000VA Data Center",
-    copy: "Pengadaan UPS untuk Server, Network Access Storage, Core Router Data Center",
-    img: imgGombong.url,
-    position: "object-center",
-  },
-  {
-    name: "Plataran Makassar",
-    tag: "Implementasi Network & Hospitality",
-    copy: "Instalasi Network Access Point, IP Camera, UPS & Rack Server",
-    img: imgPlataran.url,
-    position: "object-center",
-  },
-  {
-    name: "RS Siaga Medika Banyumas",
-    tag: "Implementasi Data Center",
-    copy: "Pengadaan Server, Network Access Storage, Core Router Data Center",
-    img: imgSiaga.url,
-    position: "object-center",
-  },
-  {
-    name: "Internet Service Provider Korporat",
-    tag: "ISP Solution",
-    copy: "Layanan Internet ISP dan Intranet untuk Gymnest Purwokerto",
-    img: imgIsp.url,
-    position: "object-center",
-  },
-  {
-    name: "RSUD Margono Soekarjo",
-    tag: "Managed Service IT Perusahaan",
-    copy: "Instalasi dan Perbaikan Kabel Fiber Optic Antar Gedung",
-    img: imgMargono.url,
-    position: "object-top",
-  },
-  {
-    name: "Teras Menara Sudirman Jakarta",
-    tag: "Access Point, Wifi & Surveillance",
-    copy: "Pengadaan Access Point, Wifi, Camera Surveillance",
-    img: imgTeras.url,
-    position: "object-center",
-  },
+  { img: imgGombong.url, position: "object-center" },
+  { img: imgPlataran.url, position: "object-center" },
+  { img: imgSiaga.url, position: "object-center" },
+  { img: imgIsp.url, position: "object-center" },
+  { img: imgMargono.url, position: "object-top" },
+  { img: imgTeras.url, position: "object-center" },
 ];
 
 
 export default function Work() {
+  const t = useT();
   const [active, setActive] = useState(0);
 
   return (
@@ -69,10 +35,10 @@ export default function Work() {
         >
           <div className="min-w-0">
             <h2 className="text-4xl font-black tracking-tighter text-foreground sm:text-5xl">
-              Portfolio Project
+              {t.work.title}
             </h2>
             <p className="mt-3 text-base font-light text-muted-foreground">
-              Berbagai project infrastruktur IT yang telah kami selesaikan dengan sukses
+              {t.work.desc}
             </p>
           </div>
           <a
@@ -81,7 +47,7 @@ export default function Work() {
             rel="noopener noreferrer"
             className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            Diskusikan Project Anda
+            {t.work.cta}
             <ArrowUpRight
               size={16}
               className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -90,8 +56,9 @@ export default function Work() {
         </motion.div>
 
         <div className="flex h-auto flex-col gap-3 md:h-[400px] md:flex-row">
-          {PROJECTS.map((p, i) => {
+          {PROJECTS.map((project, i) => {
             const isActive = active === i;
+            const p = { ...project, ...t.work.items[i] };
             return (
               <motion.article
                 key={p.name}
