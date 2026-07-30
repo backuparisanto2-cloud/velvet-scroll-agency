@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
+import logoSgk from "@/assets/img/logo-sgk.webp.asset.json";
 
 const NAV = [
   { label: "Tentang", href: "#agency" },
@@ -17,7 +18,7 @@ const LAYANAN = [
   "Pengadaan Perangkat IT",
   "Managed Service IT",
   "Internet Service Provider",
-  "AI Solutions",
+  "Solusi AI Anda",
 ];
 
 
@@ -57,6 +58,15 @@ export default function Footer() {
 
         <div className="grid gap-10 border-t border-white/10 py-14 sm:grid-cols-2 lg:grid-cols-4">
           <div>
+            <img
+              src={logoSgk.url}
+              alt="Logo PT Sekawan Global Komunika"
+              width={735}
+              height={624}
+              loading="lazy"
+              decoding="async"
+              className="mb-4 h-10 w-auto"
+            />
             <div className="text-lg font-black tracking-tighter text-white">
               MENTARI SATRIA
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">

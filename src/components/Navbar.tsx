@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logoSgk from "@/assets/img/logo-sgk.webp.asset.json";
 
 const NAV_ITEMS = [
   { label: "Tentang", href: "#agency" },
@@ -33,11 +34,21 @@ export default function Navbar() {
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:flex md:justify-between">
           <a
             href="#top"
-            className="min-w-0 truncate text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+            className="flex min-w-0 items-center gap-2.5 text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
           >
-            MENTARI SATRIA
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              .
+            <img
+              src={logoSgk.url}
+              alt="Logo PT Sekawan Global Komunika"
+              width={735}
+              height={624}
+              decoding="async"
+              className="h-8 w-auto shrink-0"
+            />
+            <span className="truncate">
+              MENTARI SATRIA
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                .
+              </span>
             </span>
           </a>
 
