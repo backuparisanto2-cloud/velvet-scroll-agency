@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logoSgk from "@/assets/img/logo-sgk-v2.webp.asset.json";
+import { Logo } from "@/components/Logo";
 
 const NAV_ITEMS = [
   { label: "Tentang", href: "#agency" },
