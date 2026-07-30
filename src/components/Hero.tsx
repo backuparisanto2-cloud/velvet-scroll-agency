@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useT } from "@/i18n/context";
 
 import heroVideoSm from "@/assets/hero-city-640.mp4.asset.json";
 import heroVideoLg from "@/assets/hero-city-1280.mp4.asset.json";
@@ -21,6 +22,7 @@ function pickSource() {
 }
 
 export default function Hero() {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<string | undefined>(undefined);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
