@@ -15,7 +15,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 const TITLE = "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya";
 const DESCRIPTION =
   "PT Sekawan Global Komunika - Perusahaan IT Indonesia yang menghadirkan layanan jasa infrastruktur IT, Pengadaan Server/Part dan Networking, Data Center, dan Internet Service Provider untuk korporasi anda.";
-const OG_IMAGE = "https://www.mentarisatria.net.id/assets/service-server-D463EoSo.jpg";
+const OG_IMAGE = "https://velvet-scroll-agency.lovable.app/og-image.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
