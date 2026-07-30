@@ -8,8 +8,10 @@ const NAV_ITEMS = [
   { label: "Tools", href: "#tools" },
   { label: "Portfolio", href: "#work" },
   { label: "Event", href: "#events" },
+  { label: "Partner", href: "#partners" },
   { label: "Kontak", href: "#contact" },
 ];
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

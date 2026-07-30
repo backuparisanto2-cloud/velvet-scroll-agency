@@ -7,6 +7,7 @@ const NAV = [
   { label: "Tools", href: "#tools" },
   { label: "Portfolio", href: "#work" },
   { label: "Event", href: "#events" },
+  { label: "Partner", href: "#partners" },
   { label: "Kontak", href: "#contact" },
 ];
 
@@ -16,7 +17,9 @@ const LAYANAN = [
   "Pengadaan Perangkat IT",
   "Managed Service IT",
   "Internet Service Provider",
+  "AI Solutions",
 ];
+
 
 const WA =
   "https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai";
