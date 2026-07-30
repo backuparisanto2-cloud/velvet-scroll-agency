@@ -198,7 +198,7 @@ const id = {
     language: "Bahasa",
     whatsapp: "Chat WhatsApp",
   },
-} as const;
+};
 
 export type Dict = typeof id;
 
