@@ -92,8 +92,7 @@ export default function About() {
                 </div>
                 <div className="mt-1 text-xs font-light text-muted-foreground">{t.about.stats[i]}</div>
               </div>
-              );
-            })}
+            ))}
           </div>
         </motion.div>
 
