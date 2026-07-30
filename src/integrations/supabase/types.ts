@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      page_visits: {
+        Row: {
+          browser: string | null
+          city: string | null
+          country: string | null
+          created_at: string
+          device_type: string | null
+          duration_seconds: number
+          id: string
+          language: string | null
+          os: string | null
+          path: string
+          referrer: string | null
+          referrer_domain: string | null
+          screen_h: number | null
+          screen_w: number | null
+          scroll_depth: number
+          session_id: string
+          timezone: string | null
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          visitor_id: string
+        }
+        Insert: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          duration_seconds?: number
+          id?: string
+          language?: string | null
+          os?: string | null
+          path?: string
+          referrer?: string | null
+          referrer_domain?: string | null
+          screen_h?: number | null
+          screen_w?: number | null
+          scroll_depth?: number
+          session_id: string
+          timezone?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visitor_id: string
+        }
+        Update: {
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          device_type?: string | null
+          duration_seconds?: number
+          id?: string
+          language?: string | null
+          os?: string | null
+          path?: string
+          referrer?: string | null
+          referrer_domain?: string | null
+          screen_h?: number | null
+          screen_w?: number | null
+          scroll_depth?: number
+          session_id?: string
+          timezone?: string | null
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          visitor_id?: string
+        }
+        Relationships: []
+      }
+      visit_events: {
+        Row: {
+          created_at: string
+          event_label: string | null
+          event_name: string
+          id: string
+          path: string | null
+          session_id: string
+          visit_id: string | null
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_label?: string | null
+          event_name: string
+          id?: string
+          path?: string | null
+          session_id: string
+          visit_id?: string | null
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          event_label?: string | null
+          event_name?: string
+          id?: string
+          path?: string | null
+          session_id?: string
+          visit_id?: string | null
+          visitor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_events_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "page_visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
