@@ -65,7 +65,7 @@ export default function Footer() {
               height={368}
               loading="lazy"
               decoding="async"
-              className="mb-4 h-10 w-auto"
+              className="mb-4 h-9 w-auto shrink-0 sm:h-10"
             />
             <div className="text-lg font-black tracking-tighter text-white">
               MENTARI SATRIA
