@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
-import logoSgk from "@/assets/img/logo-sgk.webp.asset.json";
+import logoSgk from "@/assets/img/logo-sgk-v2.webp.asset.json";
 
 const NAV = [
   { label: "Tentang", href: "#agency" },
@@ -61,8 +61,8 @@ export default function Footer() {
             <img
               src={logoSgk.url}
               alt="Logo PT Sekawan Global Komunika"
-              width={735}
-              height={624}
+              width={434}
+              height={368}
               loading="lazy"
               decoding="async"
               className="mb-4 h-10 w-auto"

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logoSgk from "@/assets/img/logo-sgk.webp.asset.json";
+import logoSgk from "@/assets/img/logo-sgk-v2.webp.asset.json";
 
 const NAV_ITEMS = [
   { label: "Tentang", href: "#agency" },
@@ -39,8 +39,8 @@ export default function Navbar() {
             <img
               src={logoSgk.url}
               alt="Logo PT Sekawan Global Komunika"
-              width={735}
-              height={624}
+              width={434}
+              height={368}
               decoding="async"
               className="h-8 w-auto shrink-0"
             />
