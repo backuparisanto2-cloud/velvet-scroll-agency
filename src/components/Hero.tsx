@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { useT } from "@/i18n/context";
 
 import heroVideoSm from "@/assets/hero-city-640.mp4.asset.json";
 import heroVideoLg from "@/assets/hero-city-1280.mp4.asset.json";
@@ -21,6 +22,7 @@ function pickSource() {
 }
 
 export default function Hero() {
+  const t = useT();
   const ref = useRef<HTMLDivElement>(null);
   const [src, setSrc] = useState<string | undefined>(undefined);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -45,20 +47,19 @@ export default function Hero() {
             alt="Hand-drawn outline sketch of a future city skyline"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/55" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+          <div className="absolute inset-0 bg-white/70 dark:bg-black/55" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/25 to-white/85 dark:from-black/60 dark:via-transparent dark:to-black/70" />
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6">
-            <p className="text-center text-xs font-semibold tracking-[0.2em] text-gray-200 uppercase drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] sm:text-sm">
-              PT. Sekawan Global Komunika - Mentarisatria.net.id
+            <p className="text-center text-xs font-semibold tracking-[0.2em] text-slate-700 uppercase drop-shadow-[0_1px_6px_rgba(255,255,255,0.9)] sm:text-sm dark:text-gray-200 dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+              {t.hero.eyebrow}
             </p>
-            <h1 className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.6)] sm:text-6xl lg:text-7xl">
-              Solusi{" "}
-              <span className="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">
-                Infrastruktur IT
+            <h1 className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-slate-900 drop-shadow-[0_1px_10px_rgba(255,255,255,0.85)] sm:text-6xl lg:text-7xl dark:text-white dark:drop-shadow-[0_2px_24px_rgba(0,0,0,0.6)]">
+              {t.hero.sketchTitle}{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-200 dark:to-purple-200">
+                {t.hero.sketchTitleAccent}
               </span>
             </h1>
           </div>
-
         </div>
 
         {/* Top layer — realistic reveal */}
@@ -76,50 +77,53 @@ export default function Hero() {
             className="h-full w-full object-cover"
           />
           {/* Premium legibility stack: vertical falloff + centre scrim + vignette */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/75" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(12,17,40,0.55)_0%,rgba(12,17,40,0.15)_45%,rgba(12,17,40,0.7)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/45 to-white/85 dark:from-black/65 dark:via-black/25 dark:to-black/75" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.25)_45%,rgba(255,255,255,0.75)_100%)] dark:bg-[radial-gradient(ellipse_at_center,rgba(12,17,40,0.55)_0%,rgba(12,17,40,0.15)_45%,rgba(12,17,40,0.7)_100%)]" />
           <div className="absolute inset-0 backdrop-saturate-125 backdrop-contrast-110 sm:backdrop-blur-[1px]" />
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6">
-            <p className="text-center text-xs font-semibold tracking-[0.2em] text-gray-200 uppercase drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)] sm:text-sm">
-              PT. Sekawan Global Komunika - Mentarisatria.net.id
+            <p className="text-center text-xs font-semibold tracking-[0.2em] text-slate-700 uppercase drop-shadow-[0_1px_6px_rgba(255,255,255,0.9)] sm:text-sm dark:text-gray-200 dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+              {t.hero.eyebrow}
             </p>
-            <p className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)] sm:text-6xl lg:text-7xl">
-              Server, Internet &amp;{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                Network Terpercaya
+            <p className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-slate-900 drop-shadow-[0_1px_12px_rgba(255,255,255,0.85)] sm:text-6xl lg:text-7xl dark:text-white dark:drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)]">
+              {t.hero.title}{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-500">
+                {t.hero.titleAccent}
               </span>
             </p>
-            <p className="max-w-2xl text-center text-sm leading-relaxed font-light text-gray-200 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] sm:text-base">
-              PT Sekawan Global Komunika - Perusahaan IT Indonesia yang menghadirkan layanan jasa
-              infrastruktur IT, Pengadaan Server/Part dan Networking, Data Center, dan Internet
-              Service Provider untuk korporasi anda
+            <p className="max-w-2xl text-center text-sm leading-relaxed font-light text-slate-700 drop-shadow-[0_1px_6px_rgba(255,255,255,0.9)] sm:text-base dark:text-gray-200 dark:drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+              {t.hero.desc}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full bg-white px-7 py-3.5 text-sm font-bold text-black transition-transform duration-200 hover:scale-105 active:scale-95"
+                className="rounded-full bg-slate-900 px-7 py-3.5 text-sm font-bold text-white transition-transform duration-200 hover:scale-105 active:scale-95 dark:bg-white dark:text-black"
               >
-                Konsultasi Gratis
+                {t.hero.cta1}
               </a>
               <a
                 href="#contact"
-                className="rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-transform duration-200 hover:scale-105 active:scale-95"
+                className="rounded-full border border-slate-900/20 bg-white/60 px-7 py-3.5 text-sm font-bold text-slate-900 backdrop-blur-md transition-transform duration-200 hover:scale-105 active:scale-95 dark:border-white/25 dark:bg-white/10 dark:text-white"
               >
-                Hubungi Kami
+                {t.hero.cta2}
               </a>
             </div>
           </div>
-
         </motion.div>
 
         <motion.div
           style={{ opacity: indicatorOpacity }}
           className="absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
         >
-          <span className="text-xs font-bold tracking-widest text-gray-300 uppercase">Scroll</span>
-          <ChevronDown className="animate-bounce text-white" size={22} aria-hidden="true" />
+          <span className="text-xs font-bold tracking-widest text-slate-700 uppercase dark:text-gray-300">
+            {t.hero.scroll}
+          </span>
+          <ChevronDown
+            className="animate-bounce text-slate-900 dark:text-white"
+            size={22}
+            aria-hidden="true"
+          />
         </motion.div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useT } from "@/i18n/context";
 import cisco from "@/assets/img/logo-cisco.webp.asset.json";
 import gigabyte from "@/assets/img/logo-gigabyte.webp.asset.json";
 import ruijie from "@/assets/img/logo-ruijie.webp.asset.json";
@@ -28,6 +29,7 @@ const PARTNERS = [
 ];
 
 export default function Clients() {
+  const t = useT();
   return (
     <section id="partners" aria-label="Technology Partners" className="relative w-full py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -38,13 +40,13 @@ export default function Clients() {
           transition={{ duration: 0.8 }}
           className="mb-12 flex flex-col items-center gap-4"
         >
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold tracking-widest text-gray-300 uppercase backdrop-blur-md">
-            Partner
+          <span className="rounded-full border border-foreground/10 bg-foreground/5 px-4 py-1.5 text-xs font-bold tracking-widest text-muted-foreground uppercase backdrop-blur-md">
+            {t.partners.badge}
           </span>
-          <h2 className="text-center text-3xl font-black tracking-tighter text-white sm:text-4xl">
-            Technology{" "}
+          <h2 className="text-center text-3xl font-black tracking-tighter text-foreground sm:text-4xl">
+            {t.partners.title}{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Partners
+              {t.partners.titleAccent}
             </span>
           </h2>
         </motion.div>
@@ -57,7 +59,7 @@ export default function Clients() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: (i % 6) * 0.06 }}
-              className="group grid aspect-square place-items-center rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08]"
+              className="group grid aspect-square place-items-center rounded-3xl border border-foreground/10 bg-foreground/[0.04] p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:bg-foreground/[0.08]"
             >
               <img
                 src={p.src}
@@ -66,7 +68,7 @@ export default function Clients() {
                 decoding="async"
                 width={200}
                 height={100}
-                className="max-h-12 w-full object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                className="max-h-12 w-full object-contain opacity-80 invert transition-opacity duration-300 group-hover:opacity-100 dark:opacity-70 dark:invert-0"
               />
             </motion.li>
           ))}

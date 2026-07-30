@@ -7,54 +7,20 @@ import imgSiaga from "@/assets/img/project-siaga-medika.webp.asset.json";
 import imgIsp from "@/assets/img/service-isp.webp.asset.json";
 import imgMargono from "@/assets/img/project-margono.webp.asset.json";
 import imgTeras from "@/assets/img/project-teras-sudirman.webp.asset.json";
+import { useT } from "@/i18n/context";
 
 const PROJECTS = [
-  {
-    name: "RSU PKU Muhammadiyah Gombong",
-    tag: "Implementasi UPS 5000VA Data Center",
-    copy: "Pengadaan UPS untuk Server, Network Access Storage, Core Router Data Center",
-    img: imgGombong.url,
-    position: "object-center",
-  },
-  {
-    name: "Plataran Makassar",
-    tag: "Implementasi Network & Hospitality",
-    copy: "Instalasi Network Access Point, IP Camera, UPS & Rack Server",
-    img: imgPlataran.url,
-    position: "object-center",
-  },
-  {
-    name: "RS Siaga Medika Banyumas",
-    tag: "Implementasi Data Center",
-    copy: "Pengadaan Server, Network Access Storage, Core Router Data Center",
-    img: imgSiaga.url,
-    position: "object-center",
-  },
-  {
-    name: "Internet Service Provider Korporat",
-    tag: "ISP Solution",
-    copy: "Layanan Internet ISP dan Intranet untuk Gymnest Purwokerto",
-    img: imgIsp.url,
-    position: "object-center",
-  },
-  {
-    name: "RSUD Margono Soekarjo",
-    tag: "Managed Service IT Perusahaan",
-    copy: "Instalasi dan Perbaikan Kabel Fiber Optic Antar Gedung",
-    img: imgMargono.url,
-    position: "object-top",
-  },
-  {
-    name: "Teras Menara Sudirman Jakarta",
-    tag: "Access Point, Wifi & Surveillance",
-    copy: "Pengadaan Access Point, Wifi, Camera Surveillance",
-    img: imgTeras.url,
-    position: "object-center",
-  },
+  { img: imgGombong.url, position: "object-center" },
+  { img: imgPlataran.url, position: "object-center" },
+  { img: imgSiaga.url, position: "object-center" },
+  { img: imgIsp.url, position: "object-center" },
+  { img: imgMargono.url, position: "object-top" },
+  { img: imgTeras.url, position: "object-center" },
 ];
 
 
 export default function Work() {
+  const t = useT();
   const [active, setActive] = useState(0);
 
   return (
@@ -68,20 +34,20 @@ export default function Work() {
           className="mb-12 flex flex-col gap-5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end sm:gap-4"
         >
           <div className="min-w-0">
-            <h2 className="text-4xl font-black tracking-tighter text-white sm:text-5xl">
-              Portfolio Project
+            <h2 className="text-4xl font-black tracking-tighter text-foreground sm:text-5xl">
+              {t.work.title}
             </h2>
-            <p className="mt-3 text-base font-light text-gray-400">
-              Berbagai project infrastruktur IT yang telah kami selesaikan dengan sukses
+            <p className="mt-3 text-base font-light text-muted-foreground">
+              {t.work.desc}
             </p>
           </div>
           <a
             href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            Diskusikan Project Anda
+            {t.work.cta}
             <ArrowUpRight
               size={16}
               className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -90,8 +56,9 @@ export default function Work() {
         </motion.div>
 
         <div className="flex h-auto flex-col gap-3 md:h-[400px] md:flex-row">
-          {PROJECTS.map((p, i) => {
+          {PROJECTS.map((project, i) => {
             const isActive = active === i;
+            const p = { ...project, ...t.work.items[i] };
             return (
               <motion.article
                 key={p.name}
@@ -100,7 +67,7 @@ export default function Work() {
                 tabIndex={0}
                 animate={{ flexGrow: isActive ? 4 : 0.8 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
+                className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-foreground/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/60 md:h-full md:basis-0"
               >
                 <img
                   src={p.img}
