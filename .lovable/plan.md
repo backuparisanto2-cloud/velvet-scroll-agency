@@ -1,40 +1,39 @@
 ## Tujuan
 
-Ganti seluruh isi konten situs (teks, gambar, section, title/description, plus peta Google) dengan konten dari **mentarisatria.net.id** (PT Sekawan Global Komunika), tanpa mengambil logo mereka. Hero tetap memakai gambar sketsa + video yang sekarang — hanya teksnya yang diganti.
+1. Tambah section baru **Tools** (teknologi/tools yang dipakai).
+2. Setiap section punya **animasi parallax framer-motion yang smooth**.
+3. Di Hero, tepat di atas judul "Solusi Infrastruktur IT", tambah baris teks lebih kecil: **PT. SEKAWAN GLOBAL KOMUNIKA - Mentarisatria.net.id**.
 
-## Perubahan per bagian
+## 1. Section Tools baru — `src/components/Tools.tsx`
 
-**`src/routes/index.tsx`**
-- Title: "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya".
-- Description: teks perusahaan dari situs sumber (PT Sekawan Global Komunika).
-- Tambah section baru `Contact` (peta + info kontak) setelah About.
+Grid kartu glass (2 kolom mobile, 3–4 kolom desktop) berisi tools/teknologi yang digunakan, tiap kartu: ikon lucide + nama + satu baris keterangan singkat. Isi mengikuti stack infrastruktur perusahaan, misalnya: Mikrotik & Cisco Routing, Fortinet Firewall, VMware Virtualization, Windows Server & Linux, Ruckus/Ruijie Wireless, Veeam Backup, Zabbix Monitoring, UniFi Controller.
 
-**`src/components/Navbar.tsx`**
-- Wordmark teks "MENTARI SATRIA" (bukan logo mereka, murni tipografi seperti sekarang).
-- Menu: Tentang, Layanan, Portfolio, Event, Kontak.
+- Eyebrow "Tools & Teknologi", judul "Tools yang Kami Gunakan", subjudul singkat.
+- Hover: border menyala + lift halus, konsisten dengan Services.
+- Dipasang di `src/routes/index.tsx` setelah `Services`, dan link "Tools" (`#tools`) ditambahkan di Navbar serta Footer.
 
-**`src/components/Hero.tsx`** (visual tidak diubah)
-- Judul: "Solusi Infrastruktur IT" → reveal "Server, Internet & Network".
-- Video/gambar/animasi clipPath tetap seperti sekarang.
+## 2. Parallax smooth per section — `src/components/ParallaxSection.tsx`
 
-**`src/components/Services.tsx`** — 5 layanan dari situs sumber, memakai gambar aslinya:
-Pengadaan Server/Part/Upgrade & Data Center, Network & Router Enterprise, Pengadaan Perangkat IT, Managed Service IT, Internet Service Provider (ISP) — dengan deskripsi asli dan foto `service-*.jpg` dari mentarisatria.net.id. Grid disesuaikan agar muat 5 kartu dengan gambar.
+Komponen pembungkus reusable:
+- `useScroll({ target, offset: ["start end", "end start"] })` + `useTransform` untuk `y` (misal 60px → -60px) dan `opacity` masuk-keluar halus.
+- `useSpring` (stiffness rendah, damping tinggi) agar gerakan tidak patah-patah.
+- `useReducedMotion` → parallax dimatikan bila user minta reduced motion.
+- Intensitas bisa diatur lewat prop `strength` supaya tiap section beda kedalaman (heading bergerak lebih jauh daripada konten).
 
-**`src/components/Work.tsx`** — "Portfolio Project", 6 project asli (RSU PKU Muhammadiyah Gombong, Plataran Makassar, RS Siaga Medika Banyumas, ISP Korporat Gymnest, RSUD Margono Soekarjo, Teras Menara Sudirman) beserta gambar dan deskripsi aslinya. Layout accordion tetap.
+Diterapkan ke: Clients, Services, Tools, Work, Events, About, Contact, Footer CTA. Hero tidak diubah (sudah punya efek scroll sendiri). Layout, ukuran, dan urutan konten tidak berubah — hanya transform.
 
-**Section baru `src/components/Events.tsx`** — "Event & Kegiatan": 4 kartu (Huawei/Infoblox/Forcepoint 2022, HPE 2024, DELL 2023, Ruijie/Sonicwall/Robustel 2024) dengan foto, judul, dan lokasi/tanggal asli.
+## 3. Hero eyebrow — `src/components/Hero.tsx`
 
-**`src/components/About.tsx`** — "Tentang Kami" dengan dua paragraf asli, tiga keunggulan (Tim Berpengalaman, Solusi Scalable & Aman, SLA Profesional), dan statistik asli: 200+ Klien Aktif, 1000+ Project Selesai, 99.9% Uptime Guarantee.
+Di kedua layer (layer sketsa dan layer video reveal), tambah baris di atas judul:
 
-**`src/components/Clients.tsx`** — jadi "Technology Partners": nama partner (Cisco, Dell, HP, Fortinet, Ruijie, Ruckus, Gigabyte, Sangfor, APC, APJII, Netviel, WPS) sebagai teks dalam ticker berjalan — tidak memakai file logo mereka, sesuai permintaan.
+```text
+PT. SEKAWAN GLOBAL KOMUNIKA - Mentarisatria.net.id
+```
 
-**Section baru `src/components/Contact.tsx`** — "Hubungi Kami": alamat kantor lengkap (Jl. Overste Isdiman No.25, Purwokerto), telepon +62 281 7920477, WhatsApp +62 812 1295 1737, email info@mentarisatria.net.id, jam operasional Senin–Sabtu 08.00–17.00 WIB, plus **peta Google embed** untuk alamat tersebut (iframe `google.com/maps?q=<alamat>&output=embed`, lazy-load, tanpa API key) dengan sudut membulat mengikuti gaya glass yang ada.
-
-**`src/components/Footer.tsx`** — CTA "Siap Transformasi Infrastruktur IT Perusahaan Anda?" dengan tombol WhatsApp asli, navigasi baru, kontak singkat, dan copyright PT Sekawan Global Komunika.
+Ukuran lebih kecil dari judul (`text-xs sm:text-sm`, tracking lebar, uppercase, warna gray-200/300 dengan drop-shadow) agar tetap terbaca di atas video. Judul dan animasi clipPath tidak diubah; hanya heading dibungkus flex-col agar eyebrow duduk di atasnya.
 
 ## Catatan teknis
 
-- Gambar diambil langsung lewat URL remote milik situs sumber (tidak diunduh ke repo), memakai `loading="lazy"` dan `alt` deskriptif.
-- Tidak ada file logo yang disalin — semua identitas merek dirender sebagai teks.
-- Gaya visual (midnight blue, glassmorphism, animasi framer-motion) dipertahankan sepenuhnya.
-- Verifikasi: typecheck + screenshot headless desktop & mobile, termasuk cek iframe peta termuat.
+- Semua parallax pakai transform GPU (`y`/`opacity`) — tidak memicu layout shift.
+- Section tetap `will-change: transform` seperlunya untuk kelancaran di mobile.
+- Verifikasi: typecheck + screenshot headless desktop & mobile pada beberapa posisi scroll.

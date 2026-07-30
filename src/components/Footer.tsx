@@ -4,6 +4,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 const NAV = [
   { label: "Tentang", href: "#agency" },
   { label: "Layanan", href: "#services" },
+  { label: "Tools", href: "#tools" },
   { label: "Portfolio", href: "#work" },
   { label: "Event", href: "#events" },
   { label: "Kontak", href: "#contact" },
