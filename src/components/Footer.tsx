@@ -58,13 +58,8 @@ export default function Footer() {
 
         <div className="grid gap-10 border-t border-white/10 py-14 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <img
-              src={logoSgk.url}
-              alt="Logo PT Sekawan Global Komunika"
-              width={434}
-              height={368}
-              loading="lazy"
-              decoding="async"
+            <Logo
+              sizes="(min-width: 640px) 47px, 42px"
               className="mb-4 h-9 w-auto shrink-0 sm:h-10"
             />
             <div className="text-lg font-black tracking-tighter text-white">
