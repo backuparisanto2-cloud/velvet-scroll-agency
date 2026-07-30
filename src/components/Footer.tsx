@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin, Phone } from "lucide-react";
-import logoSgk from "@/assets/img/logo-sgk-v2.webp.asset.json";
+import { Logo } from "@/components/Logo";
 
 const NAV = [
   { label: "Tentang", href: "#agency" },
