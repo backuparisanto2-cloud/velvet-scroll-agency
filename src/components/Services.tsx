@@ -96,8 +96,8 @@ export default function Services() {
                   className={`h-full w-full object-cover ${position} transition-transform duration-700 group-hover:scale-105`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-                <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-foreground/15 bg-black/40 backdrop-blur-md">
-                  <Icon className="text-foreground" size={20} aria-hidden="true" />
+                <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-black/40 backdrop-blur-md">
+                  <Icon className="text-white" size={20} aria-hidden="true" />
                 </div>
               </div>
               <div className="flex flex-1 flex-col p-7">

@@ -117,16 +117,16 @@ export default function Work() {
                   <span className="block text-[10px] font-bold tracking-[0.18em] text-blue-300 uppercase sm:text-[11px]">
                     {p.tag}
                   </span>
-                  <h3 className="mt-2 text-base leading-snug font-black tracking-tight text-foreground drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
+                  <h3 className="mt-2 text-base leading-snug font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
                     {p.name}
                   </h3>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-muted-foreground md:hidden">
+                  <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-200 md:hidden">
                     {p.copy}
                   </p>
                   <motion.p
                     animate={{ opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.4 }}
-                    className="mt-2 hidden max-w-md text-sm leading-relaxed font-light text-muted-foreground md:block"
+                    className="mt-2 hidden max-w-md text-sm leading-relaxed font-light text-gray-200 md:block"
                     style={{ pointerEvents: isActive ? "auto" : "none" }}
                   >
                     {p.copy}
