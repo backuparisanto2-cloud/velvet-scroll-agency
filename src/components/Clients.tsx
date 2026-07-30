@@ -66,7 +66,7 @@ export default function Clients() {
                 decoding="async"
                 width={200}
                 height={100}
-                className="max-h-12 w-full object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                className="max-h-12 w-full object-contain opacity-80 invert transition-opacity duration-300 group-hover:opacity-100 dark:opacity-70 dark:invert-0"
               />
             </motion.li>
           ))}
