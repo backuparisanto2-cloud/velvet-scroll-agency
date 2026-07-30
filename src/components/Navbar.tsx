@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logoSgk from "@/assets/img/logo-sgk-v2.webp.asset.json";
+import { Logo } from "@/components/Logo";
 
 const NAV_ITEMS = [
   { label: "Tentang", href: "#agency" },
@@ -36,14 +36,9 @@ export default function Navbar() {
             href="#top"
             className="flex min-w-0 items-center gap-2 text-base sm:gap-2.5 sm:text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
           >
-            <img
-              src={logoSgk.url}
-              alt="Logo PT Sekawan Global Komunika"
-              width={434}
-              height={368}
-              decoding="async"
-              loading="eager"
-              fetchPriority="high"
+            <Logo
+              priority
+              sizes="(min-width: 768px) 42px, (min-width: 640px) 38px, 33px"
               className="h-7 w-auto shrink-0 sm:h-8 md:h-9"
             />
             <span className="truncate">
