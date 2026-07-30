@@ -74,7 +74,7 @@ export default function Work() {
                 tabIndex={0}
                 animate={{ flexGrow: isActive ? 4 : 0.8 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                className="group relative h-48 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
+                className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
 
               >
                 <img
@@ -83,7 +83,7 @@ export default function Work() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
 
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
                   <span className="text-xs font-bold tracking-widest text-gray-300 uppercase">
