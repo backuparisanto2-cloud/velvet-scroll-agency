@@ -4,13 +4,15 @@ import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Services from "@/components/Services";
 import Work from "@/components/Work";
+import Events from "@/components/Events";
 import About from "@/components/About";
+import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
-const TITLE = "Nova Studio — Digital Design & Product Agency";
+const TITLE = "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya";
 const DESCRIPTION =
-  "Nova Studio is a senior design and engineering agency crafting premium interfaces, brand systems, and growth-focused digital products.";
-const OG_IMAGE = "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_iglhwn.jpg";
+  "PT Sekawan Global Komunika - Perusahaan IT Indonesia yang menghadirkan layanan jasa infrastruktur IT, Pengadaan Server/Part dan Networking, Data Center, dan Internet Service Provider untuk korporasi anda.";
+const OG_IMAGE = "https://www.mentarisatria.net.id/assets/service-server-D463EoSo.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -37,7 +39,9 @@ function Index() {
         <Clients />
         <Services />
         <Work />
+        <Events />
         <About />
+        <Contact />
       </main>
       <Footer />
     </div>
