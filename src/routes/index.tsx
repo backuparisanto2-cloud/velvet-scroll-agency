@@ -3,11 +3,13 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Services from "@/components/Services";
+import Tools from "@/components/Tools";
 import Work from "@/components/Work";
 import Events from "@/components/Events";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import ParallaxSection from "@/components/ParallaxSection";
 
 const TITLE = "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya";
 const DESCRIPTION =
@@ -36,14 +38,31 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <Clients />
-        <Services />
-        <Work />
-        <Events />
-        <About />
-        <Contact />
+        <ParallaxSection strength={40}>
+          <Clients />
+        </ParallaxSection>
+        <ParallaxSection strength={70}>
+          <Services />
+        </ParallaxSection>
+        <ParallaxSection strength={55}>
+          <Tools />
+        </ParallaxSection>
+        <ParallaxSection strength={70}>
+          <Work />
+        </ParallaxSection>
+        <ParallaxSection strength={55}>
+          <Events />
+        </ParallaxSection>
+        <ParallaxSection strength={70}>
+          <About />
+        </ParallaxSection>
+        <ParallaxSection strength={45}>
+          <Contact />
+        </ParallaxSection>
       </main>
-      <Footer />
+      <ParallaxSection strength={35} fade={false}>
+        <Footer />
+      </ParallaxSection>
     </div>
   );
 }
