@@ -112,22 +112,27 @@ export default function Work() {
                   className={`absolute inset-0 h-full w-full object-cover ${p.position} transition-transform duration-700 group-hover:scale-105`}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <span className="text-[11px] font-bold tracking-widest text-blue-300 uppercase">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/50 to-black/10" />
+                <div className="absolute inset-x-0 bottom-0 min-w-0 p-5 sm:p-6">
+                  <span className="block text-[10px] font-bold tracking-[0.18em] text-blue-300 uppercase sm:text-[11px]">
                     {p.tag}
                   </span>
-                  <h3 className="mt-1.5 text-xl leading-tight font-black tracking-tighter text-white">
+                  <h3 className="mt-2 text-lg leading-snug font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
                     {p.name}
                   </h3>
+                  <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-200 md:hidden">
+                    {p.copy}
+                  </p>
                   <motion.p
                     animate={{ opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.4 }}
-                    className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-300"
+                    className="mt-2 hidden max-w-md text-sm leading-relaxed font-light text-gray-200 md:block"
+                    style={{ pointerEvents: isActive ? "auto" : "none" }}
                   >
                     {p.copy}
                   </motion.p>
                 </div>
+
               </motion.article>
             );
           })}
