@@ -145,7 +145,10 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: #0c1128;
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
   }
+
 }
