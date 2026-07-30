@@ -1,13 +1,16 @@
+import { useT } from "@/i18n/context";
+
 const WA_LINK =
   "https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai";
 
 export default function WhatsAppButton() {
+  const t = useT();
   return (
     <a
       href={WA_LINK}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat WhatsApp"
+      aria-label={t.ui.whatsapp}
       className="wa-float fixed right-5 bottom-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] transition-transform duration-200 hover:scale-110 active:scale-95 sm:right-8 sm:bottom-8"
     >
       <svg
