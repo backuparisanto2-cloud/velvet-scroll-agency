@@ -72,9 +72,10 @@ export default function Work() {
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 tabIndex={0}
-                animate={{ flex: isActive ? 4 : 0.8 }}
+                animate={{ flexGrow: isActive ? 4 : 0.8 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                className="group relative h-48 min-w-0 cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full"
+                className="group relative h-48 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
+
               >
                 <img
                   src={p.img}
