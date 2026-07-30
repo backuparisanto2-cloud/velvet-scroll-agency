@@ -65,7 +65,7 @@ export default function Work() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="mb-12 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4"
+          className="mb-12 flex flex-col gap-5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end sm:gap-4"
         >
           <div className="min-w-0">
             <h2 className="text-4xl font-black tracking-tighter text-white sm:text-5xl">
@@ -117,7 +117,7 @@ export default function Work() {
                   <span className="block text-[10px] font-bold tracking-[0.18em] text-blue-300 uppercase sm:text-[11px]">
                     {p.tag}
                   </span>
-                  <h3 className="mt-2 text-lg leading-snug font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
+                  <h3 className="mt-2 text-base leading-snug font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
                     {p.name}
                   </h3>
                   <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-200 md:hidden">
