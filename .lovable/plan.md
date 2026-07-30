@@ -1,20 +1,20 @@
-## 1. Logo SGK
+## Ganti logo dengan file baru
 
-- Ambil `logo-sgk-vL78SFat_1.png`, crop/hapus baris teks "PT SEKAWAN GLOBAL KOMUNIKA" di bawah, sisakan bola-bola + "SGK" + globe.
-- Buat background transparan, konversi ke WebP (lossless/quality tinggi, target < 100 KB), unggah ke CDN sebagai `src/assets/img/logo-sgk.webp.asset.json`.
+Gambar yang diunggah (`file_000000004e0881fa8c9459a19ce19e72-removebg-preview.png`) sudah berlatar transparan dan tanpa teks perusahaan — cocok langsung dipakai sebagai logo.
 
-Pemakaian:
-- **Navbar** (`src/components/Navbar.tsx`): logo di kiri, tinggi ~32px, mendampingi wordmark "MENTARI SATRIA".
-- **Footer** (`src/components/Footer.tsx`): logo kecil di atas wordmark kolom pertama.
-- **Favicon**: turunan PNG persegi dari logo → `public/favicon.png`, didaftarkan di `src/routes/__root.tsx`, dan `public/favicon.ico` bawaan dihapus.
+### Langkah
 
-## 2. Layanan AI
+1. **Konversi & unggah aset**
+   - Ubah PNG unggahan ke WebP transparan (kualitas tinggi, target < 100 KB), crop margin kosong berlebih agar logo terlihat proporsional.
+   - Unggah ke CDN sebagai `src/assets/img/logo-sgk-v2.webp.asset.json`.
+   - Hapus aset lama `logo-sgk.webp` dari CDN setelah semua referensi dipindah.
 
-Di `src/components/Services.tsx`:
-- Judul kartu "AI Solutions" → **"Solusi AI Anda"** (teks keterangan tetap).
-- Gambar diganti dengan `service-ai-2.png` (mini PC + monitor analytics), dikonversi WebP (quality ~82, lebar 1200px) dan di-host via CDN sebagai aset baru.
-- Aset AI lama (`service-ai-v2.webp`) dihapus dari CDN.
-- Entri "AI Solutions" di daftar Layanan pada `src/components/Footer.tsx` ikut diganti jadi "Solusi AI Anda".
+2. **Pemakaian di UI**
+   - `src/components/Navbar.tsx`: ganti import logo ke aset baru, sesuaikan `width`/`height` intrinsik dengan dimensi baru (tinggi tampil tetap ~32px).
+   - `src/components/Footer.tsx`: ganti import yang sama (tinggi tampil tetap ~40px).
 
-## Verifikasi
-Typecheck + screenshot headless (desktop & mobile) untuk memastikan logo tajam/transparan di navbar-footer dan kartu AI tampil rapi.
+3. **Favicon**
+   - Buat turunan PNG persegi 512×512 dari logo baru → timpa `public/favicon.png` (registrasi di `src/routes/__root.tsx` sudah ada, tidak berubah).
+
+### Verifikasi
+Typecheck + screenshot headless desktop & mobile untuk memastikan logo tajam, transparan, dan tidak gepeng di navbar maupun footer.
