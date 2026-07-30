@@ -47,7 +47,10 @@ export default function Hero() {
           />
           <div className="absolute inset-0 bg-black/55" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
-          <div className="absolute inset-0 flex items-center justify-center px-6">
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-6">
+            <p className="text-center text-xs font-semibold tracking-[0.2em] text-gray-200 uppercase drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] sm:text-sm">
+              PT. Sekawan Global Komunika - Mentarisatria.net.id
+            </p>
             <h1 className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.6)] sm:text-6xl lg:text-7xl">
               Solusi{" "}
               <span className="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent">

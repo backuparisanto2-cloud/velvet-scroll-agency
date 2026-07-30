@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 const NAV_ITEMS = [
   { label: "Tentang", href: "#agency" },
   { label: "Layanan", href: "#services" },
+  { label: "Tools", href: "#tools" },
   { label: "Portfolio", href: "#work" },
   { label: "Event", href: "#events" },
   { label: "Kontak", href: "#contact" },
