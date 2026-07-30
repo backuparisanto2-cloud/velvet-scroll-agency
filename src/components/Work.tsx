@@ -1,45 +1,58 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import imgGombong from "@/assets/img/project-pku-gombong.webp.asset.json";
+import imgPlataran from "@/assets/img/project-plataran.webp.asset.json";
+import imgSiaga from "@/assets/img/project-siaga-medika.webp.asset.json";
+import imgIsp from "@/assets/img/service-isp.webp.asset.json";
+import imgMargono from "@/assets/img/project-margono.webp.asset.json";
+import imgTeras from "@/assets/img/project-teras-sudirman.webp.asset.json";
 
 const PROJECTS = [
   {
     name: "RSU PKU Muhammadiyah Gombong",
     tag: "Implementasi UPS 5000VA Data Center",
     copy: "Pengadaan UPS untuk Server, Network Access Storage, Core Router Data Center",
-    img: "https://www.mentarisatria.net.id/assets/project-pku-gombong-Bs_kQ16z.jpg",
+    img: imgGombong.url,
+    position: "object-center",
   },
   {
     name: "Plataran Makassar",
     tag: "Implementasi Network & Hospitality",
     copy: "Instalasi Network Access Point, IP Camera, UPS & Rack Server",
-    img: "https://plataran.com/wp-content/uploads/2025/08/PLSMM_INTERIOR-MARAJA-4.jpg",
+    img: imgPlataran.url,
+    position: "object-center",
   },
   {
     name: "RS Siaga Medika Banyumas",
     tag: "Implementasi Data Center",
     copy: "Pengadaan Server, Network Access Storage, Core Router Data Center",
-    img: "https://res.cloudinary.com/dk0z4ums3/image/upload/w_720,h_480,c_fill,f_auto/v1635826427/hospital_image/71c66cf19052_rs%20siaga%20medika%20banyumas%201.jpeg.jpg",
+    img: imgSiaga.url,
+    position: "object-center",
   },
   {
     name: "Internet Service Provider Korporat",
     tag: "ISP Solution",
     copy: "Layanan Internet ISP dan Intranet untuk Gymnest Purwokerto",
-    img: "https://www.mentarisatria.net.id/assets/service-isp-CcR3Pu8u.jpg",
+    img: imgIsp.url,
+    position: "object-center",
   },
   {
     name: "RSUD Margono Soekarjo",
     tag: "Managed Service IT Perusahaan",
     copy: "Instalasi dan Perbaikan Kabel Fiber Optic Antar Gedung",
-    img: "https://goalkes-images.s3.ap-southeast-1.amazonaws.com/media/447/ROp80pMiXWx0wiHAIZXj0Pg8V539oO6aRtWXU3Q2.jpg",
+    img: imgMargono.url,
+    position: "object-top",
   },
   {
     name: "Teras Menara Sudirman Jakarta",
     tag: "Access Point, Wifi & Surveillance",
     copy: "Pengadaan Access Point, Wifi, Camera Surveillance",
-    img: "https://www.mentarisatria.net.id/assets/project-teras-sudirman-Cb4mYklj.webp",
+    img: imgTeras.url,
+    position: "object-center",
   },
 ];
+
 
 export default function Work() {
   const [active, setActive] = useState(0);
