@@ -14,9 +14,8 @@ function pickSource() {
   if (typeof window === "undefined") return heroVideoLg.url;
   const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
   if (conn?.saveData) return heroVideoSm.url;
-  const cssWidth = Math.max(window.innerWidth, window.innerHeight * 0.6);
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  return cssWidth * dpr <= 900 ? heroVideoSm.url : heroVideoLg.url;
+  return window.innerWidth * dpr <= 820 ? heroVideoSm.url : heroVideoLg.url;
 }
 
 export default function Hero() {
