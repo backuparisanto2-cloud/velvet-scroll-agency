@@ -1,4 +1,5 @@
 import { useT } from "@/i18n/context";
+import { logEvent } from "@/lib/analytics";
 
 const WA_LINK =
   "https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai";
@@ -11,8 +12,10 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.ui.whatsapp}
+      onClick={() => logEvent("whatsapp_click", "Tombol WhatsApp mengambang")}
       className="wa-float fixed right-5 bottom-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] transition-transform duration-200 hover:scale-110 active:scale-95 sm:right-8 sm:bottom-8"
     >
+
       <svg
         viewBox="0 0 32 32"
         aria-hidden="true"
