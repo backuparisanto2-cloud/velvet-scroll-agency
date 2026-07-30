@@ -36,13 +36,14 @@ export default function Services() {
             {t.services.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed font-light text-muted-foreground">
-            Solusi lengkap jasa server dan network enterprise untuk mendukung transformasi digital
-            bisnis Anda
+            {t.services.desc}
           </p>
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map(({ icon: Icon, title, copy, img, position }, i) => (
+          {SERVICES.map(({ icon: Icon, img, position }, i) => {
+            const { title, copy } = t.services.items[i];
+            return (
             <motion.article
               key={title}
               initial={{ opacity: 0, y: 20 }}
@@ -74,7 +75,8 @@ export default function Services() {
               </div>
               <div className="pointer-events-none absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-purple-500/10 blur-[80px]" />
             </motion.article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
