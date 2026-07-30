@@ -1,10 +1,11 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, motion, useInView, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Timer, Users } from "lucide-react";
 
 const STATS = [
-  { value: "200+", label: "Klien Aktif" },
-  { value: "1000+", label: "Project Selesai" },
-  { value: "99.9%", label: "Uptime Guarantee" },
+  { value: 200, suffix: "+", decimals: 0, label: "Klien Aktif" },
+  { value: 1000, suffix: "+", decimals: 0, label: "Project Selesai" },
+  { value: 99.9, suffix: "%", decimals: 1, label: "Uptime Guarantee" },
 ];
 
 const HIGHLIGHTS = [
@@ -25,7 +26,49 @@ const HIGHLIGHTS = [
   },
 ];
 
+function CountUp({
+  value,
+  suffix,
+  decimals,
+  start,
+}: {
+  value: number;
+  suffix: string;
+  decimals: number;
+  start: boolean;
+}) {
+  const reduced = useReducedMotion();
+  const [display, setDisplay] = useState(reduced ? value : 0);
+
+  useEffect(() => {
+    if (!start) return;
+    if (reduced) {
+      setDisplay(value);
+      return;
+    }
+    const controls = animate(0, value, {
+      duration: 1.8,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => setDisplay(v),
+    });
+    return () => controls.stop();
+  }, [start, value, reduced]);
+
+  return (
+    <span>
+      {display.toLocaleString("id-ID", {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}
+      {suffix}
+    </span>
+  );
+}
+
 export default function About() {
+  const statsRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(statsRef, { once: true, margin: "-80px" });
+
   return (
     <section id="agency" className="relative w-full overflow-hidden py-32">
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/5 blur-[120px]" />
@@ -49,11 +92,16 @@ export default function About() {
             IT terbaik
           </p>
 
-          <div className="mt-10 grid grid-cols-3 gap-6">
+          <div ref={statsRef} className="mt-10 grid grid-cols-3 gap-6">
             {STATS.map((s) => (
               <div key={s.label}>
-                <div className="text-3xl font-black tracking-tighter text-white sm:text-4xl">
-                  {s.value}
+                <div className="text-3xl font-black tracking-tighter text-white tabular-nums sm:text-4xl">
+                  <CountUp
+                    value={s.value}
+                    suffix={s.suffix}
+                    decimals={s.decimals}
+                    start={inView}
+                  />
                 </div>
                 <div className="mt-1 text-xs font-light text-gray-400">{s.label}</div>
               </div>

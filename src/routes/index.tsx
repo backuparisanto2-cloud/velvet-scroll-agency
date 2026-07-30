@@ -38,8 +38,8 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <ParallaxSection strength={40}>
-          <Clients />
+        <ParallaxSection strength={70}>
+          <About />
         </ParallaxSection>
         <ParallaxSection strength={70}>
           <Services />
@@ -53,13 +53,14 @@ function Index() {
         <ParallaxSection strength={55}>
           <Events />
         </ParallaxSection>
-        <ParallaxSection strength={70}>
-          <About />
+        <ParallaxSection strength={40}>
+          <Clients />
         </ParallaxSection>
         <ParallaxSection strength={45}>
           <Contact />
         </ParallaxSection>
       </main>
+
       <ParallaxSection strength={35} fade={false}>
         <Footer />
       </ParallaxSection>

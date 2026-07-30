@@ -1,55 +1,71 @@
 import { motion } from "framer-motion";
 import {
-  Activity,
-  DatabaseBackup,
+  ArrowUpRight,
+  BatteryCharging,
+  Cable,
+  Gauge,
+  Globe,
   HardDrive,
-  Router,
-  Server,
-  Shield,
-  Terminal,
+  Radar,
+  ScanSearch,
+  ShieldAlert,
   Wifi,
 } from "lucide-react";
 
 const TOOLS = [
   {
-    icon: Router,
-    name: "Mikrotik & Cisco",
-    copy: "Routing, switching, dan BGP untuk jaringan korporat.",
-  },
-  {
-    icon: Shield,
-    name: "Fortinet & Sonicwall",
-    copy: "Firewall dan keamanan perimeter enterprise.",
-  },
-  {
-    icon: Server,
-    name: "VMware & Proxmox",
-    copy: "Virtualisasi server dan konsolidasi data center.",
-  },
-  {
-    icon: Terminal,
-    name: "Windows Server & Linux",
-    copy: "Administrasi sistem operasi server dan layanan inti.",
+    icon: BatteryCharging,
+    name: "UPS Calculator",
+    copy: "Calculate UPS requirements for your infrastructure",
+    href: "https://mentarisatria.net.id/tools/ups-calculator.php",
   },
   {
     icon: Wifi,
-    name: "Ruckus & Ruijie",
-    copy: "Wireless controller dan access point berkapasitas tinggi.",
+    name: "Wifi Plan",
+    copy: "Plan your wireless network coverage",
+    href: "https://mentarisatria.net.id/tools/wifi-planner/",
   },
   {
-    icon: DatabaseBackup,
-    name: "Veeam Backup",
-    copy: "Backup, replikasi, dan disaster recovery terjadwal.",
+    icon: Cable,
+    name: "Cable Building",
+    copy: "Calculate cable requirements for your project",
+    href: "https://mentarisatria.net.id/tools/cable-calculator/",
   },
   {
-    icon: Activity,
-    name: "Zabbix & Grafana",
-    copy: "Monitoring performa jaringan dan server 24/7.",
+    icon: Globe,
+    name: "Check IP",
+    copy: "Check IP address details and geolocation",
+    href: "https://mentarisatria.net.id/tools/check-ip/",
+  },
+  {
+    icon: ScanSearch,
+    name: "MAC Lookup",
+    copy: "Lookup MAC address vendor information",
+    href: "https://mentarisatria.net.id/tools/mac-lookup/",
+  },
+  {
+    icon: Gauge,
+    name: "Server Perf",
+    copy: "Simulate and test server performance",
+    href: "https://mentarisatria.net.id/tools/server-performance/",
+  },
+  {
+    icon: Radar,
+    name: "Port Scanner",
+    copy: "Scan host for open ports",
+    href: "https://mentarisatria.net.id/tools/port-scanner/",
+  },
+  {
+    icon: ShieldAlert,
+    name: "Pen-Test",
+    copy: "Penetration testing tools suite",
+    href: "https://mentarisatria.net.id/tools/pen-test/",
   },
   {
     icon: HardDrive,
-    name: "HPE & Dell Storage",
-    copy: "Storage enterprise, SAN, dan upgrade kapasitas.",
+    name: "RAID Calc",
+    copy: "Calculate RAID storage configurations",
+    href: "https://mentarisatria.net.id/tools/raid-calculator/",
   },
 ];
 
@@ -68,35 +84,48 @@ export default function Tools() {
             Tools &amp; Teknologi
           </span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-white sm:text-5xl">
-            Tools yang Kami Gunakan
+            Network Tools
           </h2>
           <p className="mt-4 text-base leading-relaxed font-light text-gray-400">
-            Perangkat dan platform kelas enterprise yang kami andalkan untuk membangun serta
-            merawat infrastruktur IT klien
+            Professional IT utilities at your fingertips
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {TOOLS.map(({ icon: Icon, name, copy }, i) => (
-            <motion.article
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
+          {TOOLS.map(({ icon: Icon, name, copy, href }, i) => (
+            <motion.a
               key={name}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: (i % 4) * 0.07 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/25"
+              transition={{ duration: 0.7, delay: (i % 3) * 0.07 }}
+              className="group relative block overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/25"
             >
-              <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/15 bg-white/5">
-                <Icon className="text-white" size={20} aria-hidden="true" />
+              <div className="flex items-start justify-between gap-3">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-white/15 bg-white/5">
+                  <Icon className="text-white" size={20} aria-hidden="true" />
+                </div>
+                <ArrowUpRight
+                  size={16}
+                  className="shrink-0 text-gray-500 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white"
+                  aria-hidden="true"
+                />
               </div>
               <h3 className="mt-5 text-base leading-snug font-black tracking-tight text-white">
                 {name}
               </h3>
               <p className="mt-2 text-sm leading-relaxed font-light text-gray-400">{copy}</p>
               <div className="pointer-events-none absolute -top-16 -right-16 h-36 w-36 rounded-full bg-blue-500/10 blur-[70px] transition-opacity duration-500 group-hover:bg-blue-500/20" />
-            </motion.article>
+            </motion.a>
           ))}
         </div>
+
+        <p className="mt-8 text-center text-xs font-light text-gray-500">
+          Hover over any tool to learn more
+        </p>
       </div>
     </section>
   );

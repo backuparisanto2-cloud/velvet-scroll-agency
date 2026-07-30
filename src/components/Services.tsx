@@ -1,36 +1,54 @@
 import { motion } from "framer-motion";
-import { Cloud, Cpu, Network, Server, Wrench } from "lucide-react";
+import { BrainCircuit, Cloud, Cpu, Network, Server, Wrench } from "lucide-react";
+import imgServer from "@/assets/img/service-server.webp.asset.json";
+import imgNetwork from "@/assets/img/service-network.webp.asset.json";
+import imgDevices from "@/assets/img/service-devices.webp.asset.json";
+import imgManaged from "@/assets/img/service-managed.webp.asset.json";
+import imgIsp from "@/assets/img/service-isp.webp.asset.json";
+import imgAi from "@/assets/img/service-ai.webp.asset.json";
 
 const SERVICES = [
   {
     icon: Server,
     title: "Pengadaan Server/Part/Upgrade & Data Center",
     copy: "Solusi server enterprise dan data center yang aman, scalable, dan terpercaya untuk kebutuhan bisnis Anda.",
-    img: "https://www.mentarisatria.net.id/assets/service-server-D463EoSo.jpg",
+    img: imgServer.url,
+    position: "object-center",
   },
   {
     icon: Network,
     title: "Network & Router Enterprise",
     copy: "Implementasi jaringan dan router enterprise berkualitas tinggi untuk konektivitas optimal perusahaan.",
-    img: "https://www.mentarisatria.net.id/assets/service-network-DjysASeH.jpg",
+    img: imgNetwork.url,
+    position: "object-center",
   },
   {
     icon: Cpu,
     title: "Pengadaan Perangkat IT",
     copy: "Penyediaan perangkat IT terlengkap untuk kebutuhan korporasi, instansi pemerintah, dan pendidikan.",
-    img: "https://www.mentarisatria.net.id/assets/service-devices-CGNJJD3a.jpg",
+    img: imgDevices.url,
+    position: "object-center",
   },
   {
     icon: Wrench,
     title: "Managed Service IT",
     copy: "Layanan pengelolaan infrastruktur IT profesional dengan SLA terjamin untuk operasional bisnis yang lancar.",
-    img: "https://www.mentarisatria.net.id/assets/service-managed-CYeiu6Nh.jpg",
+    img: imgManaged.url,
+    position: "object-top",
   },
   {
     icon: Cloud,
     title: "Internet Service Provider (ISP)",
     copy: "Layanan internet dedicated berkecepatan tinggi dan stabil untuk perusahaan dan korporasi.",
-    img: "https://www.mentarisatria.net.id/assets/service-isp-CcR3Pu8u.jpg",
+    img: imgIsp.url,
+    position: "object-center",
+  },
+  {
+    icon: BrainCircuit,
+    title: "AI Solutions",
+    copy: "Solusi untuk pengadaan AI Based Hardware, AI Training, Consulting & Pembuatan Aplikasi.",
+    img: imgAi.url,
+    position: "object-center",
   },
 ];
 
@@ -58,21 +76,24 @@ export default function Services() {
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map(({ icon: Icon, title, copy, img }, i) => (
+          {SERVICES.map(({ icon: Icon, title, copy, img, position }, i) => (
             <motion.article
               key={title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: i * 0.08 }}
+              transition={{ duration: 0.8, delay: (i % 3) * 0.08 }}
               className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md transition-colors hover:border-white/20"
             >
-              <div className="relative h-44 w-full overflow-hidden">
+              <div className="relative aspect-[16/10] w-full overflow-hidden">
                 <img
                   src={img}
                   alt={title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  decoding="async"
+                  width={1200}
+                  height={750}
+                  className={`h-full w-full object-cover ${position} transition-transform duration-700 group-hover:scale-105`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c1128] via-[#0c1128]/30 to-transparent" />
                 <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-black/40 backdrop-blur-md">

@@ -1,39 +1,51 @@
-## Tujuan
+## 1. Layanan: tambah "AI Solutions" — `src/components/Services.tsx`
 
-1. Tambah section baru **Tools** (teknologi/tools yang dipakai).
-2. Setiap section punya **animasi parallax framer-motion yang smooth**.
-3. Di Hero, tepat di atas judul "Solusi Infrastruktur IT", tambah baris teks lebih kecil: **PT. SEKAWAN GLOBAL KOMUNIKA - Mentarisatria.net.id**.
+Kartu ke-6:
+- Judul: **AI Solutions**
+- Keterangan: "Solusi untuk pengadaan AI Based Hardware, AI Training, Consulting & Pembuatan Aplikasi."
+- Ikon lucide `BrainCircuit`, gambar header bertema AI/GPU server (di-generate agar konsisten dengan kartu lain, format WebP).
 
-## 1. Section Tools baru — `src/components/Tools.tsx`
+## 2. Angka statistik dengan animasi count-up — `src/components/About.tsx`
 
-Grid kartu glass (2 kolom mobile, 3–4 kolom desktop) berisi tools/teknologi yang digunakan, tiap kartu: ikon lucide + nama + satu baris keterangan singkat. Isi mengikuti stack infrastruktur perusahaan, misalnya: Mikrotik & Cisco Routing, Fortinet Firewall, VMware Virtualization, Windows Server & Linux, Ruckus/Ruijie Wireless, Veeam Backup, Zabbix Monitoring, UniFi Controller.
+Hook kecil `useCountUp` (framer-motion `useMotionValue` + `animate`, dipicu `useInView`, sekali jalan):
+- 200+ → menghitung 0→200, 1000+ → 0→1000, 99.9% → 0→99.9 (satu desimal).
+- Suffix `+` / `%` dipertahankan, `prefers-reduced-motion` → langsung tampil nilai akhir.
 
-- Eyebrow "Tools & Teknologi", judul "Tools yang Kami Gunakan", subjudul singkat.
-- Hover: border menyala + lift halus, konsisten dengan Services.
-- Dipasang di `src/routes/index.tsx` setelah `Services`, dan link "Tools" (`#tools`) ditambahkan di Navbar serta Footer.
+## 3. Section Tools → Network Tools asli — `src/components/Tools.tsx`
 
-## 2. Parallax smooth per section — `src/components/ParallaxSection.tsx`
-
-Komponen pembungkus reusable:
-- `useScroll({ target, offset: ["start end", "end start"] })` + `useTransform` untuk `y` (misal 60px → -60px) dan `opacity` masuk-keluar halus.
-- `useSpring` (stiffness rendah, damping tinggi) agar gerakan tidak patah-patah.
-- `useReducedMotion` → parallax dimatikan bila user minta reduced motion.
-- Intensitas bisa diatur lewat prop `strength` supaya tiap section beda kedalaman (heading bergerak lebih jauh daripada konten).
-
-Diterapkan ke: Clients, Services, Tools, Work, Events, About, Contact, Footer CTA. Hero tidak diubah (sudah punya efek scroll sendiri). Layout, ukuran, dan urutan konten tidak berubah — hanya transform.
-
-## 3. Hero eyebrow — `src/components/Hero.tsx`
-
-Di kedua layer (layer sketsa dan layer video reveal), tambah baris di atas judul:
+Ganti daftar tools generik dengan 9 utilitas dari mentarisatria.net.id, tiap kartu jadi link `target="_blank" rel="noopener noreferrer"`:
 
 ```text
-PT. SEKAWAN GLOBAL KOMUNIKA - Mentarisatria.net.id
+UPS Calculator  — Calculate UPS requirements for your infrastructure
+Wifi Plan       — Plan your wireless network coverage
+Cable Building  — Calculate cable requirements for your project
+Check IP        — Check IP address details and geolocation
+MAC Lookup      — Lookup MAC address vendor information
+Server Perf     — Simulate and test server performance
+Port Scanner    — Scan host for open ports
+Pen-Test        — Penetration testing tools suite
+RAID Calc       — Calculate RAID storage configurations
 ```
 
-Ukuran lebih kecil dari judul (`text-xs sm:text-sm`, tracking lebar, uppercase, warna gray-200/300 dengan drop-shadow) agar tetap terbaca di atas video. Judul dan animasi clipPath tidak diubah; hanya heading dibungkus flex-col agar eyebrow duduk di atasnya.
+Heading jadi "Network Tools" + subjudul "Professional IT utilities at your fingertips". Ikon lucide per tool, hover glow tetap.
 
-## Catatan teknis
+## 4. Technology Partners jadi grid logo — `src/components/Clients.tsx`
 
-- Semua parallax pakai transform GPU (`y`/`opacity`) — tidak memicu layout shift.
-- Section tetap `will-change: transform` seperlunya untuk kelancaran di mobile.
-- Verifikasi: typecheck + screenshot headless desktop & mobile pada beberapa posisi scroll.
+Mengikuti attachment: judul di tengah, lalu grid kartu logo (3 kolom mobile, 4–6 kolom desktop) dengan kartu rounded gelap semi-transparan. Logo pakai URL resmi dari situs sumber (Cisco, Gigabyte, Ruijie, Dell, HP, Ruckus, Netviel, WPS, Fortinet, Sangfor, APJII, APC), `object-contain` + tinggi seragam supaya tidak ada kartu kosong/terpotong, plus filter grayscale/brightness agar semua logo terbaca di background gelap dan berwarna penuh saat hover. Marquee lama dihapus.
+
+## 5. Urutan section — `src/routes/index.tsx`
+
+```text
+Hero → Tentang Kami → Layanan → Network Tools → Portfolio → Event → Technology Partners → Kontak → Footer
+```
+
+Semua tetap dibungkus `ParallaxSection`; urutan link Navbar & Footer disesuaikan.
+
+## 6. Optimasi & crop gambar
+
+- Semua `<img>` konten diberi `width`/`height`, `loading="lazy"`, `decoding="async"`.
+- Gambar remote dari mentarisatria.net.id yang JPG di-download, dikonversi ke WebP (quality ~82) lewat ffmpeg, lalu di-host via Lovable Assets CDN sehingga ukuran turun signifikan.
+- Rasio kartu dibakukan (`aspect-[16/10]` untuk Services/Events, `aspect-[4/3]` untuk Work) dengan `object-cover object-center` — beberapa gambar yang subjeknya tidak di tengah diberi `object-top` agar crop tidak memotong bagian penting.
+
+## Verifikasi
+Typecheck + screenshot headless desktop & mobile untuk cek grid partner, crop gambar, dan animasi count.
