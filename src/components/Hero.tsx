@@ -76,14 +76,36 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/75" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(12,17,40,0.55)_0%,rgba(12,17,40,0.15)_45%,rgba(12,17,40,0.7)_100%)]" />
           <div className="absolute inset-0 backdrop-saturate-125 backdrop-contrast-110 sm:backdrop-blur-[1px]" />
-          <div className="absolute inset-0 flex items-center justify-center px-6">
-            <p className="max-w-4xl text-center text-5xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)] sm:text-7xl lg:text-8xl">
-              Build the{" "}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6">
+            <p className="max-w-5xl text-center text-4xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)] sm:text-6xl lg:text-7xl">
+              Server, Internet &amp;{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                Reality
+                Network Terpercaya
               </span>
             </p>
+            <p className="max-w-2xl text-center text-sm leading-relaxed font-light text-gray-200 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] sm:text-base">
+              PT Sekawan Global Komunika - Perusahaan IT Indonesia yang menghadirkan layanan jasa
+              infrastruktur IT, Pengadaan Server/Part dan Networking, Data Center, dan Internet
+              Service Provider untuk korporasi anda
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-white px-7 py-3.5 text-sm font-bold text-black transition-transform duration-200 hover:scale-105 active:scale-95"
+              >
+                Konsultasi Gratis
+              </a>
+              <a
+                href="#contact"
+                className="rounded-full border border-white/25 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-transform duration-200 hover:scale-105 active:scale-95"
+              >
+                Hubungi Kami
+              </a>
+            </div>
           </div>
+
         </motion.div>
 
         <motion.div
