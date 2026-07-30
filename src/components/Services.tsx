@@ -6,53 +6,19 @@ import imgDevices from "@/assets/img/service-devices.webp.asset.json";
 import imgManaged from "@/assets/img/service-managed.webp.asset.json";
 import imgIsp from "@/assets/img/service-isp.webp.asset.json";
 import imgAi from "@/assets/img/service-ai-4.webp.asset.json";
+import { useT } from "@/i18n/context";
 
 const SERVICES = [
-  {
-    icon: Server,
-    title: "Pengadaan Server/Part/Upgrade & Data Center",
-    copy: "Solusi server enterprise dan data center yang aman, scalable, dan terpercaya untuk kebutuhan bisnis Anda.",
-    img: imgServer.url,
-    position: "object-center",
-  },
-  {
-    icon: Network,
-    title: "Network & Router Enterprise",
-    copy: "Implementasi jaringan dan router enterprise berkualitas tinggi untuk konektivitas optimal perusahaan.",
-    img: imgNetwork.url,
-    position: "object-center",
-  },
-  {
-    icon: Cpu,
-    title: "Pengadaan Perangkat IT",
-    copy: "Penyediaan perangkat IT terlengkap untuk kebutuhan korporasi, instansi pemerintah, dan pendidikan.",
-    img: imgDevices.url,
-    position: "object-center",
-  },
-  {
-    icon: Wrench,
-    title: "Managed Service IT",
-    copy: "Layanan pengelolaan infrastruktur IT profesional dengan SLA terjamin untuk operasional bisnis yang lancar.",
-    img: imgManaged.url,
-    position: "object-top",
-  },
-  {
-    icon: Cloud,
-    title: "Internet Service Provider (ISP)",
-    copy: "Layanan internet dedicated berkecepatan tinggi dan stabil untuk perusahaan dan korporasi.",
-    img: imgIsp.url,
-    position: "object-center",
-  },
-  {
-    icon: BrainCircuit,
-    title: "Solusi AI Anda",
-    copy: "Solusi untuk pengadaan AI Based Hardware, AI Training, Implementasi, Consulting & Pembuatan Aplikasi.",
-    img: imgAi.url,
-    position: "object-center",
-  },
+  { icon: Server, img: imgServer.url, position: "object-center" },
+  { icon: Network, img: imgNetwork.url, position: "object-center" },
+  { icon: Cpu, img: imgDevices.url, position: "object-center" },
+  { icon: Wrench, img: imgManaged.url, position: "object-top" },
+  { icon: Cloud, img: imgIsp.url, position: "object-center" },
+  { icon: BrainCircuit, img: imgAi.url, position: "object-center" },
 ];
 
 export default function Services() {
+  const t = useT();
   return (
     <section id="services" className="relative w-full py-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
@@ -64,10 +30,10 @@ export default function Services() {
           className="mb-16 max-w-2xl"
         >
           <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
-            Layanan Kami
+            {t.services.eyebrow}
           </span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
-            Layanan Infrastruktur IT Profesional
+            {t.services.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed font-light text-muted-foreground">
             Solusi lengkap jasa server dan network enterprise untuk mendukung transformasi digital
