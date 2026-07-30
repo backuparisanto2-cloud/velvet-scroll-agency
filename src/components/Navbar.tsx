@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import ThemeToggle, { LangSwitch } from "@/components/ThemeToggle";
 import { useT } from "@/i18n/context";
+import { logEvent } from "@/lib/analytics";
 
 const NAV_KEYS = [
   { key: "about", href: "#agency" },
@@ -74,10 +75,12 @@ export default function Navbar() {
             href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => logEvent("cta_click", "Navbar CTA (desktop)")}
             className="hidden rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background transition-transform duration-200 hover:scale-105 active:scale-95 md:inline-block"
           >
             {t.nav.cta}
           </a>
+
 
           <div className="flex items-center gap-2 md:hidden">
             <LangSwitch />
