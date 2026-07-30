@@ -65,6 +65,8 @@ function Index() {
       <ParallaxSection strength={35} fade={false}>
         <Footer />
       </ParallaxSection>
+
+      <WhatsAppButton />
     </div>
   );
 }
