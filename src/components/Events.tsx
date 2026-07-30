@@ -1,26 +1,34 @@
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
+import event2022 from "@/assets/img/event-2022.webp.asset.json";
+import eventHpe from "@/assets/img/event-hpe.webp.asset.json";
+import eventDell from "@/assets/img/event-dell.webp.asset.json";
+import eventRuijie from "@/assets/img/event-ruijie.webp.asset.json";
 
 const EVENTS = [
   {
     title: "Optimized Network Huawei, Infoblox & Forcepoint 2022",
     place: "Purwokerto, 16 Juni 2022",
-    img: "https://i.ibb.co.com/Z65J2fnZ/event2022.jpg",
+    img: event2022.url,
+    position: "object-center",
   },
   {
     title: "Data First Modernization & Ransomware Resilience with HPE Solution",
     place: "Wonosobo, 24 Januari 2024",
-    img: "https://i.ibb.co.com/pjSVqMbP/284cbbaf040f2515f2052de0ca667d5d.jpg",
+    img: eventHpe.url,
+    position: "object-center",
   },
   {
     title: "IT Transformation For Healthcare Solution - DELL Technologies",
     place: "Purwokerto, 15 Februari 2023",
-    img: "https://mentarisatria.net.id/Dell_event/gallery/images/foto36.jpeg",
+    img: eventDell.url,
+    position: "object-top",
   },
   {
     title: "Nextgen IT Solutions For Your Organization with Ruijie, Sonicwall & Robustel",
     place: "Cilacap, 21 Agustus 2024",
-    img: "https://i.ibb.co.com/jkcb5Cgj/179128032e0e8eaa26688aa8fd94de44.jpg",
+    img: eventRuijie.url,
+    position: "object-center",
   },
 ];
 
@@ -53,12 +61,15 @@ export default function Events() {
               transition={{ duration: 0.8, delay: i * 0.08 }}
               className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md transition-colors hover:border-white/20"
             >
-              <div className="h-52 w-full overflow-hidden">
+              <div className="aspect-[16/10] w-full overflow-hidden">
                 <img
                   src={e.img}
                   alt={e.title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  decoding="async"
+                  width={1200}
+                  height={750}
+                  className={`h-full w-full object-cover ${e.position} transition-transform duration-700 group-hover:scale-105`}
                 />
               </div>
               <div className="p-7">
