@@ -27,14 +27,14 @@ export default function Navbar() {
     <header className="fixed top-6 left-0 z-50 w-full px-4 sm:px-6 lg:px-8">
       <motion.nav
         style={{ background, backdropFilter }}
-        className={`mx-auto flex max-w-5xl flex-col border border-white/10 px-5 py-3 transition-[border-radius] duration-300 ${
+        className={`mx-auto flex max-w-5xl flex-col border border-foreground/10 px-5 py-3 transition-[border-radius] duration-300 ${
           open ? "rounded-3xl" : "rounded-full"
         }`}
       >
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 md:flex md:justify-between">
           <a
             href="#top"
-            className="flex min-w-0 items-center gap-2 text-base sm:gap-2.5 sm:text-lg font-black tracking-tighter text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white/60"
+            className="flex min-w-0 items-center gap-2 text-base sm:gap-2.5 sm:text-lg font-black tracking-tighter text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground/60"
           >
             <Logo
               priority
@@ -54,7 +54,7 @@ export default function Navbar() {
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="text-sm font-light text-gray-300 transition-colors hover:text-white"
+                  className="text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.label}
                 </a>
@@ -66,7 +66,7 @@ export default function Navbar() {
             href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-full bg-white px-5 py-2.5 text-sm font-bold text-black transition-transform duration-200 hover:scale-105 active:scale-95 md:inline-block"
+            className="hidden rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background transition-transform duration-200 hover:scale-105 active:scale-95 md:inline-block"
           >
             Konsultasi Gratis
           </a>
@@ -76,20 +76,20 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Tutup menu" : "Buka menu"}
             aria-expanded={open}
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/10 text-white md:hidden"
+            className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-foreground/10 text-foreground md:hidden"
           >
             {open ? <X size={17} /> : <Menu size={17} />}
           </button>
         </div>
 
         {open && (
-          <ul className="mt-4 flex flex-col gap-3 border-t border-white/10 pt-4 md:hidden">
+          <ul className="mt-4 flex flex-col gap-3 border-t border-foreground/10 pt-4 md:hidden">
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block text-sm font-light text-gray-300 transition-colors hover:text-white"
+                  className="block text-sm font-light text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {item.label}
                 </a>
@@ -100,7 +100,7 @@ export default function Navbar() {
                 href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-block rounded-full bg-white px-5 py-2.5 text-sm font-bold text-black"
+                className="mt-1 inline-block rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background"
               >
                 Konsultasi Gratis
               </a>

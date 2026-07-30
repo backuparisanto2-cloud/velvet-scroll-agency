@@ -43,10 +43,10 @@ export default function Events() {
           transition={{ duration: 0.8 }}
           className="mb-14 max-w-2xl"
         >
-          <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
+          <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
             Kegiatan
           </span>
-          <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-white sm:text-5xl">
+          <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
             Event &amp; Kegiatan
           </h2>
         </motion.div>
@@ -59,7 +59,7 @@ export default function Events() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: i * 0.08 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md transition-colors hover:border-white/20"
+              className="group relative overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/5 backdrop-blur-md transition-colors hover:border-foreground/20"
             >
               <div className="aspect-[16/10] w-full overflow-hidden">
                 <img
@@ -73,10 +73,10 @@ export default function Events() {
                 />
               </div>
               <div className="p-7">
-                <h3 className="text-lg leading-snug font-black tracking-tighter text-white">
+                <h3 className="text-lg leading-snug font-black tracking-tighter text-foreground">
                   {e.title}
                 </h3>
-                <p className="mt-3 flex items-center gap-2 text-sm font-light text-gray-400">
+                <p className="mt-3 flex items-center gap-2 text-sm font-light text-muted-foreground">
                   <CalendarDays size={15} aria-hidden="true" />
                   {e.place}
                 </p>

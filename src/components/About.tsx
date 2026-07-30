@@ -80,13 +80,13 @@ export default function About() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
         >
-          <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
+          <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
             Tentang Kami
           </span>
-          <h2 className="mt-4 text-4xl leading-[1.1] font-black tracking-tighter text-white sm:text-5xl lg:text-6xl">
+          <h2 className="mt-4 text-4xl leading-[1.1] font-black tracking-tighter text-foreground sm:text-5xl lg:text-6xl">
             Dipercaya oleh Ratusan Perusahaan
           </h2>
-          <p className="mt-6 text-base leading-relaxed font-light text-gray-300">
+          <p className="mt-6 text-base leading-relaxed font-light text-muted-foreground">
             Kami telah melayani berbagai sektor industri termasuk korporasi swasta, instansi
             pemerintah, lembaga pendidikan, dan organisasi nasional dengan solusi jasa infrastruktur
             IT terbaik
@@ -95,7 +95,7 @@ export default function About() {
           <div ref={statsRef} className="mt-10 grid grid-cols-3 gap-6">
             {STATS.map((s) => (
               <div key={s.label}>
-                <div className="text-3xl font-black tracking-tighter text-white tabular-nums sm:text-4xl">
+                <div className="text-3xl font-black tracking-tighter text-foreground tabular-nums sm:text-4xl">
                   <CountUp
                     value={s.value}
                     suffix={s.suffix}
@@ -103,7 +103,7 @@ export default function About() {
                     start={inView}
                   />
                 </div>
-                <div className="mt-1 text-xs font-light text-gray-400">{s.label}</div>
+                <div className="mt-1 text-xs font-light text-muted-foreground">{s.label}</div>
               </div>
             ))}
           </div>
@@ -116,12 +116,12 @@ export default function About() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="flex flex-col justify-center gap-6"
         >
-          <p className="text-base leading-relaxed font-light text-gray-300">
+          <p className="text-base leading-relaxed font-light text-muted-foreground">
             PT Sekawan Global Komunika adalah perusahaan IT Indonesia terkemuka yang bergerak di
             bidang Internet Service Provider, Project Infrastruktur IT dengan pengalaman lebih dari
             dua dekade melayani berbagai sektor industri.
           </p>
-          <p className="text-base leading-relaxed font-light text-gray-400">
+          <p className="text-base leading-relaxed font-light text-muted-foreground">
             Kami mengkhususkan diri dalam penyediaan solusi jasa infrastruktur IT lengkap meliputi
             Server, Network, Router, Data Center, Pengadaan Perangkat IT, Managed Service, serta
             layanan Internet Service Provider (ISP) untuk perusahaan, instansi pemerintah, institusi
@@ -132,14 +132,14 @@ export default function About() {
             {HIGHLIGHTS.map(({ icon: Icon, title, copy }) => (
               <div
                 key={title}
-                className="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-md"
+                className="flex gap-4 rounded-2xl border border-foreground/10 bg-foreground/5 p-5 backdrop-blur-md"
               >
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 bg-white/5 text-white">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-foreground/10 bg-foreground/5 text-foreground">
                   <Icon size={18} aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="text-base font-black tracking-tighter text-white">{title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed font-light text-gray-400">{copy}</p>
+                  <h3 className="text-base font-black tracking-tighter text-foreground">{title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed font-light text-muted-foreground">{copy}</p>
                 </div>
               </div>
             ))}

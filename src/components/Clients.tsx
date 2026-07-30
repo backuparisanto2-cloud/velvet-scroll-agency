@@ -38,10 +38,10 @@ export default function Clients() {
           transition={{ duration: 0.8 }}
           className="mb-12 flex flex-col items-center gap-4"
         >
-          <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-bold tracking-widest text-gray-300 uppercase backdrop-blur-md">
+          <span className="rounded-full border border-foreground/10 bg-foreground/5 px-4 py-1.5 text-xs font-bold tracking-widest text-muted-foreground uppercase backdrop-blur-md">
             Partner
           </span>
-          <h2 className="text-center text-3xl font-black tracking-tighter text-white sm:text-4xl">
+          <h2 className="text-center text-3xl font-black tracking-tighter text-foreground sm:text-4xl">
             Technology{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               Partners
@@ -57,7 +57,7 @@ export default function Clients() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: (i % 6) * 0.06 }}
-              className="group grid aspect-square place-items-center rounded-3xl border border-white/10 bg-white/[0.04] p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.08]"
+              className="group grid aspect-square place-items-center rounded-3xl border border-foreground/10 bg-foreground/[0.04] p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-foreground/25 hover:bg-foreground/[0.08]"
             >
               <img
                 src={p.src}

@@ -63,13 +63,13 @@ export default function Services() {
           transition={{ duration: 0.8 }}
           className="mb-16 max-w-2xl"
         >
-          <span className="text-xs font-bold tracking-widest text-gray-400 uppercase">
+          <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
             Layanan Kami
           </span>
-          <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-white sm:text-5xl">
+          <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
             Layanan Infrastruktur IT Profesional
           </h2>
-          <p className="mt-4 text-base leading-relaxed font-light text-gray-400">
+          <p className="mt-4 text-base leading-relaxed font-light text-muted-foreground">
             Solusi lengkap jasa server dan network enterprise untuk mendukung transformasi digital
             bisnis Anda
           </p>
@@ -83,7 +83,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: (i % 3) * 0.08 }}
-              className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md transition-colors hover:border-white/20"
+              className="group relative flex flex-col overflow-hidden rounded-3xl border border-foreground/10 bg-foreground/5 backdrop-blur-md transition-colors hover:border-foreground/20"
             >
               <div className="relative aspect-[16/10] w-full overflow-hidden">
                 <img
@@ -95,16 +95,16 @@ export default function Services() {
                   height={750}
                   className={`h-full w-full object-cover ${position} transition-transform duration-700 group-hover:scale-105`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0c1128] via-[#0c1128]/30 to-transparent" />
-                <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-black/40 backdrop-blur-md">
-                  <Icon className="text-white" size={20} aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                <div className="absolute top-3 right-3 grid h-11 w-11 place-items-center rounded-full border border-foreground/15 bg-black/40 backdrop-blur-md">
+                  <Icon className="text-foreground" size={20} aria-hidden="true" />
                 </div>
               </div>
               <div className="flex flex-1 flex-col p-7">
-                <h3 className="text-xl leading-snug font-black tracking-tighter text-white">
+                <h3 className="text-xl leading-snug font-black tracking-tighter text-foreground">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed font-light text-gray-400">{copy}</p>
+                <p className="mt-3 text-sm leading-relaxed font-light text-muted-foreground">{copy}</p>
               </div>
               <div className="pointer-events-none absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-purple-500/10 blur-[80px]" />
             </motion.article>

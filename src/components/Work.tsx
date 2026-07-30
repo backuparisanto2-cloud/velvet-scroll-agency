@@ -68,10 +68,10 @@ export default function Work() {
           className="mb-12 flex flex-col gap-5 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end sm:gap-4"
         >
           <div className="min-w-0">
-            <h2 className="text-4xl font-black tracking-tighter text-white sm:text-5xl">
+            <h2 className="text-4xl font-black tracking-tighter text-foreground sm:text-5xl">
               Portfolio Project
             </h2>
-            <p className="mt-3 text-base font-light text-gray-400">
+            <p className="mt-3 text-base font-light text-muted-foreground">
               Berbagai project infrastruktur IT yang telah kami selesaikan dengan sukses
             </p>
           </div>
@@ -79,7 +79,7 @@ export default function Work() {
             href="https://wa.me/6281212951737?text=Hai%20Mentarisatria%20saya%20ingin%20berkonsultasi%20mengenai"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-gray-300 transition-colors hover:text-white"
+            className="group inline-flex shrink-0 items-center gap-1 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Diskusikan Project Anda
             <ArrowUpRight
@@ -100,7 +100,7 @@ export default function Work() {
                 tabIndex={0}
                 animate={{ flexGrow: isActive ? 4 : 0.8 }}
                 transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/60 md:h-full md:basis-0"
+                className="group relative h-72 min-w-0 shrink cursor-pointer overflow-hidden rounded-3xl border border-foreground/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/60 md:h-full md:basis-0"
               >
                 <img
                   src={p.img}
@@ -117,16 +117,16 @@ export default function Work() {
                   <span className="block text-[10px] font-bold tracking-[0.18em] text-blue-300 uppercase sm:text-[11px]">
                     {p.tag}
                   </span>
-                  <h3 className="mt-2 text-base leading-snug font-black tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
+                  <h3 className="mt-2 text-base leading-snug font-black tracking-tight text-foreground drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] sm:text-xl">
                     {p.name}
                   </h3>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-gray-200 md:hidden">
+                  <p className="mt-2 max-w-md text-sm leading-relaxed font-light text-muted-foreground md:hidden">
                     {p.copy}
                   </p>
                   <motion.p
                     animate={{ opacity: isActive ? 1 : 0 }}
                     transition={{ duration: 0.4 }}
-                    className="mt-2 hidden max-w-md text-sm leading-relaxed font-light text-gray-200 md:block"
+                    className="mt-2 hidden max-w-md text-sm leading-relaxed font-light text-muted-foreground md:block"
                     style={{ pointerEvents: isActive ? "auto" : "none" }}
                   >
                     {p.copy}
