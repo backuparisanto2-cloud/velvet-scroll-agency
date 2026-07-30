@@ -35,7 +35,10 @@ export default function Work() {
         >
           <div className="min-w-0">
             <h2 className="text-4xl font-black tracking-tighter text-foreground sm:text-5xl">
-              {t.work.title}
+              {t.work.title}{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                {t.work.titleAccent}
+              </span>
             </h2>
             <p className="mt-3 text-base font-light text-muted-foreground">
               {t.work.desc}
@@ -76,10 +79,10 @@ export default function Work() {
                   decoding="async"
                   width={1200}
                   height={800}
-                  className={`absolute inset-0 h-full w-full object-cover ${p.position} transition-transform duration-700 group-hover:scale-105`}
+                  className={`absolute inset-0 h-full w-full object-cover ${p.position} transition-transform duration-700 group-hover:scale-105 contrast-[1.06] saturate-[1.05] [image-rendering:auto]`}
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/50 to-black/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 min-w-0 p-5 sm:p-6">
                   <span className="block text-[10px] font-bold tracking-[0.18em] text-blue-300 uppercase sm:text-[11px]">
                     {p.tag}

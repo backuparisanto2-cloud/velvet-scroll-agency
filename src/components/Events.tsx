@@ -29,7 +29,10 @@ export default function Events() {
             {t.events.eyebrow}
           </span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
-            {t.events.title}
+            {t.events.title}{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {t.events.titleAccent}
+            </span>
           </h2>
         </motion.div>
 

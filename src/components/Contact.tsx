@@ -21,7 +21,10 @@ export default function Contact() {
         >
           <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">{t.contact.eyebrow}</span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
-            {t.contact.title}
+            {t.contact.title}{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {t.contact.titleAccent}
+            </span>
           </h2>
           <p className="mt-4 text-base font-light text-muted-foreground">
             {t.contact.desc}

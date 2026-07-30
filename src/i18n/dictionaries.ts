@@ -26,7 +26,8 @@ const id = {
   },
   about: {
     eyebrow: "Tentang Kami",
-    title: "Dipercaya oleh Ratusan Perusahaan",
+    title: "Dipercaya oleh Ratusan",
+    titleAccent: "Perusahaan",
     lead: "Kami telah melayani berbagai sektor industri termasuk korporasi swasta, instansi pemerintah, lembaga pendidikan, dan organisasi nasional dengan solusi jasa infrastruktur IT terbaik",
     stats: ["Klien Aktif", "Project Selesai", "Uptime Guarantee"],
     p1: "PT Sekawan Global Komunika adalah perusahaan IT Indonesia terkemuka yang bergerak di bidang Internet Service Provider, Project Infrastruktur IT dengan pengalaman lebih dari dua dekade melayani berbagai sektor industri.",
@@ -48,7 +49,8 @@ const id = {
   },
   services: {
     eyebrow: "Layanan Kami",
-    title: "Layanan Infrastruktur IT Profesional",
+    title: "Layanan",
+    titleAccent: "Infrastruktur IT Profesional",
     desc: "Solusi lengkap jasa server dan network enterprise untuk mendukung transformasi digital bisnis Anda",
     items: [
       {
@@ -79,7 +81,8 @@ const id = {
   },
   tools: {
     eyebrow: "Tools & Teknologi",
-    title: "Network Tools",
+    title: "Network",
+    titleAccent: "Tools",
     desc: "Perangkat bantu IT profesional dalam genggaman Anda",
     hint: "Arahkan kursor pada tool untuk info lebih lanjut",
     items: [
@@ -95,7 +98,8 @@ const id = {
     ],
   },
   work: {
-    title: "Portfolio Project",
+    title: "Portfolio",
+    titleAccent: "Project",
     desc: "Berbagai project infrastruktur IT yang telah kami selesaikan dengan sukses",
     cta: "Diskusikan Project Anda",
     items: [
@@ -133,7 +137,8 @@ const id = {
   },
   events: {
     eyebrow: "Kegiatan",
-    title: "Event & Kegiatan",
+    title: "Event &",
+    titleAccent: "Kegiatan",
     items: [
       {
         title: "Optimized Network Huawei, Infoblox & Forcepoint 2022",
@@ -160,7 +165,8 @@ const id = {
   },
   contact: {
     eyebrow: "Kontak",
-    title: "Hubungi Kami",
+    title: "Hubungi",
+    titleAccent: "Kami",
     desc: "Kami siap membantu kebutuhan infrastruktur IT Anda",
     addressTitle: "Alamat Kantor",
     phoneTitle: "Telepon",
@@ -228,7 +234,8 @@ const en: Dict = {
   },
   about: {
     eyebrow: "About Us",
-    title: "Trusted by Hundreds of Companies",
+    title: "Trusted by Hundreds of",
+    titleAccent: "Companies",
     lead: "We have served a wide range of industries including private corporations, government agencies, educational institutions, and national organisations with best-in-class IT infrastructure services",
     stats: ["Active Clients", "Projects Delivered", "Uptime Guarantee"],
     p1: "PT Sekawan Global Komunika is a leading Indonesian IT company operating as an Internet Service Provider and IT infrastructure project partner, with more than two decades of experience across many industries.",
@@ -250,7 +257,8 @@ const en: Dict = {
   },
   services: {
     eyebrow: "Our Services",
-    title: "Professional IT Infrastructure Services",
+    title: "Professional",
+    titleAccent: "IT Infrastructure Services",
     desc: "Complete enterprise server and network services to support your digital transformation",
     items: [
       {
@@ -281,7 +289,8 @@ const en: Dict = {
   },
   tools: {
     eyebrow: "Tools & Technology",
-    title: "Network Tools",
+    title: "Network",
+    titleAccent: "Tools",
     desc: "Professional IT utilities at your fingertips",
     hint: "Hover over any tool to learn more",
     items: [
@@ -297,7 +306,8 @@ const en: Dict = {
     ],
   },
   work: {
-    title: "Project Portfolio",
+    title: "Project",
+    titleAccent: "Portfolio",
     desc: "A selection of IT infrastructure projects we have successfully delivered",
     cta: "Discuss Your Project",
     items: [
@@ -335,7 +345,8 @@ const en: Dict = {
   },
   events: {
     eyebrow: "Activities",
-    title: "Events & Activities",
+    title: "Events &",
+    titleAccent: "Activities",
     items: [
       {
         title: "Optimized Network Huawei, Infoblox & Forcepoint 2022",
@@ -362,7 +373,8 @@ const en: Dict = {
   },
   contact: {
     eyebrow: "Contact",
-    title: "Get in Touch",
+    title: "Get in",
+    titleAccent: "Touch",
     desc: "We are ready to support your IT infrastructure needs",
     addressTitle: "Office Address",
     phoneTitle: "Phone",

@@ -33,7 +33,10 @@ export default function Services() {
             {t.services.eyebrow}
           </span>
           <h2 className="mt-4 text-4xl leading-tight font-black tracking-tighter text-foreground sm:text-5xl">
-            {t.services.title}
+            {t.services.title}{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              {t.services.titleAccent}
+            </span>
           </h2>
           <p className="mt-4 text-base leading-relaxed font-light text-muted-foreground">
             {t.services.desc}
