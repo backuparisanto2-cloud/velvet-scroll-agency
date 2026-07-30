@@ -74,7 +74,7 @@ export default function Hero() {
           {/* Premium legibility stack: vertical falloff + centre scrim + vignette */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/25 to-black/75" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(12,17,40,0.55)_0%,rgba(12,17,40,0.15)_45%,rgba(12,17,40,0.7)_100%)]" />
-          <div className="absolute inset-0 backdrop-blur-[2px] backdrop-saturate-125 backdrop-contrast-110 sm:backdrop-blur-[1px]" />
+          <div className="absolute inset-0 backdrop-saturate-125 backdrop-contrast-110 sm:backdrop-blur-[1px]" />
           <div className="absolute inset-0 flex items-center justify-center px-6">
             <p className="max-w-4xl text-center text-5xl leading-[1.1] font-black tracking-tighter text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.7)] sm:text-7xl lg:text-8xl">
               Build the{" "}
