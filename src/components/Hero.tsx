@@ -42,10 +42,16 @@ export default function Hero() {
 
         {/* Top layer — realistic reveal */}
         <motion.div style={{ clipPath }} className="absolute inset-0">
-          <motion.img
+          <motion.video
             style={{ scale }}
-            src={REAL_IMG}
-            alt="Photorealistic city skyline at dusk"
+            src={heroVideo.url}
+            poster={REAL_POSTER}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-label="Photorealistic city skyline at dusk"
             className="h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-black/40" />
