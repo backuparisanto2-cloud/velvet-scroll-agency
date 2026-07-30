@@ -5,7 +5,7 @@ import imgNetwork from "@/assets/img/service-network.webp.asset.json";
 import imgDevices from "@/assets/img/service-devices.webp.asset.json";
 import imgManaged from "@/assets/img/service-managed.webp.asset.json";
 import imgIsp from "@/assets/img/service-isp.webp.asset.json";
-import imgAi from "@/assets/img/service-ai-v2.webp.asset.json";
+import imgAi from "@/assets/img/service-ai-3.webp.asset.json";
 
 const SERVICES = [
   {
@@ -45,7 +45,7 @@ const SERVICES = [
   },
   {
     icon: BrainCircuit,
-    title: "AI Solutions",
+    title: "Solusi AI Anda",
     copy: "Solusi untuk pengadaan AI Based Hardware, AI Training, Consulting & Pembuatan Aplikasi.",
     img: imgAi.url,
     position: "object-center",
