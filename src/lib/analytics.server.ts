@@ -128,7 +128,7 @@ export async function insertPageview(data: PageviewInput) {
   const geo = readGeo();
   const ip = readIp();
   const ipGeo = await lookupIpGeo(ip);
-  const { data: row, error } = await supabaseAdmin
+  const { data: row, error } = await db()
     .from("page_visits")
     .insert({
       visitor_id: data.visitorId,
@@ -169,7 +169,7 @@ export async function updateVisit(input: {
   durationSeconds: number;
   scrollDepth: number;
 }) {
-  const { error } = await supabaseAdmin
+  const { error } = await db()
     .from("page_visits")
     .update({ duration_seconds: input.durationSeconds, scroll_depth: input.scrollDepth })
     .eq("id", input.visitId);
@@ -178,7 +178,7 @@ export async function updateVisit(input: {
 }
 
 export async function insertEvent(data: EventInput) {
-  const { error } = await supabaseAdmin.from("visit_events").insert({
+  const { error } = await db().from("visit_events").insert({
     visit_id: data.visitId ?? null,
     visitor_id: data.visitorId,
     session_id: data.sessionId,
@@ -207,7 +207,7 @@ export async function buildStats(days: number) {
   const since = new Date(Date.now() - days * 86400000).toISOString();
 
   const [visitsRes, eventsRes] = await Promise.all([
-    supabaseAdmin
+    db()
       .from("page_visits")
       .select(
         "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, region, isp, asn, ip_address, duration_seconds, scroll_depth",
@@ -215,7 +215,7 @@ export async function buildStats(days: number) {
       .gte("created_at", since)
       .order("created_at", { ascending: false })
       .limit(20000),
-    supabaseAdmin
+    db()
       .from("visit_events")
       .select("event_name, event_label, created_at")
       .gte("created_at", since)
