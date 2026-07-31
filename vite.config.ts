@@ -12,4 +12,20 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Serve every bundled asset from this app's own origin (dev + prod).
+    // Never point at an external CDN base.
+    base: "/",
+    publicDir: "public",
+    // Media types that must be emitted as real files in dist/client/assets.
+    assetsInclude: ["**/*.mp4", "**/*.webm", "**/*.webp", "**/*.avif"],
+    build: {
+      // Keep media as separate files instead of inlining them as data: URLs.
+      assetsInlineLimit: 0,
+      rollupOptions: {
+        // Nothing is treated as an external/remote module: all assets get bundled.
+        external: [],
+      },
+    },
+  },
 });
