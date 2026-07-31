@@ -171,7 +171,7 @@ export async function buildStats(days: number) {
     supabaseAdmin
       .from("page_visits")
       .select(
-        "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, ip_address, duration_seconds, scroll_depth",
+        "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, region, isp, asn, ip_address, duration_seconds, scroll_depth",
       )
       .gte("created_at", since)
       .order("created_at", { ascending: false })
@@ -236,6 +236,12 @@ export async function buildStats(days: number) {
     ),
     byPath: tally(visits, (v) => v.path),
     byIp: tally(visits, (v) => v.ip_address),
+    byRegion: tally(visits, (v) => v.region),
+    byIsp: tally(visits, (v) => v.isp),
+    byAsn: tally(
+      visits.filter((v) => v.asn),
+      (v) => v.asn,
+    ),
     byEvent: tally(events, (e) => e.event_name),
     byEventLabel: tally(
       events.filter((e) => e.event_label),
@@ -247,7 +253,8 @@ export async function buildStats(days: number) {
       device: (v.device_type as string) ?? "-",
       browser: (v.browser as string) ?? "-",
       os: (v.os as string) ?? "-",
-      location: [v.city, v.country].filter(Boolean).join(", ") || "-",
+      location: [v.city, v.region, v.country].filter(Boolean).join(", ") || "-",
+      isp: (v.isp as string) ?? "-",
       source: (v.referrer_domain as string) || "langsung",
       ip: (v.ip_address as string) ?? "-",
       duration: (v.duration_seconds as number) ?? 0,
