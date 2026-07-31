@@ -1,15 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Logo } from "@/components/Logo";
 import { useT } from "@/i18n/context";
 
 const SESSION_KEY = "msg-splash-shown";
+const MIN_DURATION = 450;
+const MAX_DURATION = 7000;
+
+/** Resolves when the page bundle, assets and fonts are ready. */
+function whenAppReady(): Promise<void> {
+  const tasks: Promise<unknown>[] = [];
+
+  tasks.push(
+    document.readyState === "complete"
+      ? Promise.resolve()
+      : new Promise<void>((resolve) =>
+          window.addEventListener("load", () => resolve(), { once: true }),
+        ),
+  );
+
+  const fonts = (document as Document & { fonts?: FontFaceSet }).fonts;
+  if (fonts?.ready) tasks.push(fonts.ready.catch(() => undefined));
+
+  return Promise.all(tasks).then(() => undefined);
+}
 
 export default function SplashScreen() {
   const t = useT();
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [ready, setReady] = useState(false);
+  const startedAt = useRef(0);
 
   useEffect(() => {
     setMounted(true);
@@ -22,23 +44,37 @@ export default function SplashScreen() {
     if (shown) return;
 
     setVisible(true);
+    startedAt.current = performance.now();
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const timer = window.setTimeout(
-      () => {
+    let cancelled = false;
+    let hideTimer = 0;
+
+    const finish = () => {
+      if (cancelled) return;
+      const elapsed = performance.now() - startedAt.current;
+      const wait = Math.max(0, MIN_DURATION - elapsed);
+      setReady(true);
+      hideTimer = window.setTimeout(() => {
+        if (cancelled) return;
         setVisible(false);
         try {
           window.sessionStorage.setItem(SESSION_KEY, "1");
         } catch {
           /* ignore */
         }
-      },
-      reduced ? 650 : 1200,
-    );
+      }, wait);
+    };
+
+    whenAppReady().then(finish);
+    // Safety net: never trap the user if something never settles.
+    const failsafe = window.setTimeout(finish, MAX_DURATION);
 
     return () => {
-      window.clearTimeout(timer);
+      cancelled = true;
+      window.clearTimeout(hideTimer);
+      window.clearTimeout(failsafe);
       document.body.style.overflow = prevOverflow;
     };
   }, [reduced]);
@@ -48,6 +84,7 @@ export default function SplashScreen() {
   };
 
   if (!mounted) return null;
+
 
   return (
     <AnimatePresence onExitComplete={release}>
@@ -121,9 +158,12 @@ export default function SplashScreen() {
               aria-label={t.ui.splashLoading}
             >
               <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: reduced ? 0.4 : 1.05, ease: [0.4, 0, 0.2, 1] }}
+                initial={{ scaleX: 0.04 }}
+                animate={{ scaleX: ready ? 1 : 0.82 }}
+                transition={{
+                  duration: ready ? 0.25 : reduced ? 0.6 : 2.2,
+                  ease: ready ? [0.22, 1, 0.36, 1] : [0.16, 1, 0.3, 1],
+                }}
                 className="h-full w-full origin-left rounded-full bg-gradient-to-r from-blue-400 to-purple-500"
               />
             </div>
