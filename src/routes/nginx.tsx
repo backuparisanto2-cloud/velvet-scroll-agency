@@ -121,12 +121,47 @@ cd mentarisatria
 npm ci
 
 # 2. Siapkan environment (.env)
-cp .env.example .env   # jika ada, atau buat manual
-# VITE_SUPABASE_URL=...
-# VITE_SUPABASE_PUBLISHABLE_KEY=...
+cp .env.example .env
+# Isi minimal:
+#   SUPABASE_URL=https://<project-ref>.supabase.co
+#   SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
+#   VITE_SUPABASE_URL=https://<project-ref>.supabase.co
+#   VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 
 # 3. Build produksi
 npm run build          # hasil: dist/client (aset) + dist/server (SSR)`;
+
+const ENV_VARS = [
+  {
+    label: "SUPABASE_URL",
+    desc: "Project URL Supabase. Dibaca oleh SSR, analytics, dan auth middleware.",
+  },
+  {
+    label: "SUPABASE_PUBLISHABLE_KEY",
+    desc: "Kunci publik/anon Supabase. Wajib untuk analytics dan client Supabase.",
+  },
+  {
+    label: "VITE_SUPABASE_URL",
+    desc: "Sama dengan SUPABASE_URL. Vite membundel ke browser saat build.",
+  },
+  {
+    label: "VITE_SUPABASE_PUBLISHABLE_KEY",
+    desc: "Sama dengan SUPABASE_PUBLISHABLE_KEY. Dibundel ke browser.",
+  },
+  {
+    label: "SUPABASE_SERVICE_ROLE_KEY",
+    desc: "Opsional. Hanya diperlukan jika fitur admin memanggil supabaseAdmin.",
+  },
+  {
+    label: "NODE_ENV & PORT",
+    desc: "Runtime SSR. NODE_ENV=production, PORT=3000 (disesuaikan service).",
+  },
+  {
+    label: "NITRO_PRESET",
+    desc: "Build saja. Gunakan NITRO_PRESET=node-server agar output bisa dijalankan Node.",
+  },
+];
+
 
 const NODE_PRESET = `# Build untuk runtime Node (bukan Cloudflare)
 # Windows PowerShell:  $env:NITRO_PRESET="node-server"; npm run build
