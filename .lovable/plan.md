@@ -1,17 +1,32 @@
-## Splash Tampil Lebih Dulu, Baru Halaman
+## Masalah
 
-Saat ini splash baru dipasang setelah React hidrasi (`mounted` state), sehingga isi halaman (Hero/Navbar) sempat terlihat sekejap sebelum splash menutupinya. Tujuan: begitu halaman dibuka, yang pertama terlihat adalah splash — konten baru muncul setelah splash selesai.
+Semua gambar/video sekarang hanya berupa file pointer `.asset.json` yang menunjuk ke URL CDN Lovable (`/__l5e/assets-v1/...`). File binernya tidak ada di repo, jadi saat di-clone dan di-build di luar Lovable, URL itu tidak dilayani siapa pun → aset hilang.
 
-### Perubahan perilaku
-- Overlay splash sudah ada di HTML pertama (server-render), bukan menunggu hidrasi — tidak ada kedipan konten.
-- Konten halaman utama disembunyikan (opacity 0 / tidak terlihat) selama splash aktif, lalu fade-in halus setelah splash keluar.
-- Skrip inline kecil di `<head>` langsung menandai body sebagai "splash aktif" (lock scroll + sembunyikan konten) sebelum CSS/JS aplikasi selesai dimuat, jadi urutannya pasti: splash dulu → halaman.
-- Tetap sekali per sesi (sessionStorage): jika splash sudah pernah tampil, konten langsung terlihat tanpa penundaan.
-- Durasi tetap sinkron dengan kesiapan aplikasi (min 0,45 detik, failsafe 7 detik) seperti sekarang, plus fade-in konten ~0,4 detik.
-- `prefers-reduced-motion` tetap dihormati: fade sederhana tanpa scale/scanline.
+## Solusi
 
-### Teknis
-- `src/routes/__root.tsx`: tambahkan skrip inline (menyatu dengan theme script) yang menyetel `data-splash="1"` pada `<html>` jika sesi belum menampilkan splash.
-- `src/styles.css`: aturan `[data-splash="1"] body { overflow: hidden }` dan konten utama disembunyikan, dengan transisi opacity saat atribut dilepas.
-- `src/components/SplashScreen.tsx`: render overlay sejak render pertama (hapus gate `mounted`), dan hapus `data-splash` dari `<html>` saat animasi keluar selesai; scroll lock dipindah ke atribut tersebut.
-- `src/routes/index.tsx`: bungkus konten dengan penanda kelas agar bisa di-fade-in; urutan section dan layout tidak berubah.
+Kembalikan 33 file biner ke dalam repo dan pakai import Vite biasa, sehingga aset ikut ter-commit, ter-clone, dan ter-bundle di mana pun app di-build.
+
+### Langkah
+
+1. Unduh setiap aset dari URL CDN-nya ke lokasi aslinya:
+   - `src/assets/` — `hero-city-640.mp4`, `hero-city-1280.mp4`, `hero-city-poster.jpg`
+   - `src/assets/img/` — 30 file `.webp` (logo partner, logo SGK 4 ukuran, project, service, event)
+2. Ganti semua referensi di 6 komponen (`Hero`, `Logo`, `Clients`, `Events`, `Services`, `Work`):
+   ```ts
+   // sebelum
+   import imgServer from "@/assets/img/service-server-v2.webp.asset.json";
+   ... src={imgServer.url}
+   // sesudah
+   import imgServer from "@/assets/img/service-server-v2.webp";
+   ... src={imgServer}
+   ```
+   Untuk video dan `srcset` logo, pola sama: string hasil import langsung dipakai.
+3. Hapus semua file `.asset.json` dari repo (pointer tidak lagi dipakai). Objek CDN dibiarkan (tidak dihapus) agar deployment lama tidak rusak.
+4. Jalankan build + cek preview supaya semua gambar/video tampil.
+
+### Catatan teknis
+
+- Total biner yang masuk repo ± 3,4 MB (video hero 1,9 MB, sisanya WebP kecil). Masih wajar untuk git.
+- Vite akan hashing + emit aset ini ke `dist/assets/` saat build, jadi caching tetap baik dan tidak ada dependensi ke infrastruktur Lovable.
+- Sinkronisasi GitHub dua arah tetap berjalan seperti biasa: karena file biner ada di repo, clone → `bun install` → `bun run build` langsung jalan tanpa akses CDN.
+- Trade-off: aset tidak lagi disajikan lewat CDN Lovable, tetapi dari hosting/CDN tempat app di-deploy.
