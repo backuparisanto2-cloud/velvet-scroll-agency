@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "env:check": "node scripts/env-check.mjs",
+    "prebuild": "node scripts/env-check.mjs",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "prepreview": "node scripts/env-check.mjs",
     "preview": "npx --yes wrangler@4 --cwd ./dist dev --port 4173",
     "lint": "eslint .",
     "format": "prettier --write ."
