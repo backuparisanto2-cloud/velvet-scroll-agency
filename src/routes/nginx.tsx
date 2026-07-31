@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Copy, Server, Terminal, ShieldCheck, RefreshCw } from "lucide-react";
+import { Check, Copy, Server, Terminal, ShieldCheck, RefreshCw, CheckCircle2 } from "lucide-react";
 
 const TITLE = "Panduan Build & Deploy NGINX — Mentari Satria";
 const DESCRIPTION =
@@ -76,18 +76,92 @@ function Step({
   );
 }
 
+function CheckList({
+  items,
+  checked,
+  onToggle,
+}: {
+  items: { label: string; desc: string }[];
+  checked: boolean[];
+  onToggle: (i: number) => void;
+}) {
+  return (
+    <ul className="space-y-3">
+      {items.map((item, i) => (
+        <li key={i}>
+          <button
+            type="button"
+            onClick={() => onToggle(i)}
+            className="flex w-full items-start gap-3 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-3 text-left transition-colors hover:border-foreground/20"
+          >
+            <span
+              className={`mt-0.5 shrink-0 transition-colors ${
+                checked[i] ? "text-emerald-400" : "text-muted-foreground/40"
+              }`}
+            >
+              <CheckCircle2 size={18} />
+            </span>
+            <span className="flex-1">
+              <span className="block text-sm font-bold text-foreground">{item.label}</span>
+              <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                {item.desc}
+              </span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+
 const BUILD = `# 1. Clone & install
 git clone <URL_REPO> mentarisatria
 cd mentarisatria
 npm ci
 
 # 2. Siapkan environment (.env)
-cp .env.example .env   # jika ada, atau buat manual
-# VITE_SUPABASE_URL=...
-# VITE_SUPABASE_PUBLISHABLE_KEY=...
+cp .env.example .env
+# Isi minimal:
+#   SUPABASE_URL=https://<project-ref>.supabase.co
+#   SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
+#   VITE_SUPABASE_URL=https://<project-ref>.supabase.co
+#   VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 
 # 3. Build produksi
 npm run build          # hasil: dist/client (aset) + dist/server (SSR)`;
+
+const ENV_VARS = [
+  {
+    label: "SUPABASE_URL",
+    desc: "Project URL Supabase. Dibaca oleh SSR, analytics, dan auth middleware.",
+  },
+  {
+    label: "SUPABASE_PUBLISHABLE_KEY",
+    desc: "Kunci publik/anon Supabase. Wajib untuk analytics dan client Supabase.",
+  },
+  {
+    label: "VITE_SUPABASE_URL",
+    desc: "Sama dengan SUPABASE_URL. Vite membundel ke browser saat build.",
+  },
+  {
+    label: "VITE_SUPABASE_PUBLISHABLE_KEY",
+    desc: "Sama dengan SUPABASE_PUBLISHABLE_KEY. Dibundel ke browser.",
+  },
+  {
+    label: "SUPABASE_SERVICE_ROLE_KEY",
+    desc: "Opsional. Hanya diperlukan jika fitur admin memanggil supabaseAdmin.",
+  },
+  {
+    label: "NODE_ENV & PORT",
+    desc: "Runtime SSR. NODE_ENV=production, PORT=3000 (disesuaikan service).",
+  },
+  {
+    label: "NITRO_PRESET",
+    desc: "Build saja. Gunakan NITRO_PRESET=node-server agar output bisa dijalankan Node.",
+  },
+];
+
 
 const NODE_PRESET = `# Build untuk runtime Node (bukan Cloudflare)
 # Windows PowerShell:  $env:NITRO_PRESET="node-server"; npm run build
@@ -192,6 +266,19 @@ sudo systemctl restart mentarisatria
 sudo systemctl reload nginx`;
 
 function NginxGuide() {
+  const [checked, setChecked] = useState<boolean[]>(() => ENV_VARS.map(() => false));
+
+  const toggle = (i: number) => {
+    setChecked((prev) => {
+      const next = [...prev];
+      next[i] = !next[i];
+      return next;
+    });
+  };
+
+  const allChecked = checked.every(Boolean);
+  const done = checked.filter(Boolean).length;
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
@@ -217,6 +304,34 @@ function NginxGuide() {
             depan server Node, sekaligus melayani aset statis dan sertifikat SSL.
           </p>
         </header>
+
+        <section className="mt-10 rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-5 sm:p-6">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Checklist environment
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Centang setiap variabel yang sudah diisi. Error build/runtime paling sering
+                disebabkan variabel Supabase yang kosong.
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-black text-foreground">
+                {done}/{ENV_VARS.length}
+              </p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                {allChecked ? "Siap build" : "Belum lengkap"}
+              </p>
+            </div>
+          </div>
+          <CheckList items={ENV_VARS} checked={checked} onToggle={toggle} />
+          <div className="mt-4 rounded-xl bg-foreground/[0.03] p-3 text-xs text-muted-foreground">
+            <strong className="text-foreground">Catatan keamanan:</strong> simpan file{" "}
+            <code>.env</code> di server, jangan di-commit. Variabel VITE_* akan ikut ter-bundle
+            ke browser, jadi jangan memasukkan service-role key di sana.
+          </div>
+        </section>
 
         <div className="mt-12 space-y-12">
           <Step n={1} title="Build produksi">
@@ -271,6 +386,7 @@ function NginxGuide() {
             <CodeBlock code={REDEPLOY} label="bash" />
           </Step>
         </div>
+
 
         <div className="mt-14 grid gap-4 sm:grid-cols-3">
           <InfoCard
