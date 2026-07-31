@@ -88,7 +88,7 @@ export default function SplashScreen() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: reduced ? 1 : 1.04 }}
           transition={{ duration: reduced ? 0.25 : 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-background"
+          className="splash-overlay fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-background"
         >
           {/* tech grid */}
           <div
