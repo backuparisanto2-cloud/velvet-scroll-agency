@@ -327,6 +327,9 @@ function MyStats() {
               <Panel title="Kota">
                 <RankTable rows={data.byCity} />
               </Panel>
+              <Panel title="Alamat IP">
+                <RankTable rows={data.byIp} />
+              </Panel>
               <Panel title="Sumber trafik">
                 <RankTable rows={data.byReferrer} />
               </Panel>
@@ -355,6 +358,7 @@ function MyStats() {
                       <th className="py-2 pr-4 font-medium">Halaman</th>
                       <th className="py-2 pr-4 font-medium">Perangkat</th>
                       <th className="py-2 pr-4 font-medium">Browser / OS</th>
+                      <th className="py-2 pr-4 font-medium">IP</th>
                       <th className="py-2 pr-4 font-medium">Lokasi</th>
                       <th className="py-2 pr-4 font-medium">Sumber</th>
                       <th className="py-2 pr-4 font-medium">Durasi</th>
@@ -372,6 +376,7 @@ function MyStats() {
                         <td className="py-2 pr-4">
                           {r.browser} / {r.os}
                         </td>
+                        <td className="whitespace-nowrap py-2 pr-4">{r.ip}</td>
                         <td className="py-2 pr-4">{r.location}</td>
                         <td className="py-2 pr-4">{r.source}</td>
                         <td className="py-2 pr-4">{r.duration} dtk</td>
@@ -380,7 +385,7 @@ function MyStats() {
                     ))}
                     {!data.recent.length && (
                       <tr>
-                        <td colSpan={8} className="py-6 text-center text-muted-foreground">
+                        <td colSpan={9} className="py-6 text-center text-muted-foreground">
                           Belum ada kunjungan tercatat.
                         </td>
                       </tr>
