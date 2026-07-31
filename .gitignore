@@ -33,3 +33,6 @@ dist-ssr
 
 # Keep binary assets in the repo (needed for clone + build)
 !src/assets/**
+
+# Paket hasil export (npm run export)
+release/

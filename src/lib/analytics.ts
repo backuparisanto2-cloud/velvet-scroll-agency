@@ -1,4 +1,4 @@
-import { trackPageview, trackHeartbeat, trackEvent } from "@/lib/analytics.functions";
+import { insertPageview, updateVisit, insertEvent } from "@/lib/analytics.browser";
 
 const VISITOR_KEY = "msg-visitor-id";
 const SESSION_KEY = "msg-session-id";
@@ -64,26 +64,22 @@ function currentScroll() {
 
 function flush() {
   if (!visitId) return;
-  void trackHeartbeat({
-    data: {
-      visitId,
-      durationSeconds: Math.min(86400, Math.round((Date.now() - startedAt) / 1000)),
-      scrollDepth: maxScroll,
-    },
+  void updateVisit({
+    visitId,
+    durationSeconds: Math.min(86400, Math.round((Date.now() - startedAt) / 1000)),
+    scrollDepth: maxScroll,
   }).catch(() => undefined);
 }
 
 export function logEvent(eventName: string, eventLabel?: string) {
   if (typeof window === "undefined" || !visitorId) return;
-  void trackEvent({
-    data: {
-      visitId,
-      visitorId,
-      sessionId,
-      eventName,
-      eventLabel: eventLabel ?? null,
-      path: window.location.pathname,
-    },
+  void insertEvent({
+    visitId,
+    visitorId,
+    sessionId,
+    eventName,
+    eventLabel: eventLabel ?? null,
+    path: window.location.pathname,
   }).catch(() => undefined);
 }
 
@@ -107,24 +103,22 @@ export function startAnalytics() {
     }
   }
 
-  void trackPageview({
-    data: {
-      visitorId,
-      sessionId,
-      path: window.location.pathname,
-      deviceType: detectDevice(ua),
-      browser: detectBrowser(ua),
-      os: detectOs(ua),
-      screenW: window.screen?.width ?? null,
-      screenH: window.screen?.height ?? null,
-      referrer: document.referrer ? document.referrer.slice(0, 500) : null,
-      referrerDomain,
-      utmSource: params.get("utm_source"),
-      utmMedium: params.get("utm_medium"),
-      utmCampaign: params.get("utm_campaign"),
-      language: navigator.language ?? null,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? null,
-    },
+  void insertPageview({
+    visitorId,
+    sessionId,
+    path: window.location.pathname,
+    deviceType: detectDevice(ua),
+    browser: detectBrowser(ua),
+    os: detectOs(ua),
+    screenW: window.screen?.width ?? null,
+    screenH: window.screen?.height ?? null,
+    referrer: document.referrer ? document.referrer.slice(0, 500) : null,
+    referrerDomain,
+    utmSource: params.get("utm_source"),
+    utmMedium: params.get("utm_medium"),
+    utmCampaign: params.get("utm_campaign"),
+    language: navigator.language ?? null,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone ?? null,
   })
     .then((res) => {
       visitId = res.visitId;

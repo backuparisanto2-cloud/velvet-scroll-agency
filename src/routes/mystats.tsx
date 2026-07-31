@@ -14,7 +14,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getVisitorStats } from "@/lib/analytics.functions";
+import { buildStats } from "@/lib/analytics.browser";
 
 const TITLE = "MyStats — Analitik Pengunjung Mentari Satria";
 const DESCRIPTION =
@@ -119,7 +119,7 @@ function MyStats() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["visitor-stats", days],
-    queryFn: () => getVisitorStats({ data: { days } }),
+    queryFn: () => buildStats(days),
     refetchInterval: 60000,
   });
 

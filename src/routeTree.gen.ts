@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApacheRouteImport } from './routes/apache'
 import { Route as MystatsRouteImport } from './routes/mystats'
 import { Route as NginxRouteImport } from './routes/nginx'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApacheRoute = ApacheRouteImport.update({
+  id: '/apache',
+  path: '/apache',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MystatsRoute = MystatsRouteImport.update({
@@ -31,30 +37,34 @@ const NginxRoute = NginxRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apache': typeof ApacheRoute
   '/mystats': typeof MystatsRoute
   '/nginx': typeof NginxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apache': typeof ApacheRoute
   '/mystats': typeof MystatsRoute
   '/nginx': typeof NginxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apache': typeof ApacheRoute
   '/mystats': typeof MystatsRoute
   '/nginx': typeof NginxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mystats' | '/nginx'
+  fullPaths: '/' | '/apache' | '/mystats' | '/nginx'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mystats' | '/nginx'
-  id: '__root__' | '/' | '/mystats' | '/nginx'
+  to: '/' | '/apache' | '/mystats' | '/nginx'
+  id: '__root__' | '/' | '/apache' | '/mystats' | '/nginx'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApacheRoute: typeof ApacheRoute
   MystatsRoute: typeof MystatsRoute
   NginxRoute: typeof NginxRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apache': {
+      id: '/apache'
+      path: '/apache'
+      fullPath: '/apache'
+      preLoaderRoute: typeof ApacheRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mystats': {
@@ -87,9 +104,20 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApacheRoute: ApacheRoute,
   MystatsRoute: MystatsRoute,
   NginxRoute: NginxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
