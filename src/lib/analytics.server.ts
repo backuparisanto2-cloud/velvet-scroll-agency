@@ -20,6 +20,18 @@ export function readGeo() {
   };
 }
 
+export function readIp(): string | null {
+  const forwarded = getRequestHeader("x-forwarded-for");
+  const raw =
+    getRequestHeader("cf-connecting-ip") ??
+    (forwarded ? forwarded.split(",")[0] : null) ??
+    getRequestHeader("x-real-ip") ??
+    getRequestHeader("true-client-ip") ??
+    null;
+  const ip = raw?.trim();
+  return ip ? ip.slice(0, 64) : null;
+}
+
 export async function insertPageview(data: PageviewInput) {
   const geo = readGeo();
   const { data: row, error } = await supabaseAdmin
