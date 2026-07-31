@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       page_visits: {
         Row: {
+          asn: string | null
           browser: string | null
           city: string | null
           country: string | null
@@ -24,11 +25,13 @@ export type Database = {
           duration_seconds: number
           id: string
           ip_address: string | null
+          isp: string | null
           language: string | null
           os: string | null
           path: string
           referrer: string | null
           referrer_domain: string | null
+          region: string | null
           screen_h: number | null
           screen_w: number | null
           scroll_depth: number
@@ -40,6 +43,7 @@ export type Database = {
           visitor_id: string
         }
         Insert: {
+          asn?: string | null
           browser?: string | null
           city?: string | null
           country?: string | null
@@ -48,11 +52,13 @@ export type Database = {
           duration_seconds?: number
           id?: string
           ip_address?: string | null
+          isp?: string | null
           language?: string | null
           os?: string | null
           path?: string
           referrer?: string | null
           referrer_domain?: string | null
+          region?: string | null
           screen_h?: number | null
           screen_w?: number | null
           scroll_depth?: number
@@ -64,6 +70,7 @@ export type Database = {
           visitor_id: string
         }
         Update: {
+          asn?: string | null
           browser?: string | null
           city?: string | null
           country?: string | null
@@ -72,11 +79,13 @@ export type Database = {
           duration_seconds?: number
           id?: string
           ip_address?: string | null
+          isp?: string | null
           language?: string | null
           os?: string | null
           path?: string
           referrer?: string | null
           referrer_domain?: string | null
+          region?: string | null
           screen_h?: number | null
           screen_w?: number | null
           scroll_depth?: number
