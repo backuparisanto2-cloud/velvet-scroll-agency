@@ -32,8 +32,63 @@ export function readIp(): string | null {
   return ip ? ip.slice(0, 64) : null;
 }
 
+function isPrivateIp(ip: string) {
+  return (
+    ip === "::1" ||
+    ip.startsWith("127.") ||
+    ip.startsWith("10.") ||
+    ip.startsWith("192.168.") ||
+    ip.startsWith("fc") ||
+    ip.startsWith("fd") ||
+    /^172\.(1[6-9]|2\d|3[01])\./.test(ip)
+  );
+}
+
+type IpGeo = {
+  country: string | null;
+  city: string | null;
+  region: string | null;
+  isp: string | null;
+  asn: string | null;
+};
+
+export async function lookupIpGeo(ip: string | null): Promise<IpGeo> {
+  const empty: IpGeo = { country: null, city: null, region: null, isp: null, asn: null };
+  if (!ip || isPrivateIp(ip)) return empty;
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(
+      `https://ipwho.is/${encodeURIComponent(ip)}?fields=success,country,city,region,connection`,
+      { signal: controller.signal },
+    );
+    clearTimeout(timer);
+    if (!res.ok) return empty;
+    const json = (await res.json()) as {
+      success?: boolean;
+      country?: string;
+      city?: string;
+      region?: string;
+      connection?: { isp?: string; org?: string; asn?: number };
+    };
+    if (!json.success) return empty;
+    const asn = json.connection?.asn ? `AS${json.connection.asn}` : null;
+    return {
+      country: json.country?.slice(0, 80) ?? null,
+      city: json.city?.slice(0, 120) ?? null,
+      region: json.region?.slice(0, 120) ?? null,
+      isp: (json.connection?.isp ?? json.connection?.org)?.slice(0, 160) ?? null,
+      asn,
+    };
+  } catch {
+    return empty;
+  }
+}
+
 export async function insertPageview(data: PageviewInput) {
   const geo = readGeo();
+  const ip = readIp();
+  const ipGeo = await lookupIpGeo(ip);
   const { data: row, error } = await supabaseAdmin
     .from("page_visits")
     .insert({
@@ -52,10 +107,14 @@ export async function insertPageview(data: PageviewInput) {
       utm_campaign: data.utmCampaign ?? null,
       language: data.language ?? null,
       timezone: data.timezone ?? null,
-      country: geo.country,
-      city: geo.city,
-      ip_address: readIp(),
+      country: ipGeo.country ?? geo.country,
+      city: ipGeo.city ?? geo.city,
+      region: ipGeo.region,
+      isp: ipGeo.isp,
+      asn: ipGeo.asn,
+      ip_address: ip,
     })
+
     .select("id")
     .single();
 
