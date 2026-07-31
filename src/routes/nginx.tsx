@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, Copy, Server, Terminal, ShieldCheck, RefreshCw } from "lucide-react";
+import { Check, Copy, Server, Terminal, ShieldCheck, RefreshCw, CheckCircle2 } from "lucide-react";
 
 const TITLE = "Panduan Build & Deploy NGINX — Mentari Satria";
 const DESCRIPTION =
@@ -75,6 +75,45 @@ function Step({
     </section>
   );
 }
+
+function CheckList({
+  items,
+  checked,
+  onToggle,
+}: {
+  items: { label: string; desc: string }[];
+  checked: boolean[];
+  onToggle: (i: number) => void;
+}) {
+  return (
+    <ul className="space-y-3">
+      {items.map((item, i) => (
+        <li key={i}>
+          <button
+            type="button"
+            onClick={() => onToggle(i)}
+            className="flex w-full items-start gap-3 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-3 text-left transition-colors hover:border-foreground/20"
+          >
+            <span
+              className={`mt-0.5 shrink-0 transition-colors ${
+                checked[i] ? "text-emerald-400" : "text-muted-foreground/40"
+              }`}
+            >
+              <CheckCircle2 size={18} />
+            </span>
+            <span className="flex-1">
+              <span className="block text-sm font-bold text-foreground">{item.label}</span>
+              <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                {item.desc}
+              </span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 
 const BUILD = `# 1. Clone & install
 git clone <URL_REPO> mentarisatria
