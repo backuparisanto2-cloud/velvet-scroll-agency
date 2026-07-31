@@ -158,9 +158,12 @@ export default function SplashScreen() {
               aria-label={t.ui.splashLoading}
             >
               <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: reduced ? 0.4 : 1.05, ease: [0.4, 0, 0.2, 1] }}
+                initial={{ scaleX: 0.04 }}
+                animate={{ scaleX: ready ? 1 : 0.82 }}
+                transition={{
+                  duration: ready ? 0.25 : reduced ? 0.6 : 2.2,
+                  ease: ready ? [0.22, 1, 0.36, 1] : [0.16, 1, 0.3, 1],
+                }}
                 className="h-full w-full origin-left rounded-full bg-gradient-to-r from-blue-400 to-purple-500"
               />
             </div>
