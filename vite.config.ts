@@ -22,7 +22,7 @@ export default defineConfig({
           prerender: { enabled: true, crawlLinks: true, failOnError: false },
           pages: [{ path: "/" }, { path: "/nginx" }, { path: "/apache" }, { path: "/mystats" }],
           // Shell SPA dipakai sebagai fallback deep-link (rewrite .htaccess).
-          spa: { enabled: true },
+          spa: { enabled: false },
         }
       : {}),
   },
