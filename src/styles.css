@@ -177,3 +177,19 @@
     animation: none;
   }
 }
+
+/* Splash gate: hide page content until the splash finishes */
+html[data-splash="1"] body {
+  overflow: hidden;
+}
+
+.splash-gated {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+html[data-splash="1"] .splash-gated {
+  opacity: 0;
+  pointer-events: none;
+}
+
