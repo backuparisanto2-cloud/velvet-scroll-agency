@@ -38,31 +38,26 @@ const PLACEHOLDER = /<project-ref>|xxxxxxxx|your[-_]?|changeme|replace[-_]?me/i;
 
 const REQUIRED = [
   {
-    key: "SUPABASE_URL",
-    hint: "URL project backend (contoh: https://abcd1234.supabase.co)",
-    validate: (v) => /^https:\/\/.+\..+/.test(v) || "harus berupa URL https yang valid",
-  },
-  {
-    key: "SUPABASE_PUBLISHABLE_KEY",
-    hint: "Publishable/anon key backend",
-    validate: (v) => v.length > 20 || "terlalu pendek, sepertinya bukan key valid",
-  },
-  {
     key: "VITE_SUPABASE_URL",
-    hint: "Sama dengan SUPABASE_URL, dipakai di sisi browser",
+    hint: "URL backend, dipakai di browser (contoh: https://abcd1234.supabase.co)",
     validate: (v) => /^https:\/\/.+\..+/.test(v) || "harus berupa URL https yang valid",
   },
   {
     key: "VITE_SUPABASE_PUBLISHABLE_KEY",
-    hint: "Sama dengan SUPABASE_PUBLISHABLE_KEY, dipakai di sisi browser",
+    hint: "Publishable/anon key backend, dipakai di browser",
     validate: (v) => v.length > 20 || "terlalu pendek, sepertinya bukan key valid",
   },
 ];
 
 const OPTIONAL = [
+  { key: "SUPABASE_URL", hint: "salinan VITE_SUPABASE_URL, dipakai mode SSR (NGINX)" },
+  {
+    key: "SUPABASE_PUBLISHABLE_KEY",
+    hint: "salinan VITE_SUPABASE_PUBLISHABLE_KEY, dipakai mode SSR (NGINX)",
+  },
   { key: "NODE_ENV", hint: "production saat deploy" },
-  { key: "PORT", hint: "port server SSR (default 3000)" },
-  { key: "NITRO_PRESET", hint: "node-server untuk deploy NGINX sendiri" },
+  { key: "PORT", hint: "port server SSR (default 3000), hanya mode NGINX" },
+  { key: "NITRO_PRESET", hint: "node-server untuk deploy SSR sendiri, hanya mode NGINX" },
 ];
 
 const errors = [];
