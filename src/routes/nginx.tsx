@@ -266,6 +266,19 @@ sudo systemctl restart mentarisatria
 sudo systemctl reload nginx`;
 
 function NginxGuide() {
+  const [checked, setChecked] = useState<boolean[]>(() => ENV_VARS.map(() => false));
+
+  const toggle = (i: number) => {
+    setChecked((prev) => {
+      const next = [...prev];
+      next[i] = !next[i];
+      return next;
+    });
+  };
+
+  const allChecked = checked.every(Boolean);
+  const done = checked.filter(Boolean).length;
+
   return (
     <div className="min-h-screen w-full bg-background text-foreground">
       <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
@@ -291,6 +304,34 @@ function NginxGuide() {
             depan server Node, sekaligus melayani aset statis dan sertifikat SSL.
           </p>
         </header>
+
+        <section className="mt-10 rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-5 sm:p-6">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Checklist environment
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Centang setiap variabel yang sudah diisi. Error build/runtime paling sering
+                disebabkan variabel Supabase yang kosong.
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-2xl font-black text-foreground">
+                {done}/{ENV_VARS.length}
+              </p>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                {allChecked ? "Siap build" : "Belum lengkap"}
+              </p>
+            </div>
+          </div>
+          <CheckList items={ENV_VARS} checked={checked} onToggle={toggle} />
+          <div className="mt-4 rounded-xl bg-foreground/[0.03] p-3 text-xs text-muted-foreground">
+            <strong className="text-foreground">Catatan keamanan:</strong> simpan file{" "}
+            <code>.env</code> di server, jangan di-commit. Variabel VITE_* akan ikut ter-bundle
+            ke browser, jadi jangan memasukkan service-role key di sana.
+          </div>
+        </section>
 
         <div className="mt-12 space-y-12">
           <Step n={1} title="Build produksi">
@@ -345,6 +386,7 @@ function NginxGuide() {
             <CodeBlock code={REDEPLOY} label="bash" />
           </Step>
         </div>
+
 
         <div className="mt-14 grid gap-4 sm:grid-cols-3">
           <InfoCard
