@@ -14,7 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "@/i18n/context";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 
-const themeScript = `try{var t=localStorage.getItem("msg-theme");if(t!=="light")document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}`;
+const themeScript = `try{var t=localStorage.getItem("msg-theme");if(t!=="light")document.documentElement.classList.add("dark")}catch(e){document.documentElement.classList.add("dark")}
+try{if(location.pathname==="/"&&sessionStorage.getItem("msg-splash-shown")!=="1")document.documentElement.setAttribute("data-splash","1")}catch(e){}`;
 
 function NotFoundComponent() {
   return (
