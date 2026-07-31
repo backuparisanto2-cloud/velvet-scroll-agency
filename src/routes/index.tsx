@@ -70,6 +70,7 @@ function Index() {
       </ParallaxSection>
 
       <WhatsAppButton />
+      </div>
     </div>
   );
 }
