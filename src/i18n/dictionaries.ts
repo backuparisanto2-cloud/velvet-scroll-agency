@@ -413,6 +413,8 @@ const en: Dict = {
     toDark: "Switch to dark mode",
     language: "Language",
     whatsapp: "Chat on WhatsApp",
+    splashTagline: "IT Infrastructure Solutions",
+    splashLoading: "Loading",
   },
 };
 
