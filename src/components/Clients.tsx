@@ -1,31 +1,31 @@
 import { motion } from "framer-motion";
 import { useT } from "@/i18n/context";
-import cisco from "@/assets/img/logo-cisco.webp.asset.json";
-import gigabyte from "@/assets/img/logo-gigabyte.webp.asset.json";
-import ruijie from "@/assets/img/logo-ruijie.webp.asset.json";
-import dell from "@/assets/img/logo-dell.webp.asset.json";
-import hp from "@/assets/img/logo-hp.webp.asset.json";
-import ruckus from "@/assets/img/logo-ruckus.webp.asset.json";
-import netviel from "@/assets/img/logo-netviel.webp.asset.json";
-import wps from "@/assets/img/logo-wps.webp.asset.json";
-import fortinet from "@/assets/img/logo-fortinet.webp.asset.json";
-import sangfor from "@/assets/img/logo-sangfor.webp.asset.json";
-import apjii from "@/assets/img/logo-apjii.webp.asset.json";
-import apc from "@/assets/img/logo-apc.webp.asset.json";
+import cisco from "@/assets/img/logo-cisco.webp";
+import gigabyte from "@/assets/img/logo-gigabyte.webp";
+import ruijie from "@/assets/img/logo-ruijie.webp";
+import dell from "@/assets/img/logo-dell.webp";
+import hp from "@/assets/img/logo-hp.webp";
+import ruckus from "@/assets/img/logo-ruckus.webp";
+import netviel from "@/assets/img/logo-netviel.webp";
+import wps from "@/assets/img/logo-wps.webp";
+import fortinet from "@/assets/img/logo-fortinet.webp";
+import sangfor from "@/assets/img/logo-sangfor.webp";
+import apjii from "@/assets/img/logo-apjii.webp";
+import apc from "@/assets/img/logo-apc.webp";
 
 const PARTNERS = [
-  { name: "Cisco", src: cisco.url },
-  { name: "Gigabyte", src: gigabyte.url },
-  { name: "Ruijie", src: ruijie.url },
-  { name: "Dell", src: dell.url },
-  { name: "HP", src: hp.url },
-  { name: "Ruckus", src: ruckus.url },
-  { name: "Netviel", src: netviel.url },
-  { name: "WPS", src: wps.url },
-  { name: "Fortinet", src: fortinet.url },
-  { name: "Sangfor", src: sangfor.url },
-  { name: "APJII", src: apjii.url },
-  { name: "APC", src: apc.url },
+  { name: "Cisco", src: cisco },
+  { name: "Gigabyte", src: gigabyte },
+  { name: "Ruijie", src: ruijie },
+  { name: "Dell", src: dell },
+  { name: "HP", src: hp },
+  { name: "Ruckus", src: ruckus },
+  { name: "Netviel", src: netviel },
+  { name: "WPS", src: wps },
+  { name: "Fortinet", src: fortinet },
+  { name: "Sangfor", src: sangfor },
+  { name: "APJII", src: apjii },
+  { name: "APC", src: apc },
 ];
 
 export default function Clients() {
