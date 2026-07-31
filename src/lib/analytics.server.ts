@@ -1,6 +1,45 @@
 import { getRequestHeader } from "@tanstack/react-start/server";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 import type { PageviewInput, EventInput } from "./analytics.schemas";
+
+type AnalyticsClient = ReturnType<typeof createClient<Database>>;
+let _client: AnalyticsClient | undefined;
+
+/**
+ * Analytics uses the publishable (public) key, not the service-role key, so the
+ * project keeps working from a plain git clone where only the public env vars exist.
+ * Access is controlled by RLS policies on page_visits / visit_events.
+ */
+function db(): AnalyticsClient {
+  if (_client) return _client;
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) {
+    const missing = [
+      ...(!url ? ["SUPABASE_URL"] : []),
+      ...(!key ? ["SUPABASE_PUBLISHABLE_KEY"] : []),
+    ].join(", ");
+    throw new Error(
+      `Missing environment variable(s): ${missing}. Copy them from the project .env file before running the app.`,
+    );
+  }
+  _client = createClient<Database>(url, key, {
+    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: {
+      fetch: (input, init) => {
+        const headers = new Headers(init?.headers);
+        // New-format sb_ keys are opaque strings, not bearer JWTs.
+        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) {
+          headers.delete("Authorization");
+        }
+        headers.set("apikey", key);
+        return fetch(input, { ...init, headers });
+      },
+    },
+  });
+  return _client;
+}
 
 export function readGeo() {
   const country =
