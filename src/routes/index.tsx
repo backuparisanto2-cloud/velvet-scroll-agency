@@ -38,6 +38,7 @@ function Index() {
   return (
     <div className="min-h-screen w-full bg-background text-foreground selection:bg-blue-500/30">
       <SplashScreen />
+      <div className="splash-gated">
       <Navbar />
       <main>
         <Hero />
@@ -69,6 +70,7 @@ function Index() {
       </ParallaxSection>
 
       <WhatsAppButton />
+      </div>
     </div>
   );
 }
