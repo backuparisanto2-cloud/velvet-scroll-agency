@@ -11,6 +11,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ParallaxSection from "@/components/ParallaxSection";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import SplashScreen from "@/components/SplashScreen";
 
 const TITLE = "Solusi Infrastruktur IT, Server, Internet & Network Terpercaya";
 const DESCRIPTION =
