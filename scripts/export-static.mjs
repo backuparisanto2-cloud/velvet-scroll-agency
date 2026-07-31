@@ -26,7 +26,13 @@ const releaseDir = resolve(root, "release");
 const siteDir = join(releaseDir, "site");
 const zipPath = join(releaseDir, "mentarisatria-site.zip");
 
-const run = (cmd) => execSync(cmd, { stdio: "inherit", cwd: root });
+const run = (cmd) =>
+  execSync(cmd, {
+    stdio: "inherit",
+    cwd: root,
+    // STATIC_EXPORT mengaktifkan mode prerender statis di vite.config.ts
+    env: { ...process.env, STATIC_EXPORT: "1", NODE_ENV: process.env.NODE_ENV ?? "production" },
+  });
 
 function findClientDir() {
   const candidates = [
