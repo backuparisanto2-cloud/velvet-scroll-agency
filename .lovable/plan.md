@@ -1,24 +1,17 @@
-## Splash Screen — Modern Tech, Fast
+## Splash Tampil Lebih Dulu, Baru Halaman
 
-Overlay pembuka singkat (±1.2 detik) yang muncul saat halaman utama pertama kali dibuka, lalu menghilang mulus ke konten.
+Saat ini splash baru dipasang setelah React hidrasi (`mounted` state), sehingga isi halaman (Hero/Navbar) sempat terlihat sekejap sebelum splash menutupinya. Tujuan: begitu halaman dibuka, yang pertama terlihat adalah splash — konten baru muncul setelah splash selesai.
 
-### Tampilan
-- Layar penuh dengan warna latar sesuai tema (dark/light mengikuti token `--background`), tanpa kedip saat ganti tema.
-- Logo SGK (komponen `Logo` yang sudah ada) di tengah, muncul dengan skala + fade halus dan sedikit glow biru→ungu sesuai aksen situs.
-- Wordmark "MENTARI SATRIA" di bawah logo dengan titik gradient biru→ungu, sama seperti navbar.
-- Elemen tech: garis grid tipis / sapuan cahaya (scanline) yang melintas sekali, plus progress bar tipis gradient biru→ungu yang terisi cepat.
-- Tagline mikro "Solusi Infrastruktur IT" (mengikuti bahasa aktif ID/EN dari sistem i18n).
-
-### Perilaku
-- Durasi total maksimal ~1.2 detik, otomatis keluar (fade + sedikit scale-up) — tidak menahan pengguna.
-- Hanya tampil di halaman utama, tidak di `/mystats`.
-- Tampil sekali per sesi browser (sessionStorage), jadi navigasi berikutnya langsung ke konten.
-- Body dikunci scroll selama splash aktif, dilepas setelah selesai.
-- Menghormati `prefers-reduced-motion`: animasi diganti fade sederhana dan durasi dipangkas.
-- Tidak mengubah layout Hero atau section mana pun.
+### Perubahan perilaku
+- Overlay splash sudah ada di HTML pertama (server-render), bukan menunggu hidrasi — tidak ada kedipan konten.
+- Konten halaman utama disembunyikan (opacity 0 / tidak terlihat) selama splash aktif, lalu fade-in halus setelah splash keluar.
+- Skrip inline kecil di `<head>` langsung menandai body sebagai "splash aktif" (lock scroll + sembunyikan konten) sebelum CSS/JS aplikasi selesai dimuat, jadi urutannya pasti: splash dulu → halaman.
+- Tetap sekali per sesi (sessionStorage): jika splash sudah pernah tampil, konten langsung terlihat tanpa penundaan.
+- Durasi tetap sinkron dengan kesiapan aplikasi (min 0,45 detik, failsafe 7 detik) seperti sekarang, plus fade-in konten ~0,4 detik.
+- `prefers-reduced-motion` tetap dihormati: fade sederhana tanpa scale/scanline.
 
 ### Teknis
-- Komponen baru `src/components/SplashScreen.tsx` memakai Framer Motion (`AnimatePresence`, `motion`) yang sudah dipakai di proyek.
-- Dirender di `src/routes/index.tsx` di atas konten; hanya di sisi klien agar tidak mengganggu SSR/hidrasi.
-- Teks splash ditambahkan ke `src/i18n/dictionaries.ts` (ID & EN).
-- Semua warna memakai token semantik yang ada, tanpa warna hardcoded.
+- `src/routes/__root.tsx`: tambahkan skrip inline (menyatu dengan theme script) yang menyetel `data-splash="1"` pada `<html>` jika sesi belum menampilkan splash.
+- `src/styles.css`: aturan `[data-splash="1"] body { overflow: hidden }` dan konten utama disembunyikan, dengan transisi opacity saat atribut dilepas.
+- `src/components/SplashScreen.tsx`: render overlay sejak render pertama (hapus gate `mounted`), dan hapus `data-splash` dari `<html>` saat animasi keluar selesai; scroll lock dipindah ke atribut tersebut.
+- `src/routes/index.tsx`: bungkus konten dengan penanda kelas agar bisa di-fade-in; urutan section dan layout tidak berubah.
