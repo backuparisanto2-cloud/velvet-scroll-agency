@@ -25,28 +25,25 @@ function whenAppReady(): Promise<void> {
   return Promise.all(tasks).then(() => undefined);
 }
 
+function splashPending() {
+  if (typeof document === "undefined") return true;
+  return document.documentElement.getAttribute("data-splash") === "1";
+}
+
 export default function SplashScreen() {
   const t = useT();
   const reduced = useReducedMotion();
-  const [visible, setVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [ready, setReady] = useState(false);
   const startedAt = useRef(0);
 
   useEffect(() => {
-    setMounted(true);
-    let shown = false;
-    try {
-      shown = window.sessionStorage.getItem(SESSION_KEY) === "1";
-    } catch {
-      shown = false;
+    if (!splashPending()) {
+      setVisible(false);
+      return;
     }
-    if (shown) return;
 
-    setVisible(true);
     startedAt.current = performance.now();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
 
     let cancelled = false;
     let hideTimer = 0;
@@ -75,19 +72,16 @@ export default function SplashScreen() {
       cancelled = true;
       window.clearTimeout(hideTimer);
       window.clearTimeout(failsafe);
-      document.body.style.overflow = prevOverflow;
     };
   }, [reduced]);
 
   const release = () => {
-    document.body.style.overflow = "";
+    document.documentElement.removeAttribute("data-splash");
   };
-
-  if (!mounted) return null;
-
 
   return (
     <AnimatePresence onExitComplete={release}>
+
       {visible && (
         <motion.div
           key="splash"
