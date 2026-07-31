@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { BrainCircuit, Cloud, Cpu, Network, Server, Wrench } from "lucide-react";
-import imgServer from "@/assets/img/service-server.webp.asset.json";
+import imgServer from "@/assets/img/service-server-v2.webp.asset.json";
 import imgNetwork from "@/assets/img/service-network.webp.asset.json";
 import imgDevices from "@/assets/img/service-devices.webp.asset.json";
 import imgManaged from "@/assets/img/service-managed.webp.asset.json";
