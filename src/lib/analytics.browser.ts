@@ -1,89 +1,14 @@
-import { getRequestHeader } from "@tanstack/react-start/server";
-import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@/integrations/supabase/types";
-import type { PageviewInput, EventInput } from "./analytics.schemas";
-
-type AnalyticsClient = ReturnType<typeof createClient<Database>>;
-let _client: AnalyticsClient | undefined;
-
 /**
- * Analytics uses the publishable (public) key, not the service-role key, so the
- * project keeps working from a plain git clone where only the public env vars exist.
- * Access is controlled by RLS policies on page_visits / visit_events.
+ * Analytics jalan penuh di browser agar situs bisa di-host sebagai file statis
+ * (Apache/public_html) tanpa runtime Node. Akses data memakai kunci publishable
+ * + RLS publik pada tabel page_visits / visit_events.
  */
-function db(): AnalyticsClient {
-  if (_client) return _client;
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
-  if (!url || !key) {
-    const missing = [
-      ...(!url ? ["SUPABASE_URL"] : []),
-      ...(!key ? ["SUPABASE_PUBLISHABLE_KEY"] : []),
-    ].join(", ");
-    throw new Error(
-      `Missing environment variable(s): ${missing}. Copy them from the project .env file before running the app.`,
-    );
-  }
-  _client = createClient<Database>(url, key, {
-    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
-    global: {
-      fetch: (input, init) => {
-        const headers = new Headers(init?.headers);
-        // New-format sb_ keys are opaque strings, not bearer JWTs.
-        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) {
-          headers.delete("Authorization");
-        }
-        headers.set("apikey", key);
-        return fetch(input, { ...init, headers });
-      },
-    },
-  });
-  return _client;
-}
-
-export function readGeo() {
-  const country =
-    getRequestHeader("cf-ipcountry") ?? getRequestHeader("x-vercel-ip-country") ?? null;
-  const rawCity = getRequestHeader("cf-ipcity") ?? getRequestHeader("x-vercel-ip-city") ?? null;
-  let city: string | null = rawCity;
-  if (city) {
-    try {
-      city = decodeURIComponent(city);
-    } catch {
-      /* keep raw value */
-    }
-  }
-  return {
-    country: country && country !== "XX" ? country.slice(0, 80) : null,
-    city: city ? city.slice(0, 120) : null,
-  };
-}
-
-export function readIp(): string | null {
-  const forwarded = getRequestHeader("x-forwarded-for");
-  const raw =
-    getRequestHeader("cf-connecting-ip") ??
-    (forwarded ? forwarded.split(",")[0] : null) ??
-    getRequestHeader("x-real-ip") ??
-    getRequestHeader("true-client-ip") ??
-    null;
-  const ip = raw?.trim();
-  return ip ? ip.slice(0, 64) : null;
-}
-
-function isPrivateIp(ip: string) {
-  return (
-    ip === "::1" ||
-    ip.startsWith("127.") ||
-    ip.startsWith("10.") ||
-    ip.startsWith("192.168.") ||
-    ip.startsWith("fc") ||
-    ip.startsWith("fd") ||
-    /^172\.(1[6-9]|2\d|3[01])\./.test(ip)
-  );
-}
+import { supabase } from "@/integrations/supabase/client";
+import { pageviewSchema, heartbeatSchema, eventSchema } from "@/lib/analytics.schemas";
+import type { PageviewInput, EventInput } from "@/lib/analytics.schemas";
 
 type IpGeo = {
+  ip: string | null;
   country: string | null;
   city: string | null;
   region: string | null;
@@ -91,44 +16,58 @@ type IpGeo = {
   asn: string | null;
 };
 
-export async function lookupIpGeo(ip: string | null): Promise<IpGeo> {
-  const empty: IpGeo = { country: null, city: null, region: null, isp: null, asn: null };
-  if (!ip || isPrivateIp(ip)) return empty;
-  try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 2500);
-    const res = await fetch(
-      `https://ipwho.is/${encodeURIComponent(ip)}?fields=success,country,city,region,connection`,
-      { signal: controller.signal },
-    );
-    clearTimeout(timer);
-    if (!res.ok) return empty;
-    const json = (await res.json()) as {
-      success?: boolean;
-      country?: string;
-      city?: string;
-      region?: string;
-      connection?: { isp?: string; org?: string; asn?: number };
-    };
-    if (!json.success) return empty;
-    const asn = json.connection?.asn ? `AS${json.connection.asn}` : null;
-    return {
-      country: json.country?.slice(0, 80) ?? null,
-      city: json.city?.slice(0, 120) ?? null,
-      region: json.region?.slice(0, 120) ?? null,
-      isp: (json.connection?.isp ?? json.connection?.org)?.slice(0, 160) ?? null,
-      asn,
-    };
-  } catch {
-    return empty;
-  }
+const EMPTY_GEO: IpGeo = {
+  ip: null,
+  country: null,
+  city: null,
+  region: null,
+  isp: null,
+  asn: null,
+};
+
+let geoPromise: Promise<IpGeo> | undefined;
+
+/** Ambil IP + geolokasi pengunjung dari layanan publik (sekali per sesi halaman). */
+export function lookupSelfGeo(): Promise<IpGeo> {
+  if (geoPromise) return geoPromise;
+  geoPromise = (async () => {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 3000);
+      const res = await fetch(
+        "https://ipwho.is/?fields=success,ip,country,city,region,connection",
+        { signal: controller.signal },
+      );
+      clearTimeout(timer);
+      if (!res.ok) return EMPTY_GEO;
+      const json = (await res.json()) as {
+        success?: boolean;
+        ip?: string;
+        country?: string;
+        city?: string;
+        region?: string;
+        connection?: { isp?: string; org?: string; asn?: number };
+      };
+      if (!json.success) return EMPTY_GEO;
+      return {
+        ip: json.ip?.slice(0, 64) ?? null,
+        country: json.country?.slice(0, 80) ?? null,
+        city: json.city?.slice(0, 120) ?? null,
+        region: json.region?.slice(0, 120) ?? null,
+        isp: (json.connection?.isp ?? json.connection?.org)?.slice(0, 160) ?? null,
+        asn: json.connection?.asn ? `AS${json.connection.asn}` : null,
+      };
+    } catch {
+      return EMPTY_GEO;
+    }
+  })();
+  return geoPromise;
 }
 
-export async function insertPageview(data: PageviewInput) {
-  const geo = readGeo();
-  const ip = readIp();
-  const ipGeo = await lookupIpGeo(ip);
-  const { data: row, error } = await db()
+export async function insertPageview(input: PageviewInput) {
+  const data = pageviewSchema.parse(input);
+  const geo = await lookupSelfGeo();
+  const { data: row, error } = await supabase
     .from("page_visits")
     .insert({
       visitor_id: data.visitorId,
@@ -146,14 +85,13 @@ export async function insertPageview(data: PageviewInput) {
       utm_campaign: data.utmCampaign ?? null,
       language: data.language ?? null,
       timezone: data.timezone ?? null,
-      country: ipGeo.country ?? geo.country,
-      city: ipGeo.city ?? geo.city,
-      region: ipGeo.region,
-      isp: ipGeo.isp,
-      asn: ipGeo.asn,
-      ip_address: ip,
+      country: geo.country,
+      city: geo.city,
+      region: geo.region,
+      isp: geo.isp,
+      asn: geo.asn,
+      ip_address: geo.ip,
     })
-
     .select("id")
     .single();
 
@@ -169,16 +107,18 @@ export async function updateVisit(input: {
   durationSeconds: number;
   scrollDepth: number;
 }) {
-  const { error } = await db()
+  const data = heartbeatSchema.parse(input);
+  const { error } = await supabase
     .from("page_visits")
-    .update({ duration_seconds: input.durationSeconds, scroll_depth: input.scrollDepth })
-    .eq("id", input.visitId);
+    .update({ duration_seconds: data.durationSeconds, scroll_depth: data.scrollDepth })
+    .eq("id", data.visitId);
   if (error) console.error("[analytics] heartbeat failed", error.message);
   return { ok: !error };
 }
 
-export async function insertEvent(data: EventInput) {
-  const { error } = await db().from("visit_events").insert({
+export async function insertEvent(input: EventInput) {
+  const data = eventSchema.parse(input);
+  const { error } = await supabase.from("visit_events").insert({
     visit_id: data.visitId ?? null,
     visitor_id: data.visitorId,
     session_id: data.sessionId,
@@ -207,7 +147,7 @@ export async function buildStats(days: number) {
   const since = new Date(Date.now() - days * 86400000).toISOString();
 
   const [visitsRes, eventsRes] = await Promise.all([
-    db()
+    supabase
       .from("page_visits")
       .select(
         "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, region, isp, asn, ip_address, duration_seconds, scroll_depth",
@@ -215,7 +155,7 @@ export async function buildStats(days: number) {
       .gte("created_at", since)
       .order("created_at", { ascending: false })
       .limit(20000),
-    db()
+    supabase
       .from("visit_events")
       .select("event_name, event_label, created_at")
       .gte("created_at", since)
