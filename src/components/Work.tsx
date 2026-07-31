@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import imgGombong from "@/assets/img/project-pku-gombong.webp.asset.json";
-import imgPlataran from "@/assets/img/project-plataran.webp.asset.json";
-import imgSiaga from "@/assets/img/project-siaga-medika.webp.asset.json";
-import imgIsp from "@/assets/img/service-isp.webp.asset.json";
-import imgMargono from "@/assets/img/project-margono.webp.asset.json";
-import imgTeras from "@/assets/img/project-teras-sudirman.webp.asset.json";
+import imgGombong from "@/assets/img/project-pku-gombong.webp";
+import imgPlataran from "@/assets/img/project-plataran.webp";
+import imgSiaga from "@/assets/img/project-siaga-medika.webp";
+import imgIsp from "@/assets/img/service-isp.webp";
+import imgMargono from "@/assets/img/project-margono.webp";
+import imgTeras from "@/assets/img/project-teras-sudirman.webp";
 import { useT } from "@/i18n/context";
 
 const PROJECTS = [
-  { img: imgGombong.url, position: "object-center" },
-  { img: imgPlataran.url, position: "object-center" },
-  { img: imgSiaga.url, position: "object-center" },
-  { img: imgIsp.url, position: "object-center" },
-  { img: imgMargono.url, position: "object-top" },
-  { img: imgTeras.url, position: "object-center" },
+  { img: imgGombong, position: "object-center" },
+  { img: imgPlataran, position: "object-center" },
+  { img: imgSiaga, position: "object-center" },
+  { img: imgIsp, position: "object-center" },
+  { img: imgMargono, position: "object-top" },
+  { img: imgTeras, position: "object-center" },
 ];
 
 

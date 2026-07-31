@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
-import event2022 from "@/assets/img/event-2022.webp.asset.json";
-import eventHpe from "@/assets/img/event-hpe.webp.asset.json";
-import eventDell from "@/assets/img/event-dell.webp.asset.json";
-import eventRuijie from "@/assets/img/event-ruijie.webp.asset.json";
+import event2022 from "@/assets/img/event-2022.webp";
+import eventHpe from "@/assets/img/event-hpe.webp";
+import eventDell from "@/assets/img/event-dell.webp";
+import eventRuijie from "@/assets/img/event-ruijie.webp";
 import { useT } from "@/i18n/context";
 
 const EVENTS = [
-  { img: event2022.url, position: "object-center" },
-  { img: eventHpe.url, position: "object-center" },
-  { img: eventDell.url, position: "object-top" },
-  { img: eventRuijie.url, position: "object-center" },
+  { img: event2022, position: "object-center" },
+  { img: eventHpe, position: "object-center" },
+  { img: eventDell, position: "object-top" },
+  { img: eventRuijie, position: "object-center" },
 ];
 
 export default function Events() {

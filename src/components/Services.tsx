@@ -1,20 +1,20 @@
 import { motion } from "framer-motion";
 import { BrainCircuit, Cloud, Cpu, Network, Server, Wrench } from "lucide-react";
-import imgServer from "@/assets/img/service-server-v2.webp.asset.json";
-import imgNetwork from "@/assets/img/service-network.webp.asset.json";
-import imgDevices from "@/assets/img/service-devices.webp.asset.json";
-import imgManaged from "@/assets/img/service-managed.webp.asset.json";
-import imgIsp from "@/assets/img/service-isp.webp.asset.json";
-import imgAi from "@/assets/img/service-ai-4.webp.asset.json";
+import imgServer from "@/assets/img/service-server-v2.webp";
+import imgNetwork from "@/assets/img/service-network.webp";
+import imgDevices from "@/assets/img/service-devices.webp";
+import imgManaged from "@/assets/img/service-managed.webp";
+import imgIsp from "@/assets/img/service-isp.webp";
+import imgAi from "@/assets/img/service-ai-4.webp";
 import { useT } from "@/i18n/context";
 
 const SERVICES = [
-  { icon: Server, img: imgServer.url, position: "object-center" },
-  { icon: Network, img: imgNetwork.url, position: "object-center" },
-  { icon: Cpu, img: imgDevices.url, position: "object-center" },
-  { icon: Wrench, img: imgManaged.url, position: "object-top" },
-  { icon: Cloud, img: imgIsp.url, position: "object-center" },
-  { icon: BrainCircuit, img: imgAi.url, position: "object-center" },
+  { icon: Server, img: imgServer, position: "object-center" },
+  { icon: Network, img: imgNetwork, position: "object-center" },
+  { icon: Cpu, img: imgDevices, position: "object-center" },
+  { icon: Wrench, img: imgManaged, position: "object-top" },
+  { icon: Cloud, img: imgIsp, position: "object-center" },
+  { icon: BrainCircuit, img: imgAi, position: "object-center" },
 ];
 
 export default function Services() {
