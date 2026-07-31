@@ -6,9 +6,9 @@ import { useT } from "@/i18n/context";
 import heroVideoSm from "@/assets/hero-city-640.mp4";
 import heroVideoLg from "@/assets/hero-city-1280.mp4";
 import heroPoster from "@/assets/hero-city-poster.jpg";
+import heroOutline from "@/assets/hero-city-outline.webp";
 
-const OUTLINE_IMG =
-  "https://strvid.nyc3.cdn.digitaloceanspaces.com/cloudinary/hero_city_outline_fzg37d.jpg";
+const OUTLINE_IMG = heroOutline;
 
 /** Picks the lightest source that still looks sharp on the current device. */
 function pickSource() {
