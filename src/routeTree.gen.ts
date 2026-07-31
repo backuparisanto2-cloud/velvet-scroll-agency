@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MystatsRouteImport } from './routes/mystats'
+import { Route as NginxRouteImport } from './routes/nginx'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const MystatsRoute = MystatsRouteImport.update({
   path: '/mystats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NginxRoute = NginxRouteImport.update({
+  id: '/nginx',
+  path: '/nginx',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/mystats': typeof MystatsRoute
+  '/nginx': typeof NginxRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/mystats': typeof MystatsRoute
+  '/nginx': typeof NginxRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/mystats': typeof MystatsRoute
+  '/nginx': typeof NginxRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mystats'
+  fullPaths: '/' | '/mystats' | '/nginx'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mystats'
-  id: '__root__' | '/' | '/mystats'
+  to: '/' | '/mystats' | '/nginx'
+  id: '__root__' | '/' | '/mystats' | '/nginx'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MystatsRoute: typeof MystatsRoute
+  NginxRoute: typeof NginxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MystatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/nginx': {
+      id: '/nginx'
+      path: '/nginx'
+      fullPath: '/nginx'
+      preLoaderRoute: typeof NginxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MystatsRoute: MystatsRoute,
+  NginxRoute: NginxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
