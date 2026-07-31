@@ -54,6 +54,7 @@ export async function insertPageview(data: PageviewInput) {
       timezone: data.timezone ?? null,
       country: geo.country,
       city: geo.city,
+      ip_address: readIp(),
     })
     .select("id")
     .single();
@@ -111,7 +112,7 @@ export async function buildStats(days: number) {
     supabaseAdmin
       .from("page_visits")
       .select(
-        "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, duration_seconds, scroll_depth",
+        "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, ip_address, duration_seconds, scroll_depth",
       )
       .gte("created_at", since)
       .order("created_at", { ascending: false })
@@ -175,6 +176,7 @@ export async function buildStats(days: number) {
       (v) => [v.utm_source, v.utm_medium, v.utm_campaign].filter(Boolean).join(" / "),
     ),
     byPath: tally(visits, (v) => v.path),
+    byIp: tally(visits, (v) => v.ip_address),
     byEvent: tally(events, (e) => e.event_name),
     byEventLabel: tally(
       events.filter((e) => e.event_label),
@@ -188,6 +190,7 @@ export async function buildStats(days: number) {
       os: (v.os as string) ?? "-",
       location: [v.city, v.country].filter(Boolean).join(", ") || "-",
       source: (v.referrer_domain as string) || "langsung",
+      ip: (v.ip_address as string) ?? "-",
       duration: (v.duration_seconds as number) ?? 0,
       scroll: (v.scroll_depth as number) ?? 0,
     })),
