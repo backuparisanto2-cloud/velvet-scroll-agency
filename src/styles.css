@@ -193,3 +193,11 @@ html[data-splash="1"] .splash-gated {
   pointer-events: none;
 }
 
+
+.splash-overlay {
+  display: none;
+}
+
+html[data-splash="1"] .splash-overlay {
+  display: flex;
+}
