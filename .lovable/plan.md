@@ -1,32 +1,28 @@
 ## Masalah
 
-Semua gambar/video sekarang hanya berupa file pointer `.asset.json` yang menunjuk ke URL CDN Lovable (`/__l5e/assets-v1/...`). File binernya tidak ada di repo, jadi saat di-clone dan di-build di luar Lovable, URL itu tidak dilayani siapa pun → aset hilang.
+`/mystats` (dan pencatatan pengunjung) memakai **kunci service-role** yang hanya disuntikkan di server Lovable. File `.env` yang ikut ter-clone hanya berisi URL + kunci publik, sehingga saat `npm run build` / `npm run dev` di komputer sendiri muncul:
+
+> Missing Supabase environment variable(s): SUPABASE_SERVICE_ROLE_KEY
+
+Verifikasi: `src/lib/analytics.server.ts` memakai `supabaseAdmin` (service role) untuk insert/update/select, dan `.env` memang tidak punya `SUPABASE_SERVICE_ROLE_KEY`.
 
 ## Solusi
 
-Kembalikan 33 file biner ke dalam repo dan pakai import Vite biasa, sehingga aset ikut ter-commit, ter-clone, dan ter-bundle di mana pun app di-build.
+Pindahkan seluruh analytics ke **kunci publik** yang sudah ada di `.env`, dengan aturan akses database yang mengizinkannya. Sesuai pilihan Anda, `/mystats` tetap terbuka tanpa proteksi.
 
-### Langkah
+### 1. Aturan akses database (migrasi)
+- Beri izin `anon` untuk mencatat kunjungan dan event pada tabel `page_visits` dan `visit_events`.
+- Beri izin `anon` untuk memperbarui durasi/scroll pada kunjungan (heartbeat).
+- Beri izin `anon` membaca kedua tabel, supaya dashboard bisa menampilkan statistik tanpa login.
 
-1. Unduh setiap aset dari URL CDN-nya ke lokasi aslinya:
-   - `src/assets/` — `hero-city-640.mp4`, `hero-city-1280.mp4`, `hero-city-poster.jpg`
-   - `src/assets/img/` — 30 file `.webp` (logo partner, logo SGK 4 ukuran, project, service, event)
-2. Ganti semua referensi di 6 komponen (`Hero`, `Logo`, `Clients`, `Events`, `Services`, `Work`):
-   ```ts
-   // sebelum
-   import imgServer from "@/assets/img/service-server-v2.webp.asset.json";
-   ... src={imgServer.url}
-   // sesudah
-   import imgServer from "@/assets/img/service-server-v2.webp";
-   ... src={imgServer}
-   ```
-   Untuk video dan `srcset` logo, pola sama: string hasil import langsung dipakai.
-3. Hapus semua file `.asset.json` dari repo (pointer tidak lagi dipakai). Objek CDN dibiarkan (tidak dihapus) agar deployment lama tidak rusak.
-4. Jalankan build + cek preview supaya semua gambar/video tampil.
+### 2. Kode server analytics
+- `src/lib/analytics.server.ts`: ganti `supabaseAdmin` dengan klien Supabase yang dibuat di dalam handler memakai `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY` (tanpa sesi tersimpan, dengan shim header `apikey` untuk kunci `sb_` seperti pada klien bawaan).
+- Logika pengumpulan geo/IP, insert, heartbeat, dan agregasi statistik tetap sama persis.
+- Tambahkan pesan error yang lebih jelas bila variabel lingkungan hilang.
 
-### Catatan teknis
+### 3. Verifikasi
+- Jalankan build produksi dari clone bersih, buka `/` untuk memicu satu pageview, lalu buka `/mystats` dan pastikan angka muncul tanpa error.
 
-- Total biner yang masuk repo ± 3,4 MB (video hero 1,9 MB, sisanya WebP kecil). Masih wajar untuk git.
-- Vite akan hashing + emit aset ini ke `dist/assets/` saat build, jadi caching tetap baik dan tidak ada dependensi ke infrastruktur Lovable.
-- Sinkronisasi GitHub dua arah tetap berjalan seperti biasa: karena file biner ada di repo, clone → `bun install` → `bun run build` langsung jalan tanpa akses CDN.
-- Trade-off: aset tidak lagi disajikan lewat CDN Lovable, tetapi dari hosting/CDN tempat app di-deploy.
+## Catatan teknis & risiko
+
+Karena `/mystats` dibuka tanpa proteksi, data kunjungan (termasuk alamat IP, kota, ISP) bisa dibaca siapa pun yang punya kunci publik situs atau membuka URL `/mystats`. Ini konsekuensi langsung dari pilihan "terbuka"; bila nanti ingin ditutup, saya bisa tambahkan gerbang kata sandi atau login admin dan mencabut izin baca `anon`.

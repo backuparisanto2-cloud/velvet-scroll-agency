@@ -1,6 +1,45 @@
 import { getRequestHeader } from "@tanstack/react-start/server";
-import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/integrations/supabase/types";
 import type { PageviewInput, EventInput } from "./analytics.schemas";
+
+type AnalyticsClient = ReturnType<typeof createClient<Database>>;
+let _client: AnalyticsClient | undefined;
+
+/**
+ * Analytics uses the publishable (public) key, not the service-role key, so the
+ * project keeps working from a plain git clone where only the public env vars exist.
+ * Access is controlled by RLS policies on page_visits / visit_events.
+ */
+function db(): AnalyticsClient {
+  if (_client) return _client;
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+  if (!url || !key) {
+    const missing = [
+      ...(!url ? ["SUPABASE_URL"] : []),
+      ...(!key ? ["SUPABASE_PUBLISHABLE_KEY"] : []),
+    ].join(", ");
+    throw new Error(
+      `Missing environment variable(s): ${missing}. Copy them from the project .env file before running the app.`,
+    );
+  }
+  _client = createClient<Database>(url, key, {
+    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+    global: {
+      fetch: (input, init) => {
+        const headers = new Headers(init?.headers);
+        // New-format sb_ keys are opaque strings, not bearer JWTs.
+        if (key.startsWith("sb_") && headers.get("Authorization") === `Bearer ${key}`) {
+          headers.delete("Authorization");
+        }
+        headers.set("apikey", key);
+        return fetch(input, { ...init, headers });
+      },
+    },
+  });
+  return _client;
+}
 
 export function readGeo() {
   const country =
@@ -89,7 +128,7 @@ export async function insertPageview(data: PageviewInput) {
   const geo = readGeo();
   const ip = readIp();
   const ipGeo = await lookupIpGeo(ip);
-  const { data: row, error } = await supabaseAdmin
+  const { data: row, error } = await db()
     .from("page_visits")
     .insert({
       visitor_id: data.visitorId,
@@ -130,7 +169,7 @@ export async function updateVisit(input: {
   durationSeconds: number;
   scrollDepth: number;
 }) {
-  const { error } = await supabaseAdmin
+  const { error } = await db()
     .from("page_visits")
     .update({ duration_seconds: input.durationSeconds, scroll_depth: input.scrollDepth })
     .eq("id", input.visitId);
@@ -139,7 +178,7 @@ export async function updateVisit(input: {
 }
 
 export async function insertEvent(data: EventInput) {
-  const { error } = await supabaseAdmin.from("visit_events").insert({
+  const { error } = await db().from("visit_events").insert({
     visit_id: data.visitId ?? null,
     visitor_id: data.visitorId,
     session_id: data.sessionId,
@@ -168,7 +207,7 @@ export async function buildStats(days: number) {
   const since = new Date(Date.now() - days * 86400000).toISOString();
 
   const [visitsRes, eventsRes] = await Promise.all([
-    supabaseAdmin
+    db()
       .from("page_visits")
       .select(
         "id, created_at, visitor_id, session_id, path, device_type, browser, os, referrer_domain, utm_source, utm_medium, utm_campaign, language, timezone, country, city, region, isp, asn, ip_address, duration_seconds, scroll_depth",
@@ -176,7 +215,7 @@ export async function buildStats(days: number) {
       .gte("created_at", since)
       .order("created_at", { ascending: false })
       .limit(20000),
-    supabaseAdmin
+    db()
       .from("visit_events")
       .select("event_name, event_label, created_at")
       .gte("created_at", since)
