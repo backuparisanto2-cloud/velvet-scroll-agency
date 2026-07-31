@@ -203,6 +203,8 @@ const id = {
     toDark: "Aktifkan mode gelap",
     language: "Bahasa",
     whatsapp: "Chat WhatsApp",
+    splashTagline: "Solusi Infrastruktur IT",
+    splashLoading: "Memuat",
   },
 };
 
@@ -411,6 +413,8 @@ const en: Dict = {
     toDark: "Switch to dark mode",
     language: "Language",
     whatsapp: "Chat on WhatsApp",
+    splashTagline: "IT Infrastructure Solutions",
+    splashLoading: "Loading",
   },
 };
 
